@@ -985,7 +985,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    After the initial registration, an endpoint should retain the
    returned location of the Registration Resource for further
    operations, including refreshing the registration in order to extend
-   the lifetie and "keep-alive" the registration.  If the lifetime of
+   the lifetime and "keep-alive" the registration.  If the lifetime of
    the registration expires, the RD SHOULD NOT respond to discovery
    queries with information from the endpoint.  The RD SHOULD continue
    to provide access to the Registration Resource after a registration
