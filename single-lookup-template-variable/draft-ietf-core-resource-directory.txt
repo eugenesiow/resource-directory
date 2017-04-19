@@ -85,7 +85,7 @@ Table of Contents
      4.1.  Resource Directory Address Option (RDAO)  . . . . . . . .   9
    5.  Resource Directory  . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  Content Formats . . . . . . . . . . . . . . . . . . . . .  11
-     5.2.  Base URI Discovery  . . . . . . . . . . . . . . . . . . .  11
+     5.2.  URI Discovery . . . . . . . . . . . . . . . . . . . . . .  11
      5.3.  Registration  . . . . . . . . . . . . . . . . . . . . . .  13
        5.3.1.  Simple Registration . . . . . . . . . . . . . . . . .  16
        5.3.2.  Simple publishing to Resource Directory Server  . . .  17
@@ -578,24 +578,24 @@ Internet-Draft           CoRE Resource Directory              March 2017
    implementing this specification MUST have an equivalent serialization
    in the application/link-format content format.
 
-5.2.  Base URI Discovery
+5.2.  URI Discovery
 
    Before an endpoint can make use of an RD, it must first know the RD's
-   address and port, and the base URI information for its REST API.
-   This section defines discovery of the RD and its base URI using the
-   well-known interface of the CoRE Link Format [RFC6690].  It is
-   however expected that RDs will also be discoverable via other methods
+   address and port, and the URI path information for its REST APIs.
+   This section defines discovery of the RD and its URIs using the well-
+   known interface of the CoRE Link Format [RFC6690].  It is however
+   expected that RDs will also be discoverable via other methods
    depending on the deployment.
 
-   Discovery of the RD base URI is performed by sending either a
+   Discovery of the RD URI paths is performed by sending either a
    multicast or unicast GET request to "/.well-known/core" and including
    a Resource Type (rt) parameter [RFC6690] with the value "core.rd" in
    the query string.  Likewise, a Resource Type parameter value of
    "core.rd-lookup*" is used to discover the base URI for RD Lookup
-   operations, and "core.gp" is used to discover the base URI for RD
+   operations, and "core.gp" is used to discover the URI path for RD
    Group operations.  Upon success, the response will contain a payload
    with a link format entry for each RD function discovered, indicating
-   the base URI of the RD function returned and the corresponding
+   the URI path of the RD function returned and the corresponding
    Resource Type.  When performing multicast discovery, the multicast IP
    address used will depend on the scope required and the multicast
    capabilities of the network.
@@ -747,8 +747,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    URI Template Variables:
 
-      rd :=  RD Base URI path (mandatory).  This is the path of the RD,
-         as obtained from discovery.  The value "rd" is recommended for
+      rd :=  RD URI path (mandatory).  This is the path of the RD, as
+         obtained from discovery.  The value "rd" is recommended for
          this variable.
 
       ep :=  Endpoint name (mandatory).  The endpoint name is an
@@ -1514,9 +1514,9 @@ Shelby, et al.         Expires September 27, 2017              [Page 27]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      rd-group :=  RD Group Base URI path (mandatory).  This is the path
-         of the RD Group REST API.  The value "rd-group" is recommended
-         for this variable.
+      rd-group :=  RD Group URI path (mandatory).  This is the path of
+         the RD Group REST API.  The value "rd-group" is recommended for
+         this variable.
 
       gp :=  Group Name (mandatory).  The name of the group to be
          created or replaced, unique within that domain.  The maximum
@@ -2323,10 +2323,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
    interfaces, proxies, and applications are currently out of scope for
    LWM2M.
 
-   The location of the LWM2M Server and RD base URI path is provided by
-   the LWM2M Bootstrap process, so no dynamic discovery of the RD is
-   used.  LWM2M Servers and endpoints are not required to implement the
-   /.well-known/core resource.
+   The location of the LWM2M Server and RD URI path is provided by the
+   LWM2M Bootstrap process, so no dynamic discovery of the RD is used.
+   LWM2M Servers and endpoints are not required to implement the /.well-
+   known/core resource.
 
 10.2.1.  The LWM2M Object Model
 

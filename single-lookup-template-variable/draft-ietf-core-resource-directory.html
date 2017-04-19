@@ -287,7 +287,7 @@ address {
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Resource Directory Address Option (RDAO)"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Resource Directory"/>
 <link href="#rfc.section.5.1" rel="Chapter" title="5.1 Content Formats"/>
-<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Base URI Discovery"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 URI Discovery"/>
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Registration"/>
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Simple Registration"/>
 <link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Simple publishing to Resource Directory Server"/>
@@ -419,7 +419,7 @@ address {
 <ul><li>4.1.   <a href="#rfc.section.4.1">Resource Directory Address Option (RDAO)</a></li>
 </ul><li>5.   <a href="#rfc.section.5">Resource Directory</a></li>
 <ul><li>5.1.   <a href="#rfc.section.5.1">Content Formats</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">Base URI Discovery</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">URI Discovery</a></li>
 <li>5.3.   <a href="#rfc.section.5.3">Registration</a></li>
 <ul><li>5.3.1.   <a href="#rfc.section.5.3.1">Simple Registration</a></li>
 <li>5.3.2.   <a href="#rfc.section.5.3.2">Simple publishing to Resource Directory Server</a></li>
@@ -613,9 +613,9 @@ RD Address:             IPv6 address of the RD.
 <p id="rfc.section.5.1.p.1">Resource Directory implementations using this specification MUST support the application/link-format content format (ct=40).</p>
 <p id="rfc.section.5.1.p.2">Resource Directories implementing this specification MAY support additional content formats.</p>
 <p id="rfc.section.5.1.p.3">Any additional content format supported by a Resource Directory implementing this specification MUST have an equivalent serialization in the application/link-format content format.</p>
-<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">Base URI Discovery</a></h1>
-<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the base URI information for its REST API. This section defines discovery of the RD and its base URI using the well-known interface of the CoRE Link Format <a href="#RFC6690">[RFC6690]</a>. It is however expected that RDs will also be discoverable via other methods depending on the deployment.</p>
-<p id="rfc.section.5.2.p.2">Discovery of the RD base URI is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the base URI for RD Lookup operations, and &#8220;core.gp&#8221; is used to discover the base URI for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the base URI of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">URI Discovery</a></h1>
+<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690">[RFC6690]</a>. It is however expected that RDs will also be discoverable via other methods depending on the deployment.</p>
+<p id="rfc.section.5.2.p.2">Discovery of the RD URI paths is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the base URI for RD Lookup operations, and &#8220;core.gp&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
 <p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
 <p id="rfc.section.5.2.p.4">HTTP does not support multicast and consequently only unicast discovery can be supported using HTTP. Links to Resource Directories MAY be registered in other Resource Directories, and well-known entry points SHOULD be provided to enable the bootstrapping of unicast discovery.</p>
 <p id="rfc.section.5.2.p.5">An RD implementation of this specification MUST support query filtering for the rt parameter as defined in <a href="#RFC6690">[RFC6690]</a>.</p>
@@ -695,7 +695,7 @@ Res: 2.05 Content
   <dd style="margin-left: 8">
     <dl>
       <dt>rd :=</dt>
-      <dd style="margin-left: 8">RD Base URI path (mandatory). This is the path of the RD, as obtained from discovery. The value &#8220;rd&#8221; is recommended for this variable.</dd>
+      <dd style="margin-left: 8">RD URI path (mandatory). This is the path of the RD, as obtained from discovery. The value &#8220;rd&#8221; is recommended for this variable.</dd>
       <dt>ep :=</dt>
       <dd style="margin-left: 8">Endpoint name (mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.</dd>
       <dt>d :=</dt>
@@ -1107,7 +1107,7 @@ Payload:
   <dd style="margin-left: 8">
     <dl>
       <dt>rd-group :=</dt>
-      <dd style="margin-left: 8">RD Group Base URI path (mandatory). This is the path of the RD Group REST API. The value &#8220;rd-group&#8221; is recommended for this variable.</dd>
+      <dd style="margin-left: 8">RD Group URI path (mandatory). This is the path of the RD Group REST API. The value &#8220;rd-group&#8221; is recommended for this variable.</dd>
       <dt>gp :=</dt>
       <dd style="margin-left: 8">Group Name (mandatory). The name of the group to be created or replaced, unique within that domain. The maximum length of this parameter is 63 bytes.</dd>
       <dt>d :=</dt>
@@ -1642,7 +1642,7 @@ Location-Path: /coap-group/1
 <p id="rfc.section.10.2.p.4">CoRE Resource Directory (RD) is used to provide the LWM2M Registration interface.</p>
 <p id="rfc.section.10.2.p.5">LWM2M does not provide for registration domains and does not currently use the rd-group or rd-lookup interfaces.</p>
 <p id="rfc.section.10.2.p.6">The LWM2M specification describes a set of interfaces and a resource model used between a LWM2M device and an LWM2M server. Other interfaces, proxies, and applications are currently out of scope for LWM2M.</p>
-<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD base URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the /.well-known/core resource.</p>
+<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the /.well-known/core resource.</p>
 <h1 id="rfc.section.10.2.1"><a href="#rfc.section.10.2.1">10.2.1.</a> <a href="#lwm2m-obj" id="lwm2m-obj">The LWM2M Object Model</a></h1>
 <p id="rfc.section.10.2.1.p.1">The OMA LWM2M object model is based on a simple 2 level class hierarchy consisting of Objects and Resources.</p>
 <p id="rfc.section.10.2.1.p.2">An LWM2M Resource is a REST endpoint, allowed to be a single value or an array of values of the same data type.</p>
