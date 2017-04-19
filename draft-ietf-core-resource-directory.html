@@ -327,7 +327,7 @@ address {
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Shelby, Z., Koster, M., Bormann, C., and P. van der Stok" />
@@ -649,11 +649,11 @@ RD Address:             IPv6 address of the RD.
 
 <dl>
   <dt>Success:</dt>
-  <dd style="margin-left: 8">2.05 &#8220;Content&#8221; with an application/link-format, application/link-format+json, or application/link-format+cbor payload containing one or more matching entries for the RD resource.</dd>
+  <dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; with an application/link-format, application/link-format+json, or application/link-format+cbor payload containing one or more matching entries for the RD resource.</dd>
   <dt>Failure:</dt>
-  <dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; is returned in case no matching entry is found for a unicast request.</dd>
+  <dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221; is returned in case no matching entry is found for a unicast request.</dd>
   <dt>Failure:</dt>
-  <dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; is returned in case of a malformed request for a unicast request.</dd>
+  <dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221; is returned in case of a malformed request for a unicast request.</dd>
   <dt>Failure:</dt>
   <dd style="margin-left: 8">No error response to a multicast request.</dd>
   <dt>HTTP support :</dt>
@@ -666,7 +666,7 @@ Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 Res: 2.05 Content
 &lt;/rd&gt;;rt="core.rd";ct=40,
 &lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct=40,
-&lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct="40",
+&lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct=40,
 &lt;/rd-group&gt;;rt="core.rd-group";ct=40
 </pre>
 <p id="rfc.section.5.2.p.11">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as a more application-specific content format (picked as 65225 in this example; this is in the experimental space, not an assigned value).  The base RD resource values /rd, /rd-lookup, and /rd-group are example values.</p>
@@ -705,7 +705,7 @@ Res: 2.05 Content
       <dt>lt :=</dt>
       <dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included in the initial registration, a default value of 86400 (24 hours) SHOULD be assumed. If the lt parameter is not included in a registration refresh  or update operation, the most recently supplied value SHALL be re-used.</dd>
       <dt>con :=</dt>
-      <dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address and port at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.  If the endpoint uses an ephemeral port to register with, it MUST include the con: parameter in the registration to provide a valid network path.  If the endpoint which is located behind a NAT gateway is registering with a Resource Directory which is on the network service side of the NAT gateway, the endpoint MUST use a persistent port for the outgoing registration in order to provide the NAT gateway with a valid network address for replies and incoming requests.</dd>
+      <dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address, port and path at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.  If the endpoint uses an ephemeral port to register with, it MUST include the con: parameter in the registration to provide a valid network path.  If the endpoint which is located behind a NAT gateway is registering with a Resource Directory which is on the network service side of the NAT gateway, the endpoint MUST use a persistent port for the outgoing registration in order to provide the NAT gateway with a valid network address for replies and incoming requests.</dd>
     </dl>
     <p> </p>
   </dd>
@@ -744,7 +744,7 @@ Location: /rd/4521
 </pre>
 <p id="rfc.section.5.3.p.7">A Resource Directory may optionally support HTTP. Here is an example of the same registration operation above, when done using HTTP.</p>
 <pre>
-Req: POST /rd?ep=node1 HTTP/1.1
+Req: POST /rd?ep=node1&amp;con=http://[2001:db8::1:1] HTTP/1.1
 Host : example.com
 Content-Type: application/link-format
 Payload:
@@ -790,7 +790,7 @@ payload:
 &lt;/sen/temp&gt;
 </pre>
 <h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a></h1>
-<p id="rfc.section.5.3.3.p.1">For some applications, even Simple Directory Discovery may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
+<p id="rfc.section.5.3.3.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
 <p id="rfc.section.5.3.3.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration">Section 5.3</a>.</p>
 <h1 id="rfc.section.5.3.4"><a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#link-plurality" id="link-plurality">Plurality of link references in a Registration</a></h1>
 <p id="rfc.section.5.3.4.p.1">Plurality of link references within a Registration (registration resource) is an indication of some error condition and should not be allowed.</p>
@@ -1433,7 +1433,7 @@ Res: 2.05 Content
       <td class="left">Context</td>
       <td class="left">con</td>
       <td class="left">URI</td>
-      <td class="left">The scheme, address and port at which this server is available</td>
+      <td class="left">The scheme, address and port and path at which this server is available</td>
     </tr>
     <tr>
       <td class="left">Resource Name</td>
@@ -1565,44 +1565,44 @@ Res: 2.05 Content
 <p id="rfc.section.10.1.2.p.3">The CT inserts the endpoints of the luminaries and the sensor in the RD using the Context parameter (con) to specify the interface address:</p>
 <pre>
 Req: POST coap://[FDFD::ABCD:0]/rd
-  ?ep=lm_R2-4-015_wndw&amp;con=coap://[FDFD::ABCD:1]
+  ?ep=lm_R2-4-015_wndw&amp;con=coap://[FDFD::ABCD:1]&amp;d=R2-4-015
 Payload:
-&lt;/light/left&gt;;rt="light"; d="R2-4-015",
-&lt;/light/middle&gt;;rt="light"; d="R2-4-015",
-&lt;/light/right&gt;;rt="light";d="R2-4-015"
+&lt;/light/left&gt;;rt="light",
+&lt;/light/middle&gt;;rt="light",
+&lt;/light/right&gt;;rt="light"
 
 Res: 2.01 Created
 Location: /rd/4521
 </pre>
 <pre>
 Req: POST coap://[FDFD::ABCD:0]/rd
-  ?ep=lm_R2-4-015_door&amp;con=coap://[FDFD::ABCD:2]
+  ?ep=lm_R2-4-015_door&amp;con=coap://[FDFD::ABCD:2]&amp;d=R2-4-015
 Payload:
-&lt;/light/left&gt;;rt="light"; d="R2-4-015",
-&lt;/light/middle&gt;;rt="light"; d="R2-4-015",
-&lt;/light/right&gt;;rt="light"; d="R2-4-015"
+&lt;/light/left&gt;;rt="light",
+&lt;/light/middle&gt;;rt="light",
+&lt;/light/right&gt;;rt="light"
 
 Res: 2.01 Created
 Location: /rd/4522
 </pre>
 <pre>
 Req: POST coap://[FDFD::ABCD:0]/rd
-  ?ep=ps_R2-4-015_door&amp;con=coap://[FDFD::ABCD:3]
+  ?ep=ps_R2-4-015_door&amp;con=coap://[FDFD::ABCD:3]d&amp;d=R2-4-015
 Payload:
-&lt;/ps&gt;;rt="p-sensor"; d="R2-4-015"
+&lt;/ps&gt;;rt="p-sensor"
 
 Res: 2.01 Created
 Location: /rd/4523
 </pre>
-<p id="rfc.section.10.1.2.p.4">The domain name d=&#8221;R2-4-015&#8221; has been added for an efficient lookup because filtering on &#8220;ep&#8221; name is more awkward. The same domain name is communicated to the two luminaries and the presence sensor by the CT.</p>
+<p id="rfc.section.10.1.2.p.4">The domain name d=R2-4-015 has been added for an efficient lookup because filtering on &#8220;ep&#8221; name is more awkward. The same domain name is communicated to the two luminaries and the presence sensor by the CT.</p>
 <p id="rfc.section.10.1.2.p.5">The group is specified in the RD. The Context parameter is set to the site-local multicast address allocated to the group.  In the POST in the example below, these two endpoints and the endpoint of the presence sensor are registered as members of the group.</p>
 <pre>
 Req: POST coap://[FDFD::ABCD:0]/rd-group
-?gp=grp_R2-4-015;con="coap//[FF05::1]"
+?gp=grp_R2-4-015&amp;con=coap://[FF05::1]
 Payload:
-&lt;&gt;ep=lm_R2-4-015_wndw,
-&lt;&gt;ep=lm_R2-4-015_door,
-&lt;&gt;ep=ps_R2-4-015_door
+&lt;&gt;;ep=lm_R2-4-015_wndw,
+&lt;&gt;;ep=lm_R2-4-015_door,
+&lt;&gt;;ep=ps_R2-4-015_door
 
 Res: 2.01 Created
 Location: /rd-group/501
@@ -1646,7 +1646,7 @@ Location-Path: /coap-group/1
 <p id="rfc.section.10.2.p.4">CoRE Resource Directory (RD) is used to provide the LWM2M Registration interface.</p>
 <p id="rfc.section.10.2.p.5">LWM2M does not provide for registration domains and does not currently use the rd-group or rd-lookup interfaces.</p>
 <p id="rfc.section.10.2.p.6">The LWM2M specification describes a set of interfaces and a resource model used between a LWM2M device and an LWM2M server. Other interfaces, proxies, and applications are currently out of scope for LWM2M.</p>
-<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD base URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the ./well-known/core resource.</p>
+<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD base URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the /.well-known/core resource.</p>
 <h1 id="rfc.section.10.2.1"><a href="#rfc.section.10.2.1">10.2.1.</a> <a href="#lwm2m-obj" id="lwm2m-obj">The LWM2M Object Model</a></h1>
 <p id="rfc.section.10.2.1.p.1">The OMA LWM2M object model is based on a simple 2 level class hierarchy consisting of Objects and Resources.</p>
 <p id="rfc.section.10.2.1.p.2">An LWM2M Resource is a REST endpoint, allowed to be a single value or an array of values of the same data type.</p>
@@ -2076,5 +2076,6 @@ link payload - new or modified links
   </address>
 </div>
 
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/core-wg/resource-directory">Fork me on GitHub</a></div></div>
 </body>
 </html>
