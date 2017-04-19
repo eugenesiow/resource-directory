@@ -2309,7 +2309,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    presence sensor are registered as members of the group.
 
    Req: POST coap://[FDFD::ABCD:0]/rd-group
-   ?gp=grp_R2-4-015;con=coap//[FF05::1];exp;ins=grp1234
+   ?gp=grp_R2-4-015&con=coap//[FF05::1]&exp&ins=grp1234
    Payload:
    <>;ep=lm_R2-4-015_wndw,
    <>;ep=lm_R2-4-015_door,
