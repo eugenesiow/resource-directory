@@ -100,7 +100,7 @@ Table of Contents
      6.1.  Register a Group  . . . . . . . . . . . . . . . . . . . .  27
      6.2.  Group Removal . . . . . . . . . . . . . . . . . . . . . .  29
    7.  RD Lookup . . . . . . . . . . . . . . . . . . . . . . . . . .  30
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  35
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  34
      8.1.  Endpoint Identification and Authentication  . . . . . . .  35
      8.2.  Access Control  . . . . . . . . . . . . . . . . . . . . .  35
      8.3.  Denial of Service Attacks . . . . . . . . . . . . . . . .  35
@@ -587,11 +587,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
    expected that RDs will also be discoverable via other methods
    depending on the deployment.
 
-   Discovery of the RD URI paths is performed by sending either a
-   multicast or unicast GET request to "/.well-known/core" and including
-   a Resource Type (rt) parameter [RFC6690] with the value "core.rd" in
-   the query string.  Likewise, a Resource Type parameter value of
-   "core.rd-lookup*" is used to discover the base URI for RD Lookup
+   Discovery of the RD registration URI path is performed by sending
+   either a multicast or unicast GET request to "/.well-known/core" and
+   including a Resource Type (rt) parameter [RFC6690] with the value
+   "core.rd" in the query string.  Likewise, a Resource Type parameter
+   value of "core.rd-lookup*" is used to discover the URIs for RD Lookup
    operations, and "core.gp" is used to discover the URI path for RD
    Group operations.  Upon success, the response will contain a payload
    with a link format entry for each RD function discovered, indicating
@@ -663,9 +663,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    HTTP support :  YES (Unicast only)
 
    The following example shows an endpoint discovering an RD using this
-   interface, thus learning that the base RD resource is, in this
-   example, at /rd and that the content-format delivered by the server
-   hosting the resource is application/link-format (ct=40).  Note that
+   interface, thus learning that the RD registration resource is, in
+   this example, at /rd, and that the content-format delivered by the
+
 
 
 
@@ -674,9 +674,8 @@ Shelby, et al.         Expires September 27, 2017              [Page 12]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   it is up to the RD to choose its base RD resource, although
-   diagnostics and debugging is facilitated by using the base paths
-   specified here where possible.
+   server hosting the resource is application/link-format (ct=40).  Note
+   that it is up to the RD to choose its RD resource paths.
 
    Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 
@@ -684,7 +683,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
    </rd>;rt="core.rd";ct=40,
    </rd-lookup/ep>;rt="core.rd-lookup-ep";ct=40,
    </rd-lookup/res>;rt="core.rd-lookup-res";ct=40,
+   </rd-lookup/gp>;rt="core.rd-lookup-gp";ct=40,
+   </rd-lookup/d>;rt="core.rd-lookup-d";ct=40,
    </rd-group>;rt="core.rd-group";ct=40
+
+                   Figure 4: Example discovery exchange
 
    The following example shows the way of indicating that a client may
    request alternate content-formats.  The Content-Format code attribute
@@ -694,8 +697,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Content-Format 40 (application/link-format) indicated as well as a
    more application-specific content format (picked as 65225 in this
    example; this is in the experimental space, not an assigned value).
-   The base RD resource values /rd, /rd-lookup, and /rd-group are
-   example values.
+   The RD resource paths /rd, /rd-lookup, and /rd-group are example
+   values.  This server only implements some of the interfaces described
+   in this document.
 
    Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 
@@ -718,10 +722,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    of the registration.  It is expected that other specifications will
    define further parameters (see Section 9.3).  The RD then creates a
    new registration resource in the RD and returns its location.  An
-   endpoint MUST use that location when refreshing registrations using
-   this interface.  Endpoint resources in the RD are kept active for the
-   period indicated by the lifetime parameter.  The endpoint is
-   responsible for refreshing the entry within this period using either
 
 
 
@@ -730,6 +730,10 @@ Shelby, et al.         Expires September 27, 2017              [Page 13]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   endpoint MUST use that location when refreshing registrations using
+   this interface.  Endpoint resources in the RD are kept active for the
+   period indicated by the lifetime parameter.  The endpoint is
+   responsible for refreshing the entry within this period using either
    the registration or update interface.  The registration interface
    MUST be implemented to be idempotent, so that registering twice with
    the same endpoint parameters ep and d does not create multiple RD
@@ -743,13 +747,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  POST
 
-   URI Template:  /{+rd}{?ep,d,et,lt,con}
+   URI Template:  {+rd}{?ep,d,et,lt,con}
 
    URI Template Variables:
 
-      rd :=  RD URI path (mandatory).  This is the path of the RD, as
-         obtained from discovery.  The value "rd" is recommended for
-         this variable.
+      rd :=  RD registration URI (mandatory).  This is the location of
+         the RD, as obtained from discovery.
 
       ep :=  Endpoint name (mandatory).  The endpoint name is an
          identifier that MUST be unique within a domain.  The maximum
@@ -775,9 +778,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
          form scheme://host:port/path.  In the absence of this parameter
          the scheme of the protocol, source address and source port of
          the register request are assumed.  This parameter is mandatory
-         when the directory is filled by a third party such as an
-         commissioning tool.  When con is used, scheme and host are
-         mandatory and port and path parameters are optional.  If the
 
 
 
@@ -786,6 +786,9 @@ Shelby, et al.         Expires September 27, 2017              [Page 14]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+         when the directory is filled by a third party such as an
+         commissioning tool.  When con is used, scheme and host are
+         mandatory and port and path parameters are optional.  If the
          endpoint uses an ephemeral port to register with, it MUST
          include the con: parameter in the registration to provide a
          valid network path.  If the endpoint which is located behind a
@@ -826,11 +829,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows an endpoint with the name "node1"
    registering two resources to an RD using this interface.  The
-   location "/rd" is an example value of an RD base location.
-
-
-
-
+   location "/rd" is an example RD location discovered in a request
+   similar to Figure 4.
 
 
 
@@ -1066,12 +1066,12 @@ Shelby, et al.         Expires September 27, 2017              [Page 19]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   URI Template:  /{+location}{?lt,con}
+   URI Template:  {+location}{?lt,con}
 
    URI Template Variables:
 
-      location :=  This is the Location path returned by the RD as a
-         result of a successful earlier registration.
+      location :=  This is the Location returned by the RD as a result
+         of a successful earlier registration.
 
       lt :=  Lifetime (optional).  Lifetime of the registration in
          seconds.  Range of 60-4294967295.  If no lifetime is included,
@@ -1163,12 +1163,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  DELETE
 
-   URI Template:  /{+location}
+   URI Template:  {+location}
 
    URI Template Variables:
 
-      location :=  This is the Location path returned by the RD as a
-         result of a successful earlier registration.
+      location :=  This is the Location returned by the RD as a result
+         of a successful earlier registration.
 
 
 
@@ -1218,12 +1218,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  GET
 
-   URI Template:  /{+location}{?href,rel,rt,if,ct}
+   URI Template:  {+location}{?href,rel,rt,if,ct}
 
    URI Template Variables:
 
-      location :=  This is the Location path returned by the RD as a
-         result of a successful earlier registration.
+      location :=  This is the Location returned by the RD as a result
+         of a successful earlier registration.
 
 
 
@@ -1324,12 +1324,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  PATCH
 
-   URI Template:  /{+location}{?href,rel,rt,if,ct}
+   URI Template:  {+location}{?href,rel,rt,if,ct}
 
    URI Template Variables:
 
-      location :=  This is the Location path returned by the RD as a
-         result of a successful earlier registration.
+      location :=  This is the Location returned by the RD as a result
+         of a successful earlier registration.
 
       href,rel,rt,if,ct := link relations and attributes specified in
       the query in order to select particular links based on their
@@ -1500,12 +1500,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  POST
 
-   URI Template:  /{+rd-group}{?gp,d,con}
+   URI Template:  {+rd-group}{?gp,d,con}
 
    URI Template Variables:
 
-
-
+      rd-group :=  RD Group URI (mandatory).  This is the location of
+         the RD Group REST API.
 
 
 
@@ -1513,10 +1513,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 27]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-      rd-group :=  RD Group URI path (mandatory).  This is the path of
-         the RD Group REST API.  The value "rd-group" is recommended for
-         this variable.
 
       gp :=  Group Name (mandatory).  The name of the group to be
          created or replaced, unique within that domain.  The maximum
@@ -1561,6 +1557,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    HTTP support:  YES
 
+   The following example shows an EP registering a group with the name
+   "lights" which has two endpoints to an RD using this interface.  The
+   RD group path /rd-group is an example RD location discovered in a
+   request similar to Figure 4.
 
 
 
@@ -1569,10 +1569,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 28]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The following example shows an EP registering a group with the name
-   "lights" which has two endpoints to an RD using this interface.  The
-   base location value /rd-group is an example of an RD base location.
 
    Req: POST coap://rd.example.com/rd-group?gp=lights
    Content-Format: 40
@@ -1596,12 +1592,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  DELETE
 
-   URI Template:  /{+location}
+   URI Template:  {+location}
 
    URI Template Variables:
 
-      location :=  This is the Location path returned by the RD as a
-         result of a successful group registration.
+      location :=  This is the Location returned by the RD as a result
+         of a successful group registration.
 
    The following responses codes are defined for this interface:
 
@@ -1617,6 +1613,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    HTTP support:  YES
 
+   The following examples shows successful removal of the group from the
+   RD with the example location value /rd-group/12.
+
+
 
 
 
@@ -1625,9 +1625,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 29]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The following examples shows successful removal of the group from the
-   RD with the example location value /rd-group/12.
 
    Req: DELETE /rd-group/12
 
@@ -1673,6 +1670,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    every endpoint and resource inside angle brackets ("<>") and followed
    by the other parameters.
 
+   The target of these links SHOULD be the actual location of the
+   domain, endpoint or resource, but MAY be an intermediate proxy e.g.
+   in the case of an HTTP lookup interface for CoAP endpoints.
 
 
 
@@ -1681,10 +1681,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 30]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The target of these links SHOULD be the actual location of the
-   domain, endpoint or resource, but MAY be an intermediate proxy e.g.
-   in the case of an HTTP lookup interface for CoAP endpoints.
 
    The domain lookup returns every lookup domain with a base RD resource
    value (e.g. "/rd") encapsulated within angle brackets.
@@ -1728,8 +1724,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  GET
 
-   URI Template:  /{+type-lookup-
+   URI Template:  {+type-lookup-
       location}{?d,res,ep,gp,et,rt,page,count,resource-param}
+
+   URI Template Variables:
+
+
 
 
 
@@ -1738,20 +1738,17 @@ Shelby, et al.         Expires September 27, 2017              [Page 31]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   URI Template Variables:
-
-      type-lookup-location :=  RD Lookup URI path for a given lookup
-         type (mandatory).  The path is discovered as described in
-         Section 5.2, and SHOULD therefore be listed by the server in
-         .well-known/core.  The recommended values for this variable are
-         "rd-lookup/res", "rd-lookup/ep", "rd-lookup/d" and "rd/lookup/
-         gp" for the Resource, Endpoint, Domain and Group lookup types,
-         respectively; other values MAY be used.
+      type-lookup-location :=  RD Lookup URI for a given lookup type
+         (mandatory).  The address is discovered as described in
+         Section 5.2.
 
       ep :=  Endpoint name (optional).  Used for endpoint, group and
          resource lookups.
 
       d :=  Domain (optional).  Used for domain, group, endpoint and
+         resource lookups.
+
+      res :=  resource (optional).  Used for domain, group, endpoint and
          resource lookups.
 
       gp := Group name (optional).  Used for endpoint, group and
@@ -1786,6 +1783,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
       Content-Format:  application/link-format+cbor (optional)
 
+   The following responses codes are defined for this interface:
+
+
 
 
 
@@ -1793,8 +1793,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 32]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The following responses codes are defined for this interface:
 
    Success:  2.05 "Content" or 200 "OK" with an "application/link-
       format", "application/link-format+cbor", or "application/link-
@@ -1818,7 +1816,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the examples.
 
    The following example shows a client performing a resource lookup
-   with the example look-up location /rd-lookup/:
+   with the example resource look-up locations discovered in Figure 4:
 
    Req: GET /rd-lookup/res?rt=temperature
 
@@ -1842,6 +1840,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    <>;d="domain1",
    <>;d="domain2"
 
+   The following example shows a client performing a group lookup for
+   all groups:
 
 
 
@@ -1849,9 +1849,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 33]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The following example shows a client performing a group lookup for
-   all groups:
 
    Req: GET /rd-lookup/gp
 
@@ -1896,8 +1893,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
    <coap://[FDFD::123]:61616/res/8>;rt=sensor;ct=60
    <coap://[FDFD::123]:61616/res/9>;rt=sensor;ct=60
 
+8.  Security Considerations
 
-
+   The security considerations as described in Section 7 of [RFC5988]
+   and Section 6 of [RFC6690] apply.  The "/.well-known/core" resource
+   may be protected e.g. using DTLS when hosted on a CoAP server as
 
 
 
@@ -1906,11 +1906,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 34]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-8.  Security Considerations
-
-   The security considerations as described in Section 7 of [RFC5988]
-   and Section 6 of [RFC6690] apply.  The "/.well-known/core" resource
-   may be protected e.g. using DTLS when hosted on a CoAP server as
    described in [RFC7252].  DTLS or TLS based security SHOULD be used on
    all resource directory interfaces defined in this document.
 
@@ -1933,12 +1928,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 8.2.  Access Control
 
    Access control SHOULD be performed separately for the RD
-   registration, Lookup, and group API base paths, as different
-   endpoints may be authorized to register with an RD from those
-   authorized to lookup endpoints from the RD.  Such access control
-   SHOULD be performed in as fine-grained a level as possible.  For
-   example access control for lookups could be performed either at the
-   domain, endpoint or resource level.
+   registration, Lookup, and group API paths, as different endpoints may
+   be authorized to register with an RD from those authorized to lookup
+   endpoints from the RD.  Such access control SHOULD be performed in as
+   fine-grained a level as possible.  For example access control for
+   lookups could be performed either at the domain, endpoint or resource
+   level.
 
 8.3.  Denial of Service Attacks
 
@@ -1954,6 +1949,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
    attacks.  There is also a danger that NTP Servers could become
    implicated in denial-of-service (DoS) attacks since they run on
    unprotected UDP, there is no return routability check, and they can
+   have a large amplification factor.  The responses from the NTP server
+   were found to be 19 times larger than the request.  A Resource
+   Directory (RD) which responds to wild-card lookups is potentially
+   vulnerable if run with CoAP over UDP.  Since there is no return
+   routability check and the responses can be significantly larger than
 
 
 
@@ -1962,11 +1962,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 35]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   have a large amplification factor.  The responses from the NTP server
-   were found to be 19 times larger than the request.  A Resource
-   Directory (RD) which responds to wild-card lookups is potentially
-   vulnerable if run with CoAP over UDP.  Since there is no return
-   routability check and the responses can be significantly larger than
    requests, RDs can unknowingly become part of a DDoS amplification
    attack.
 
@@ -2000,6 +1995,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
    [RFC3986].
 
    Initial entries in this sub-registry are as follows:
+
+
+
+
+
 
 
 
@@ -2060,8 +2060,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    conclusions must be drawn on the realization of actual installation
    or naming procedures, because the example only "emphasizes" some of
    the issues that may influence the use of the RD and does not pretend
-   to be normative.  The example uses the recommended values for the
-   base resources: "/rd", "/rd-lookup", and "/rd-group".
+   to be normative.
+
 
 
 
@@ -2166,13 +2166,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
                   Table 4: Resource Directory identifiers
 
+   It is assumed that the CT knows of the RD's address, and has
+   performed URI discovery on it that gave a response like the one in
+   the Section 5.2 example.
+
    The CT inserts the endpoints of the luminaries and the sensor in the
    RD using the Context parameter (con) to specify the interface
    address:
-
-
-
-
 
 
 
@@ -2413,8 +2413,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 10.2.2.  LWM2M Register Endpoint
 
    LWM2M defines a registration interface based on the REST API,
-   described in Section 5.  The base URI path of the LWM2M Resource
-   Directory is specified to be "/rd" as recommended in Section 5.3.
+   described in Section 5.  The RD registration URI path of the LWM2M
+   Resource Directory is specified to be "/rd".
 
    LWM2M endpoints register object IDs, for example </1>, to indicate
    that a particular object type is supported, and register object
