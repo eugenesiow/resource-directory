@@ -10,6 +10,8 @@ Expires: September 27, 2017                                  SmartThings
                                                  Universitaet Bremen TZI
                                                          P. van der Stok
                                                               consultant
+                                                         C. Amsuess, Ed.
+                                             Energy Harvesting Solutions
                                                           March 26, 2017
 
 
@@ -45,8 +47,6 @@ Status of This Memo
    material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on September 27, 2017.
-
-
 
 
 
@@ -2764,9 +2764,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
 13.1.  Normative References
 
    [I-D.ietf-core-links-json]
-              Li, K., Rahman, A., and C. Bormann, "Representing CoRE
-              Formats in JSON and CBOR", draft-ietf-core-links-json-07
-              (work in progress), March 2017.
+              Li, K., Rahman, A., and C. Bormann, "Representing
+              Constrained RESTful Environments (CoRE) Link Format in
+              JSON and CBOR", draft-ietf-core-links-json-08 (work in
+              progress), April 2017.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -2791,7 +2792,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
               and D. Orchard, "URI Template", RFC 6570,
               DOI 10.17487/RFC6570, March 2012,
               <http://www.rfc-editor.org/info/rfc6570>.
-
 
 
 
@@ -2886,14 +2886,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    URI:   www.vanderstok.org
 
 
+   Christian Amsuess (editor)
+   Energy Harvesting Solutions
+   Hollandstr. 12/4
+   1020
+   Austria
 
-
-
-
-
-
-
-
+   Phone: +43-664-9790639
+   Email: c.amsuess@energyharvesting.at
 
 
 
