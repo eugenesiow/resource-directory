@@ -287,7 +287,7 @@ address {
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Resource Directory Address Option (RDAO)"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Resource Directory"/>
 <link href="#rfc.section.5.1" rel="Chapter" title="5.1 Content Formats"/>
-<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Base URI Discovery"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 URI Discovery"/>
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Registration"/>
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Simple Registration"/>
 <link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Simple publishing to Resource Directory Server"/>
@@ -427,7 +427,7 @@ address {
 <ul><li>4.1.   <a href="#rfc.section.4.1">Resource Directory Address Option (RDAO)</a></li>
 </ul><li>5.   <a href="#rfc.section.5">Resource Directory</a></li>
 <ul><li>5.1.   <a href="#rfc.section.5.1">Content Formats</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">Base URI Discovery</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">URI Discovery</a></li>
 <li>5.3.   <a href="#rfc.section.5.3">Registration</a></li>
 <ul><li>5.3.1.   <a href="#rfc.section.5.3.1">Simple Registration</a></li>
 <li>5.3.2.   <a href="#rfc.section.5.3.2">Simple publishing to Resource Directory Server</a></li>
@@ -621,9 +621,9 @@ RD Address:             IPv6 address of the RD.
 <p id="rfc.section.5.1.p.1">Resource Directory implementations using this specification MUST support the application/link-format content format (ct=40).</p>
 <p id="rfc.section.5.1.p.2">Resource Directories implementing this specification MAY support additional content formats.</p>
 <p id="rfc.section.5.1.p.3">Any additional content format supported by a Resource Directory implementing this specification MUST have an equivalent serialization in the application/link-format content format.</p>
-<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">Base URI Discovery</a></h1>
-<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the base URI information for its REST API. This section defines discovery of the RD and its base URI using the well-known interface of the CoRE Link Format <a href="#RFC6690">[RFC6690]</a>. It is however expected that RDs will also be discoverable via other methods depending on the deployment.</p>
-<p id="rfc.section.5.2.p.2">Discovery of the RD base URI is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the base URI for RD Lookup operations, and &#8220;core.gp&#8221; is used to discover the base URI for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the base URI of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">URI Discovery</a></h1>
+<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690">[RFC6690]</a>. It is however expected that RDs will also be discoverable via other methods depending on the deployment.</p>
+<p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.gp&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
 <p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
 <p id="rfc.section.5.2.p.4">HTTP does not support multicast and consequently only unicast discovery can be supported using HTTP. Links to Resource Directories MAY be registered in other Resource Directories, and well-known entry points SHOULD be provided to enable the bootstrapping of unicast discovery.</p>
 <p id="rfc.section.5.2.p.5">An RD implementation of this specification MUST support query filtering for the rt parameter as defined in <a href="#RFC6690">[RFC6690]</a>.</p>
@@ -667,7 +667,9 @@ RD Address:             IPv6 address of the RD.
   <dt>HTTP support :</dt>
   <dd style="margin-left: 8">YES (Unicast only)</dd>
 </dl>
-<p id="rfc.section.5.2.p.10">The following example shows an endpoint discovering an RD using this interface, thus learning that the base RD resource is, in this example, at /rd and that the content-format delivered by the server hosting the resource is application/link-format (ct=40).  Note that it is up to the RD to choose its base RD resource, although diagnostics and debugging is facilitated by using the base paths specified here where possible.</p>
+<p id="rfc.section.5.2.p.10">The following example shows an endpoint discovering an RD using this interface, thus learning that the RD registration resource is, in this example, at /rd, and that the content-format delivered by the server hosting the resource is application/link-format (ct=40).  Note that it is up to the RD to choose its RD resource paths.</p>
+<div id="rfc.figure.4"/>
+<div id="example-discovery"/>
 <pre>
 Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 
@@ -675,9 +677,12 @@ Res: 2.05 Content
 &lt;/rd&gt;;rt="core.rd";ct=40,
 &lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct=40,
 &lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct=40,
+&lt;/rd-lookup/gp&gt;;rt="core.rd-lookup-gp";ct=40,
+&lt;/rd-lookup/d&gt;;rt="core.rd-lookup-d";ct=40,
 &lt;/rd-group&gt;;rt="core.rd-group";ct=40
 </pre>
-<p id="rfc.section.5.2.p.11">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as a more application-specific content format (picked as 65225 in this example; this is in the experimental space, not an assigned value).  The base RD resource values /rd, /rd-lookup, and /rd-group are example values.</p>
+<p class="figure">Figure 4: Example discovery exchange</p>
+<p id="rfc.section.5.2.p.11">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as a more application-specific content format (picked as 65225 in this example; this is in the experimental space, not an assigned value).  The RD resource paths /rd, /rd-lookup, and /rd-group are example values.  This server only implements some of the interfaces described in this document.</p>
 <pre>
 Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 
@@ -698,12 +703,12 @@ Res: 2.05 Content
   <dt>Method:</dt>
   <dd style="margin-left: 8">POST</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+rd}{?ep,d,et,lt,con}</dd>
+  <dd style="margin-left: 8">{+rd}{?ep,d,et,lt,con}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>rd :=</dt>
-      <dd style="margin-left: 8">RD Base URI path (mandatory). This is the path of the RD, as obtained from discovery. The value &#8220;rd&#8221; is recommended for this variable.</dd>
+      <dd style="margin-left: 8">RD registration URI (mandatory). This is the location of the RD, as obtained from discovery.</dd>
       <dt>ep :=</dt>
       <dd style="margin-left: 8">Endpoint name (mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.</dd>
       <dt>d :=</dt>
@@ -739,7 +744,7 @@ Res: 2.05 Content
   <dt>HTTP support:</dt>
   <dd style="margin-left: 8">YES</dd>
 </dl>
-<p id="rfc.section.5.3.p.6">The following example shows an endpoint with the name &#8220;node1&#8221; registering two resources to an RD using this interface. The location &#8220;/rd&#8221; is an example value of an RD base location.</p>
+<p id="rfc.section.5.3.p.6">The following example shows an endpoint with the name &#8220;node1&#8221; registering two resources to an RD using this interface. The location &#8220;/rd&#8221; is an example RD location discovered in a request similar to <a href="#example-discovery">Figure 4</a>.</p>
 <pre>
 Req: POST coap://rd.example.com/rd?ep=node1
 Content-Format: 40
@@ -825,12 +830,12 @@ payload:
   <dt>Method:</dt>
   <dd style="margin-left: 8">POST</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+location}{?lt,con}</dd>
+  <dd style="margin-left: 8">{+location}{?lt,con}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>location :=</dt>
-      <dd style="margin-left: 8">This is the Location path returned by the RD as a result of a successful earlier registration.</dd>
+      <dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
       <dt>lt :=</dt>
       <dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included, the previous last lifetime set on a previous update or the original registration (falling back to 86400) SHOULD be used.</dd>
       <dt>con :=</dt>
@@ -896,12 +901,12 @@ Res: 2.04 Changed
   <dt>Method:</dt>
   <dd style="margin-left: 8">DELETE</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+location}</dd>
+  <dd style="margin-left: 8">{+location}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>location :=</dt>
-      <dd style="margin-left: 8">This is the Location path returned by the RD as a result of a successful earlier registration.</dd>
+      <dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
     </dl>
     <p> </p>
   </dd>
@@ -939,12 +944,12 @@ Res: 2.02 Deleted
   <dt>Method:</dt>
   <dd style="margin-left: 8">GET</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+location}{?href,rel,rt,if,ct}</dd>
+  <dd style="margin-left: 8">{+location}{?href,rel,rt,if,ct}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>location :=</dt>
-      <dd style="margin-left: 8">This is the Location path returned by the RD as a result of a successful earlier registration.</dd>
+      <dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
     </dl>
     <p> </p>
   </dd>
@@ -993,12 +998,12 @@ Payload:
   <dt>Method:</dt>
   <dd style="margin-left: 8">PATCH</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+location}{?href,rel,rt,if,ct}</dd>
+  <dd style="margin-left: 8">{+location}{?href,rel,rt,if,ct}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>location :=</dt>
-      <dd style="margin-left: 8">This is the Location path returned by the RD as a result of a successful earlier registration.</dd>
+      <dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
     </dl>
     <p> </p>
   </dd>
@@ -1110,12 +1115,12 @@ Payload:
   <dt>Method:</dt>
   <dd style="margin-left: 8">POST</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+rd-group}{?gp,d,con}</dd>
+  <dd style="margin-left: 8">{+rd-group}{?gp,d,con}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>rd-group :=</dt>
-      <dd style="margin-left: 8">RD Group Base URI path (mandatory). This is the path of the RD Group REST API. The value &#8220;rd-group&#8221; is recommended for this variable.</dd>
+      <dd style="margin-left: 8">RD Group URI (mandatory). This is the location of the RD Group REST API.</dd>
       <dt>gp :=</dt>
       <dd style="margin-left: 8">Group Name (mandatory). The name of the group to be created or replaced, unique within that domain. The maximum length of this parameter is 63 bytes.</dd>
       <dt>d :=</dt>
@@ -1147,7 +1152,7 @@ Payload:
   <dt>HTTP support:</dt>
   <dd style="margin-left: 8">YES</dd>
 </dl>
-<p id="rfc.section.6.1.p.8">The following example shows an EP registering a group with the name &#8220;lights&#8221; which has two endpoints to an RD using this interface. The base location value /rd-group is an example of an RD base location.</p>
+<p id="rfc.section.6.1.p.8">The following example shows an EP registering a group with the name &#8220;lights&#8221; which has two endpoints to an RD using this interface. The RD group path /rd-group is an example RD location discovered in a request similar to <a href="#example-discovery">Figure 4</a>.</p>
 <pre>
 Req: POST coap://rd.example.com/rd-group?gp=lights
 Content-Format: 40
@@ -1169,12 +1174,12 @@ Location: /rd-group/12
   <dt>Method:</dt>
   <dd style="margin-left: 8">DELETE</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+location}</dd>
+  <dd style="margin-left: 8">{+location}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
       <dt>location :=</dt>
-      <dd style="margin-left: 8">This is the Location path returned by the RD as a result of a successful group registration.</dd>
+      <dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful group registration.</dd>
     </dl>
     <p> </p>
   </dd>
@@ -1257,14 +1262,12 @@ Res: 2.02 Deleted
   <dt>Method:</dt>
   <dd style="margin-left: 8">GET</dd>
   <dt>URI Template:</dt>
-  <dd style="margin-left: 8">/{+rd-lookup-base}/{lookup-type}{?d,res,ep,gp,et,rt,page,count,resource-param}</dd>
+  <dd style="margin-left: 8">{+type-lookup-location}{?d,res,ep,gp,et,rt,page,count,resource-param}</dd>
   <dt>URI Template Variables:</dt>
   <dd style="margin-left: 8">
     <dl>
-      <dt>rd-lookup-base :=</dt>
-      <dd style="margin-left: 8">RD Lookup Base URI path (mandatory). This is the base path for RD Lookup requests. The recommended value for this variable is: &#8220;rd-lookup&#8221;.</dd>
-      <dt>lookup-type :=</dt>
-      <dd style="margin-left: 8">(&#8220;ep&#8221;, &#8220;res&#8221;) (mandatory), (&#8220;d&#8221;,&#8221;gp&#8221;) (optional) This variable is used to select the type of lookup to perform (endpoint, resource, domain, or group). The values are recommended defaults and MAY use other values as needed.  The supported lookup-types SHOULD be listed in .well-known/core using the specified resource types.</dd>
+      <dt>type-lookup-location :=</dt>
+      <dd style="margin-left: 8">RD Lookup URI for a given lookup type (mandatory). The address is discovered as described in <a href="#discovery">Section 5.2</a>.</dd>
       <dt>ep :=</dt>
       <dd style="margin-left: 8">Endpoint name (optional). Used for endpoint, group and resource lookups.</dd>
       <dt>d :=</dt>
@@ -1312,7 +1315,7 @@ Res: 2.02 Deleted
   <dd style="margin-left: 8">YES</dd>
 </dl>
 <p id="rfc.section.7.p.18">The examples in this section assume CoAP hosts with a default CoAP port 61616. HTTP hosts are possible and do not change the nature of the examples.</p>
-<p id="rfc.section.7.p.19">The following example shows a client performing a resource lookup with the example look-up location /rd-lookup/:</p>
+<p id="rfc.section.7.p.19">The following example shows a client performing a resource lookup with the example resource look-up locations discovered in <a href="#example-discovery">Figure 4</a>:</p>
 <pre>
 Req: GET /rd-lookup/res?rt=temperature
 
@@ -1384,7 +1387,7 @@ Res: 2.05 Content
 <p id="rfc.section.8.1.p.1">An Endpoint is determined to be unique by an RD by the Endpoint identifier parameter included during Registration, and any associated TLS or DTLS security bindings. An Endpoint MUST NOT be identified by its protocol, port or IP address as these may change over the lifetime of an Endpoint.</p>
 <p id="rfc.section.8.1.p.2">Every operation performed by an Endpoint or Client on a resource directory SHOULD be mutually authenticated using Pre-Shared Key, Raw Public Key or Certificate based security. Endpoints using a Certificate MUST include the Endpoint identifier as the Subject of the Certificate, and this identifier MUST be checked by a resource directory to match the Endpoint identifier included in the Registration message.</p>
 <h1 id="rfc.section.8.2"><a href="#rfc.section.8.2">8.2.</a> <a href="#access-control" id="access-control">Access Control</a></h1>
-<p id="rfc.section.8.2.p.1">Access control SHOULD be performed separately for the RD registration, Lookup, and group API base paths, as different endpoints may be authorized to register with an RD from those authorized to lookup endpoints from the RD. Such access control SHOULD be performed in as fine-grained a level as possible. For example access control for lookups could be performed either at the domain, endpoint or resource level.</p>
+<p id="rfc.section.8.2.p.1">Access control SHOULD be performed separately for the RD registration, Lookup, and group API paths, as different endpoints may be authorized to register with an RD from those authorized to lookup endpoints from the RD. Such access control SHOULD be performed in as fine-grained a level as possible. For example access control for lookups could be performed either at the domain, endpoint or resource level.</p>
 <h1 id="rfc.section.8.3"><a href="#rfc.section.8.3">8.3.</a> <a href="#denial-of-service-attacks" id="denial-of-service-attacks">Denial of Service Attacks</a></h1>
 <p id="rfc.section.8.3.p.1">Services that run over UDP unprotected are vulnerable to unknowingly become part of a DDoS attack as UDP does not require return routability check. Therefore, an attacker can easily spoof the source IP of the target entity and send requests to such a service which would then respond to the target entity. This can be used for large-scale DDoS attacks on the target. Especially, if the service returns a response that is order of magnitudes larger than the request, the situation becomes even worse as now the attack can be amplified. DNS servers have been widely used for DDoS amplification attacks. There is also a danger that NTP Servers could become implicated in denial-of-service (DoS) attacks since they run on unprotected UDP, there is no return routability check, and they can have a large amplification factor.  The responses from the NTP server were found to be 19 times larger than the request. A Resource Directory (RD) which responds to wild-card lookups is potentially vulnerable if run with CoAP over UDP.  Since there is no return routability check and the responses can be significantly larger than requests, RDs can unknowingly become part of a DDoS amplification attack.</p>
 <h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
@@ -1474,7 +1477,7 @@ Res: 2.05 Content
 <h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> <a href="#examples" id="examples">Examples</a></h1>
 <p id="rfc.section.10.p.1">Two examples are presented: a Lighting Installation example in <a href="#lt-ex">Section 10.1</a> and a LWM2M example in <a href="#lwm2m-ex">Section 10.2</a>.</p>
 <h1 id="rfc.section.10.1"><a href="#rfc.section.10.1">10.1.</a> <a href="#lt-ex" id="lt-ex">Lighting Installation</a></h1>
-<p id="rfc.section.10.1.p.1">This example shows a simplified lighting installation which makes use of the Resource Directory (RD) with a CoAP interface to facilitate the installation and start up of the application code in the lights and sensors. In particular, the example leads to the definition of a group and the enabling of the corresponding multicast address. No conclusions must be drawn on the realization of actual installation or naming procedures, because the example only &#8220;emphasizes&#8221; some of the issues that may influence the use of the RD and does not pretend to be normative. The example uses the recommended values for the base resources: &#8220;/rd&#8221;, &#8220;/rd-lookup&#8221;, and &#8220;/rd-group&#8221;.</p>
+<p id="rfc.section.10.1.p.1">This example shows a simplified lighting installation which makes use of the Resource Directory (RD) with a CoAP interface to facilitate the installation and start up of the application code in the lights and sensors. In particular, the example leads to the definition of a group and the enabling of the corresponding multicast address. No conclusions must be drawn on the realization of actual installation or naming procedures, because the example only &#8220;emphasizes&#8221; some of the issues that may influence the use of the RD and does not pretend to be normative.</p>
 <h1 id="rfc.section.10.1.1"><a href="#rfc.section.10.1.1">10.1.1.</a> <a href="#lt-in-ch" id="lt-in-ch">Installation Characteristics</a></h1>
 <p id="rfc.section.10.1.1.p.1">The example assumes that the installation is managed. That means that a Commissioning Tool (CT) is used to authorize the addition of nodes, name them, and name their services. The CT can be connected to the installation in many ways: the CT can be part of the installation network, connected by WiFi to the installation network, or connected via GPRS link, or other method.</p>
 <p id="rfc.section.10.1.1.p.2">It is assumed that there are two naming authorities for the installation: (1) the network manager that is responsible for the correct operation of the network and the connected interfaces, and (2) the lighting manager that is responsible for the correct functioning of networked lights and sensors.  The result is the existence of two naming schemes coming from the two managing entities.</p>
@@ -1571,7 +1574,8 @@ Res: 2.05 Content
     </tr>
   </tbody>
 </table>
-<p id="rfc.section.10.1.2.p.3">The CT inserts the endpoints of the luminaries and the sensor in the RD using the Context parameter (con) to specify the interface address:</p>
+<p id="rfc.section.10.1.2.p.3">It is assumed that the CT knows of the RD&#8217;s address, and has performed URI discovery on it that gave a response like the one in the <a href="#discovery">Section 5.2</a> example.</p>
+<p id="rfc.section.10.1.2.p.4">The CT inserts the endpoints of the luminaries and the sensor in the RD using the Context parameter (con) to specify the interface address:</p>
 <pre>
 Req: POST coap://[FDFD::ABCD:0]/rd
   ?ep=lm_R2-4-015_wndw&amp;con=coap://[FDFD::ABCD:1]&amp;d=R2-4-015
@@ -1603,8 +1607,8 @@ Payload:
 Res: 2.01 Created
 Location: /rd/4523
 </pre>
-<p id="rfc.section.10.1.2.p.4">The domain name d=R2-4-015 has been added for an efficient lookup because filtering on &#8220;ep&#8221; name is more awkward. The same domain name is communicated to the two luminaries and the presence sensor by the CT.</p>
-<p id="rfc.section.10.1.2.p.5">The group is specified in the RD. The Context parameter is set to the site-local multicast address allocated to the group.  In the POST in the example below, these two endpoints and the endpoint of the presence sensor are registered as members of the group.</p>
+<p id="rfc.section.10.1.2.p.5">The domain name d=R2-4-015 has been added for an efficient lookup because filtering on &#8220;ep&#8221; name is more awkward. The same domain name is communicated to the two luminaries and the presence sensor by the CT.</p>
+<p id="rfc.section.10.1.2.p.6">The group is specified in the RD. The Context parameter is set to the site-local multicast address allocated to the group.  In the POST in the example below, these two endpoints and the endpoint of the presence sensor are registered as members of the group.</p>
 <pre>
 Req: POST coap://[FDFD::ABCD:0]/rd-group
 ?gp=grp_R2-4-015&amp;con=coap://[FF05::1]
@@ -1616,8 +1620,8 @@ Payload:
 Res: 2.01 Created
 Location: /rd-group/501
 </pre>
-<p id="rfc.section.10.1.2.p.6">After the filling of the RD by the CT, the application in the luminaries can learn to which groups they belong, and enable their interface for the multicast address.</p>
-<p id="rfc.section.10.1.2.p.7">The luminary, knowing its domain, queries the RD for the endpoint with rt=light and d=R2-4-015. The RD returns all endpoints in the domain.</p>
+<p id="rfc.section.10.1.2.p.7">After the filling of the RD by the CT, the application in the luminaries can learn to which groups they belong, and enable their interface for the multicast address.</p>
+<p id="rfc.section.10.1.2.p.8">The luminary, knowing its domain, queries the RD for the endpoint with rt=light and d=R2-4-015. The RD returns all endpoints in the domain.</p>
 <pre>
 Req: GET coap://[FDFD::ABCD:0]/rd-lookup/ep
   ?d=R2-4-015;rt=light
@@ -1628,7 +1632,7 @@ Res: 2.05 Content
 &lt;coap://[FDFD::ABCD:2]&gt;;
    ep="lm_R2-4-015_door"
 </pre>
-<p id="rfc.section.10.1.2.p.8">Knowing its own IPv6 address, the luminary discovers its endpoint name. With the endpoint name the luminary queries the RD for all groups to which the endpoint belongs.</p>
+<p id="rfc.section.10.1.2.p.9">Knowing its own IPv6 address, the luminary discovers its endpoint name. With the endpoint name the luminary queries the RD for all groups to which the endpoint belongs.</p>
 <pre>
 Req: GET coap://[FDFD::ABCD:0]/rd-lookup/gp
   ?ep=lm_R2-4-015_wndw
@@ -1636,8 +1640,8 @@ Req: GET coap://[FDFD::ABCD:0]/rd-lookup/gp
 Res: 2.05 Content
 &lt;coap://[FF05::1]&gt;;gp="grp_R2-4-015"
 </pre>
-<p id="rfc.section.10.1.2.p.9">From the context parameter value, the luminary learns the multicast address of the multicast group.</p>
-<p id="rfc.section.10.1.2.p.10">Alternatively, the CT can communicate the multicast address directly to the luminaries by using the &#8220;coap-group&#8221; resource specified in <a href="#RFC7390">[RFC7390]</a>.</p>
+<p id="rfc.section.10.1.2.p.10">From the context parameter value, the luminary learns the multicast address of the multicast group.</p>
+<p id="rfc.section.10.1.2.p.11">Alternatively, the CT can communicate the multicast address directly to the luminaries by using the &#8220;coap-group&#8221; resource specified in <a href="#RFC7390">[RFC7390]</a>.</p>
 <pre>
 Req: POST //[FDFD::ABCD:1]/coap-group
           Content-Format: application/coap-group+json
@@ -1647,7 +1651,7 @@ Req: POST //[FDFD::ABCD:1]/coap-group
 Res: 2.01 Created
 Location-Path: /coap-group/1
 </pre>
-<p id="rfc.section.10.1.2.p.11">Dependent on the situation, only the address, &#8220;a&#8221;, or the name, &#8220;n&#8221;, is specified in the coap-group resource.</p>
+<p id="rfc.section.10.1.2.p.12">Dependent on the situation, only the address, &#8220;a&#8221;, or the name, &#8220;n&#8221;, is specified in the coap-group resource.</p>
 <h1 id="rfc.section.10.2"><a href="#rfc.section.10.2">10.2.</a> <a href="#lwm2m-ex" id="lwm2m-ex">OMA Lightweight M2M (LWM2M) Example</a></h1>
 <p id="rfc.section.10.2.p.1">This example shows how the OMA LWM2M specification makes use of Resource Directory (RD).</p>
 <p id="rfc.section.10.2.p.2">OMA LWM2M is a profile for device services based on CoAP(OMA Name Authority). LWM2M defines a simple object model and a number of abstract interfaces and operations for device management and device service enablement.</p>
@@ -1655,7 +1659,7 @@ Location-Path: /coap-group/1
 <p id="rfc.section.10.2.p.4">CoRE Resource Directory (RD) is used to provide the LWM2M Registration interface.</p>
 <p id="rfc.section.10.2.p.5">LWM2M does not provide for registration domains and does not currently use the rd-group or rd-lookup interfaces.</p>
 <p id="rfc.section.10.2.p.6">The LWM2M specification describes a set of interfaces and a resource model used between a LWM2M device and an LWM2M server. Other interfaces, proxies, and applications are currently out of scope for LWM2M.</p>
-<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD base URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the /.well-known/core resource.</p>
+<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the /.well-known/core resource.</p>
 <h1 id="rfc.section.10.2.1"><a href="#rfc.section.10.2.1">10.2.1.</a> <a href="#lwm2m-obj" id="lwm2m-obj">The LWM2M Object Model</a></h1>
 <p id="rfc.section.10.2.1.p.1">The OMA LWM2M object model is based on a simple 2 level class hierarchy consisting of Objects and Resources.</p>
 <p id="rfc.section.10.2.1.p.2">An LWM2M Resource is a REST endpoint, allowed to be a single value or an array of values of the same data type.</p>
@@ -1675,7 +1679,7 @@ Location-Path: /coap-group/1
 </pre>
 <p id="rfc.section.10.2.1.p.14">The base uri is empty, the Object ID is 1, the instance ID is 0, the resource ID is 1, and the resource instance is &#8220;undefined&#8221;. This example URI points to internal resource 1, which represents the registration lifetime configured, in instance 0 of a type 1 object (LWM2M Server Object).</p>
 <h1 id="rfc.section.10.2.2"><a href="#rfc.section.10.2.2">10.2.2.</a> <a href="#lwm2m-reg" id="lwm2m-reg">LWM2M Register Endpoint</a></h1>
-<p id="rfc.section.10.2.2.p.1">LWM2M defines a registration interface based on the REST API, described in <a href="#rd">Section 5</a>. The base URI path of the LWM2M Resource Directory is specified to be &#8220;/rd&#8221; as recommended in <a href="#registration">Section 5.3</a>.</p>
+<p id="rfc.section.10.2.2.p.1">LWM2M defines a registration interface based on the REST API, described in <a href="#rd">Section 5</a>. The RD registration URI path of the LWM2M Resource Directory is specified to be &#8220;/rd&#8221;.</p>
 <p id="rfc.section.10.2.2.p.2">LWM2M endpoints register object IDs, for example &lt;/1&gt;, to indicate that a particular object type is supported, and register object instances, for example &lt;/1/0&gt;, to indicate that a particular instance of that object type exists.</p>
 <p id="rfc.section.10.2.2.p.3">Resources within the LWM2M object instance are not registered with the RD, but may be discovered by reading the resource links from the object instance using GET with a CoAP Content-Format of application/link-format. Resources may also be read as a structured object by performing a GET to the object instance with a Content-Format of senml+json.</p>
 <p id="rfc.section.10.2.2.p.4">When an LWM2M object or instance is registered, this indicates to the LWM2M server that the object and its resources are available for management and service enablement (REST API) operations.</p>
