@@ -1722,14 +1722,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    filtering on groups would return a list of endpoints that are in the
    specified groups.
 
+   Clients that are interested in a lookup result repeatedly or
+   continuously can use mechanisms like ETag caching, resource
+   observation ([RFC7641]), or any future mechanism that might allow
+   more efficient observations of collections.  These are advertised,
+   detected and used according to their own specifications and can be
+   used with the lookup interface as with any other resource.
+
    The lookup interface is specified as follows:
-
-   Interaction:  Client -> RD
-
-   Method:  GET
-
-   URI Template:  /{+rd-lookup-base}/{lookup-
-      type}{?d,res,ep,gp,et,rt,page,count,resource-param}
 
 
 
@@ -1737,6 +1737,13 @@ Shelby, et al.         Expires September 27, 2017              [Page 31]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   Interaction:  Client -> RD
+
+   Method:  GET
+
+   URI Template:  /{+rd-lookup-base}/{lookup-
+      type}{?d,res,ep,gp,et,rt,page,count,resource-param}
 
    URI Template Variables:
 
@@ -1779,13 +1786,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
       rt :=  Resource type (optional).  Used for group, endpoint and
          resource lookups.
 
-      et :=  Endpoint type (optional).  Used for group, endpoint and
-         resource lookups.
-
-      resource-param :=  Link attribute parameters (optional).  Any link
-         target attribute as defined in Section 4.1 of [RFC6690], used
-         for resource lookups.
-
 
 
 
@@ -1793,6 +1793,13 @@ Shelby, et al.         Expires September 27, 2017              [Page 32]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+      et :=  Endpoint type (optional).  Used for group, endpoint and
+         resource lookups.
+
+      resource-param :=  Link attribute parameters (optional).  Any link
+         target attribute as defined in Section 4.1 of [RFC6690], used
+         for resource lookups.
 
       Content-Format:  application/link-format (optional)
 
@@ -1834,13 +1841,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The following example shows a client performing an endpoint type
    lookup:
 
-   Req: GET /rd-lookup/ep?et=power-node
-
-   Res: 2.05 Content
-   <coap://[FDFD::127]:61616>;ep="node5",
-   <coap://[FDFD::129]:61616>;ep="node7"
-
-   The following example shows a client performing a domain lookup:
 
 
 
@@ -1849,6 +1849,14 @@ Shelby, et al.         Expires September 27, 2017              [Page 33]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   Req: GET /rd-lookup/ep?et=power-node
+
+   Res: 2.05 Content
+   <coap://[FDFD::127]:61616>;ep="node5",
+   <coap://[FDFD::129]:61616>;ep="node7"
+
+   The following example shows a client performing a domain lookup:
 
    Req: GET /rd-lookup/d
 
@@ -1883,14 +1891,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    <>;gp="lights1"
 
    The following example shows a client performing a paginated lookup
-
-
-
-
-
-
-
-
 
 
 
@@ -2833,6 +2833,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
               DOI 10.17487/RFC7390, October 2014,
               <http://www.rfc-editor.org/info/rfc7390>.
 
+   [RFC7641]  Hartke, K., "Observing Resources in the Constrained
+              Application Protocol (CoAP)", RFC 7641,
+              DOI 10.17487/RFC7641, September 2015,
+              <http://www.rfc-editor.org/info/rfc7641>.
+
 Authors' Addresses
 
    Zach Shelby
@@ -2843,11 +2848,6 @@ Authors' Addresses
 
    Phone: +1-408-203-9434
    Email: zach.shelby@arm.com
-
-
-
-
-
 
 
 

@@ -1247,7 +1247,8 @@ Res: 2.02 Deleted
 <p id="rfc.section.7.p.10">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
 <p id="rfc.section.7.p.11">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
 <p id="rfc.section.7.p.12">RD Lookup requests MAY use any set of query parameters to match the registered attributes and relations.  In addition, this interface MAY be used with queries that specify domains, endpoints, and groups.  For example, a domain lookup filtering on groups would return a list of domains that contain the specified groups.  An endpoint lookup filtering on groups would return a list of endpoints that are in the specified groups.</p>
-<p id="rfc.section.7.p.13">The lookup interface is specified as follows:</p>
+<p id="rfc.section.7.p.13">Clients that are interested in a lookup result repeatedly or continuously can use mechanisms like ETag caching, resource observation (<a href="#RFC7641">[RFC7641]</a>), or any future mechanism that might allow more efficient observations of collections.  These are advertised, detected and used according to their own specifications and can be used with the lookup interface as with any other resource.</p>
+<p id="rfc.section.7.p.14">The lookup interface is specified as follows:</p>
 <p/>
 
 <dl>
@@ -1293,7 +1294,7 @@ Res: 2.02 Deleted
     <p> </p>
   </dd>
 </dl>
-<p id="rfc.section.7.p.15">The following responses codes are defined for this interface:</p>
+<p id="rfc.section.7.p.16">The following responses codes are defined for this interface:</p>
 <p/>
 
 <dl>
@@ -1310,15 +1311,15 @@ Res: 2.02 Deleted
   <dt>HTTP support:</dt>
   <dd style="margin-left: 8">YES</dd>
 </dl>
-<p id="rfc.section.7.p.17">The examples in this section assume CoAP hosts with a default CoAP port 61616. HTTP hosts are possible and do not change the nature of the examples.</p>
-<p id="rfc.section.7.p.18">The following example shows a client performing a resource lookup with the example look-up location /rd-lookup/:</p>
+<p id="rfc.section.7.p.18">The examples in this section assume CoAP hosts with a default CoAP port 61616. HTTP hosts are possible and do not change the nature of the examples.</p>
+<p id="rfc.section.7.p.19">The following example shows a client performing a resource lookup with the example look-up location /rd-lookup/:</p>
 <pre>
 Req: GET /rd-lookup/res?rt=temperature
 
 Res: 2.05 Content
 &lt;coap://[FDFD::123]:61616/temp&gt;;rt="temperature"
 </pre>
-<p id="rfc.section.7.p.19">The following example shows a client performing an endpoint type lookup:</p>
+<p id="rfc.section.7.p.20">The following example shows a client performing an endpoint type lookup:</p>
 <pre>
 Req: GET /rd-lookup/ep?et=power-node
 
@@ -1326,7 +1327,7 @@ Res: 2.05 Content
 &lt;coap://[FDFD::127]:61616&gt;;ep="node5",
 &lt;coap://[FDFD::129]:61616&gt;;ep="node7"
 </pre>
-<p id="rfc.section.7.p.20">The following example shows a client performing a domain lookup:</p>
+<p id="rfc.section.7.p.21">The following example shows a client performing a domain lookup:</p>
 <pre>
 Req: GET /rd-lookup/d
 
@@ -1334,7 +1335,7 @@ Res: 2.05 Content
 &lt;&gt;;d="domain1",
 &lt;&gt;;d="domain2"
 </pre>
-<p id="rfc.section.7.p.21">The following example shows a client performing a group lookup for all groups:</p>
+<p id="rfc.section.7.p.22">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
 Req: GET /rd-lookup/gp
 
@@ -1342,7 +1343,7 @@ Res: 2.05 Content
 &lt;&gt;;gp="lights1";d="example.com"
 &lt;&gt;;gp="lights2";d="ecample.com"
 </pre>
-<p id="rfc.section.7.p.22">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
+<p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
 <pre>
 Req: GET /rd-lookup/ep?gp=lights1
 
@@ -1350,14 +1351,14 @@ Res: 2.05 Content
 &lt;coap://[FDFD::123]:61616&gt;;ep="node1",
 &lt;coap://[FDFD::124]:61616&gt;;ep="node2"
 </pre>
-<p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
+<p id="rfc.section.7.p.24">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
 &lt;&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.p.24">The following example shows a client performing a paginated lookup</p>
+<p id="rfc.section.7.p.25">The following example shows a client performing a paginated lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
@@ -1979,6 +1980,12 @@ link payload - new or modified links
         <b id="RFC7390">[RFC7390]</b>
       </td>
       <td class="top"><a>Rahman, A.</a> and <a>E. Dijk</a>, "<a href="http://tools.ietf.org/html/rfc7390">Group Communication for the Constrained Application Protocol (CoAP)</a>", RFC 7390, DOI 10.17487/RFC7390, October 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7641">[RFC7641]</b>
+      </td>
+      <td class="top"><a>Hartke, K.</a>, "<a href="http://tools.ietf.org/html/rfc7641">Observing Resources in the Constrained Application Protocol (CoAP)</a>", RFC 7641, DOI 10.17487/RFC7641, September 2015.</td>
     </tr>
   </tbody>
 </table>
