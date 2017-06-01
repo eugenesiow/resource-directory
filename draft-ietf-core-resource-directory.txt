@@ -997,10 +997,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The Registration Resource may also be used to inspect the
    registration resource using GET, update the registration link
-   contents using PATCH, or cancel the registration using DELETE.
+   contents using PATCH (as introduced in [RFC8132]), or cancel the
+   registration using DELETE.
 
    These operations are described in this section.
-
 
 
 
@@ -2810,6 +2810,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
               DOI 10.17487/RFC7396, October 2014,
               <http://www.rfc-editor.org/info/rfc7396>.
 
+   [RFC8132]  van der Stok, P., Bormann, C., and A. Sehgal, "PATCH and
+              FETCH Methods for the Constrained Application Protocol
+              (CoAP)", RFC 8132, DOI 10.17487/RFC8132, April 2017,
+              <http://www.rfc-editor.org/info/rfc8132>.
+
 13.2.  Informative References
 
    [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
@@ -2840,14 +2845,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 Authors' Addresses
 
-   Zach Shelby
-   ARM
-   150 Rose Orchard
-   San Jose  95134
-   USA
 
-   Phone: +1-408-203-9434
-   Email: zach.shelby@arm.com
+
+
 
 
 
@@ -2856,6 +2856,16 @@ Authors' Addresses
 Shelby, et al.         Expires September 27, 2017              [Page 51]
 
 Internet-Draft           CoRE Resource Directory              March 2017
+
+
+   Zach Shelby
+   ARM
+   150 Rose Orchard
+   San Jose  95134
+   USA
+
+   Phone: +1-408-203-9434
+   Email: zach.shelby@arm.com
 
 
    Michael Koster
@@ -2894,16 +2904,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Phone: +43-664-9790639
    Email: c.amsuess@energyharvesting.at
-
-
-
-
-
-
-
-
-
-
 
 
 
