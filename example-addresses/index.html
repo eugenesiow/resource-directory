@@ -1,0 +1,2235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>CoRE Resource Directory</title>
+
+  
+<style type="text/css">/*<![CDATA[*/
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+
+@media screen and (min-width: 1024px) {
+  ul.toc, #rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 500px);
+    width: 300px;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #rfc\.toc {
+    top: 16px;
+  }
+  ul.toc {
+    top: 80px;
+    overflow: auto;
+  }
+
+  body {
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+}
+
+body {
+  font: 15px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 130%;
+  margin: 2.5em auto;
+  max-width: 724px;
+}
+
+.title, .filename, h1, h2, h3, h4 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: 500;
+  color: #333;
+  line-height: 100%;
+  margin: 0.8em 0 0.3em;
+}
+.title { font-size: 36px; }
+h1 { font-size: 30px; }
+h2 { font-size: 24px; }
+h3, h4 { font-size: 18px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+ul.toc li {
+  list-style: none;
+  text-indent: -2.5em;
+  padding-left: 2.5em;
+  padding-bottom: 5px;
+  margin: 0;
+}
+ul.toc ul {
+  margin: 0;
+}
+/* xml2rfc nests ul directly inside ul which messes with the style badly */
+ul.toc, ul.toc>ul, ul.toc ul>ul {
+  margin: 0 0 0 1.5em;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header {
+  width: 100%;
+}
+table.header td {
+  border: none;
+  background-color: transparent;
+  color: black;
+}
+.filename {
+  color: rgb(119, 119, 119);
+  font-size: 23px;
+  font-weight: normal;
+  height: auto;
+  line-height: 100%;
+}
+#rfc\.abstract+p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 130%;
+}
+
+samp, tt, code, pre {
+  font: 11pt consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure {
+  font-style: italic;
+  margin: 0 1.5em;
+}
+
+address {
+  margin: 10px 0 0;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn {
+  font-weight: bold;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+ol, ul, li, p {
+  padding: 0;
+  margin: 0.5em 0 0.5em 2em;
+}
+li, p {
+  margin-left: 0;
+}
+address {
+  font-style: normal;
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+  /*]]>*/</style>
+
+
+  <link href="#rfc.toc" rel="Contents">
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
+<link href="#rfc.section.2" rel="Chapter" title="2 Terminology">
+<link href="#rfc.section.3" rel="Chapter" title="3 Architecture and Use Cases">
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Use Case: Cellular M2M">
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Use Case: Home and Building Automation">
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Use Case: Link Catalogues">
+<link href="#rfc.section.4" rel="Chapter" title="4 Finding a Resource Directory">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Resource Directory Address Option (RDAO)">
+<link href="#rfc.section.5" rel="Chapter" title="5 Resource Directory">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Content Formats">
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 URI Discovery">
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 Registration">
+<link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Simple Registration">
+<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Simple publishing to Resource Directory Server">
+<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Third-party registration">
+<link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Plurality of link references in a Registration">
+<link href="#rfc.section.5.4" rel="Chapter" title="5.4 Operations on the Registration Resource">
+<link href="#rfc.section.5.4.1" rel="Chapter" title="5.4.1 Registration Update">
+<link href="#rfc.section.5.4.2" rel="Chapter" title="5.4.2 Registration Removal">
+<link href="#rfc.section.5.4.3" rel="Chapter" title="5.4.3 Read Endpoint Links">
+<link href="#rfc.section.5.4.4" rel="Chapter" title="5.4.4 Update Endpoint Links">
+<link href="#rfc.section.6" rel="Chapter" title="6 RD Groups">
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Register a Group">
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Group Removal">
+<link href="#rfc.section.7" rel="Chapter" title="7 RD Lookup">
+<link href="#rfc.section.8" rel="Chapter" title="8 Security Considerations">
+<link href="#rfc.section.8.1" rel="Chapter" title="8.1 Endpoint Identification and Authentication">
+<link href="#rfc.section.8.2" rel="Chapter" title="8.2 Access Control">
+<link href="#rfc.section.8.3" rel="Chapter" title="8.3 Denial of Service Attacks">
+<link href="#rfc.section.9" rel="Chapter" title="9 IANA Considerations">
+<link href="#rfc.section.9.1" rel="Chapter" title="9.1 Resource Types">
+<link href="#rfc.section.9.2" rel="Chapter" title="9.2 IPv6 ND Resource Directory Address Option">
+<link href="#rfc.section.9.3" rel="Chapter" title="9.3 RD Parameter Registry">
+<link href="#rfc.section.10" rel="Chapter" title="10 Examples">
+<link href="#rfc.section.10.1" rel="Chapter" title="10.1 Lighting Installation">
+<link href="#rfc.section.10.1.1" rel="Chapter" title="10.1.1 Installation Characteristics">
+<link href="#rfc.section.10.1.2" rel="Chapter" title="10.1.2 RD entries">
+<link href="#rfc.section.10.2" rel="Chapter" title="10.2 OMA Lightweight M2M (LWM2M) Example">
+<link href="#rfc.section.10.2.1" rel="Chapter" title="10.2.1 The LWM2M Object Model">
+<link href="#rfc.section.10.2.2" rel="Chapter" title="10.2.2 LWM2M Register Endpoint">
+<link href="#rfc.section.10.2.3" rel="Chapter" title="10.2.3 LWM2M Update Endpoint Registration">
+<link href="#rfc.section.10.2.4" rel="Chapter" title="10.2.4 LWM2M De-Register Endpoint">
+<link href="#rfc.section.11" rel="Chapter" title="11 Acknowledgments">
+<link href="#rfc.section.12" rel="Chapter" title="12 Changelog">
+<link href="#rfc.references" rel="Chapter" title="13 References">
+<link href="#rfc.references.1" rel="Chapter" title="13.1 Normative References">
+<link href="#rfc.references.2" rel="Chapter" title="13.2 Informative References">
+<link href="#rfc.authors" rel="Chapter">
+
+
+  <meta name="generator" content="xml2rfc version 2.6.1 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Shelby, Z., Koster, M., Bormann, C., van der Stok, P., and C. Ams&#252;ss, Ed." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-resource-directory-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-3-26" />
+  <meta name="dct.abstract" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
+  <meta name="description" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+<td class="left">CoRE</td>
+<td class="right">Z. Shelby</td>
+</tr>
+<tr>
+<td class="left">Internet-Draft</td>
+<td class="right">ARM</td>
+</tr>
+<tr>
+<td class="left">Intended status: Standards Track</td>
+<td class="right">M. Koster</td>
+</tr>
+<tr>
+<td class="left">Expires: September 27, 2017</td>
+<td class="right">SmartThings</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">C. Bormann</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">Universitaet Bremen TZI</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">P. van der Stok</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">consultant</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">C. Ams&#252;ss, Ed.</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">Energy Harvesting Solutions</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">March 26, 2017</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">CoRE Resource Directory<br />
+  <span class="filename">draft-ietf-core-resource-directory-latest</span></p>
+  
+  <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+<p>In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined.</p>
+<h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on September 27, 2017.</p>
+<h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a>
+</li>
+<li>2.   <a href="#rfc.section.2">Terminology</a>
+</li>
+<li>3.   <a href="#rfc.section.3">Architecture and Use Cases</a>
+</li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Use Case: Cellular M2M</a>
+</li>
+<li>3.2.   <a href="#rfc.section.3.2">Use Case: Home and Building Automation</a>
+</li>
+<li>3.3.   <a href="#rfc.section.3.3">Use Case: Link Catalogues</a>
+</li>
+</ul><li>4.   <a href="#rfc.section.4">Finding a Resource Directory</a>
+</li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Resource Directory Address Option (RDAO)</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">Resource Directory</a>
+</li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Content Formats</a>
+</li>
+<li>5.2.   <a href="#rfc.section.5.2">URI Discovery</a>
+</li>
+<li>5.3.   <a href="#rfc.section.5.3">Registration</a>
+</li>
+<ul><li>5.3.1.   <a href="#rfc.section.5.3.1">Simple Registration</a>
+</li>
+<li>5.3.2.   <a href="#rfc.section.5.3.2">Simple publishing to Resource Directory Server</a>
+</li>
+<li>5.3.3.   <a href="#rfc.section.5.3.3">Third-party registration</a>
+</li>
+<li>5.3.4.   <a href="#rfc.section.5.3.4">Plurality of link references in a Registration</a>
+</li>
+</ul><li>5.4.   <a href="#rfc.section.5.4">Operations on the Registration Resource</a>
+</li>
+<ul><li>5.4.1.   <a href="#rfc.section.5.4.1">Registration Update</a>
+</li>
+<li>5.4.2.   <a href="#rfc.section.5.4.2">Registration Removal</a>
+</li>
+<li>5.4.3.   <a href="#rfc.section.5.4.3">Read Endpoint Links</a>
+</li>
+<li>5.4.4.   <a href="#rfc.section.5.4.4">Update Endpoint Links</a>
+</li>
+</ul></ul><li>6.   <a href="#rfc.section.6">RD Groups</a>
+</li>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Register a Group</a>
+</li>
+<li>6.2.   <a href="#rfc.section.6.2">Group Removal</a>
+</li>
+</ul><li>7.   <a href="#rfc.section.7">RD Lookup</a>
+</li>
+<li>8.   <a href="#rfc.section.8">Security Considerations</a>
+</li>
+<ul><li>8.1.   <a href="#rfc.section.8.1">Endpoint Identification and Authentication</a>
+</li>
+<li>8.2.   <a href="#rfc.section.8.2">Access Control</a>
+</li>
+<li>8.3.   <a href="#rfc.section.8.3">Denial of Service Attacks</a>
+</li>
+</ul><li>9.   <a href="#rfc.section.9">IANA Considerations</a>
+</li>
+<ul><li>9.1.   <a href="#rfc.section.9.1">Resource Types</a>
+</li>
+<li>9.2.   <a href="#rfc.section.9.2">IPv6 ND Resource Directory Address Option</a>
+</li>
+<li>9.3.   <a href="#rfc.section.9.3">RD Parameter Registry</a>
+</li>
+</ul><li>10.   <a href="#rfc.section.10">Examples</a>
+</li>
+<ul><li>10.1.   <a href="#rfc.section.10.1">Lighting Installation</a>
+</li>
+<ul><li>10.1.1.   <a href="#rfc.section.10.1.1">Installation Characteristics</a>
+</li>
+<li>10.1.2.   <a href="#rfc.section.10.1.2">RD entries</a>
+</li>
+</ul><li>10.2.   <a href="#rfc.section.10.2">OMA Lightweight M2M (LWM2M) Example</a>
+</li>
+<ul><li>10.2.1.   <a href="#rfc.section.10.2.1">The LWM2M Object Model</a>
+</li>
+<li>10.2.2.   <a href="#rfc.section.10.2.2">LWM2M Register Endpoint</a>
+</li>
+<li>10.2.3.   <a href="#rfc.section.10.2.3">LWM2M Update Endpoint Registration</a>
+</li>
+<li>10.2.4.   <a href="#rfc.section.10.2.4">LWM2M De-Register Endpoint</a>
+</li>
+</ul></ul><li>11.   <a href="#rfc.section.11">Acknowledgments</a>
+</li>
+<li>12.   <a href="#rfc.section.12">Changelog</a>
+</li>
+<li>13.   <a href="#rfc.references">References</a>
+</li>
+<ul><li>13.1.   <a href="#rfc.references.1">Normative References</a>
+</li>
+<li>13.2.   <a href="#rfc.references.2">Informative References</a>
+</li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a>
+</li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1">
+<a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a>
+</h1>
+<p id="rfc.section.1.p.1">The work on Constrained RESTful Environments (CoRE) aims at realizing the REST architecture in a suitable form for the most constrained nodes (e.g., 8-bit microcontrollers with limited RAM and ROM) and networks (e.g. 6LoWPAN).  CoRE is aimed at machine-to-machine (M2M) applications such as smart energy and building automation.</p>
+<p id="rfc.section.1.p.2">The discovery of resources offered by a constrained server is very important in machine-to-machine applications where there are no humans in the loop and static interfaces result in fragility. The discovery of resources provided by an HTTP Web Server is typically called Web Linking <a href="#RFC5988" class="xref">[RFC5988]</a>. The use of Web Linking for the description and discovery of resources hosted by constrained web servers is specified by the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. However, <a href="#RFC6690" class="xref">[RFC6690]</a> only describes how to discover resources from the web server that hosts them by requesting <samp>/.well-known/core</samp>. In many M2M scenarios, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources.</p>
+<p id="rfc.section.1.p.3">This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with a Resource Directory are defined. Although the examples in this document show the use of these interfaces with CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>, they can be applied in an equivalent manner to HTTP <a href="#RFC7230" class="xref">[RFC7230]</a>.</p>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> <a href="#terminology" id="terminology">Terminology</a>
+</h1>
+<p id="rfc.section.2.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;NOT RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119" class="xref">[RFC2119]</a>. The term &#8220;byte&#8221; is used in its now customary sense as a synonym for &#8220;octet&#8221;.</p>
+<p id="rfc.section.2.p.2">This specification requires readers to be familiar with all the terms and concepts that are discussed in <a href="#RFC5988" class="xref">[RFC5988]</a> and <a href="#RFC6690" class="xref">[RFC6690]</a>. Readers should also be familiar with the terms and concepts discussed in <a href="#RFC7252" class="xref">[RFC7252]</a>.  To describe the REST interfaces defined in this specification, the URI Template format is used <a href="#RFC6570" class="xref">[RFC6570]</a>.</p>
+<p id="rfc.section.2.p.3">This specification makes use of the following additional terminology:</p>
+<p></p>
+
+<dl>
+<dt>Resource Directory</dt>
+<dd style="margin-left: 8">
+<br> A web entity that stores information about web resources and implements the REST interfaces defined in this specification for registration and lookup of those resources.</dd>
+<dt>Domain</dt>
+<dd style="margin-left: 8">
+<br> In the context of a Resource Directory, a domain is a logical grouping of endpoints. This specification assumes that the list of Domains supported by an RD is pre-configured by that RD. When a domain is exported to DNS, the domain value equates to the DNS domain name.</dd>
+<dt>Group</dt>
+<dd style="margin-left: 8">
+<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain are unique.</dd>
+<dt>Endpoint</dt>
+<dd style="margin-left: 8">
+<br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and is unique within the associated domain of the registration.</dd>
+<dt>Context</dt>
+<dd style="margin-left: 8">
+<br> When registering links to a Resource Directory, the Context refers to the scheme, address, port, and base path for all the links registered on behalf of an endpoint, of the general form scheme://host:port/path/ where the client may explicitly set the scheme and host, and may supply the port and path as optional parameters. When the context of a registration is explicitly set, the URI resolution rules in <a href="#RFC3986" class="xref">[RFC3986]</a> MUST be applied.</dd>
+<dt>Commissioning Tool</dt>
+<dd style="margin-left: 8">
+<br> Commissioning Tool (CT) is a device that assists during the installation of the network by assigning values to parameters, naming endpoints and groups, or adapting the installation to the needs of the applications.</dd>
+<dt>RDAO</dt>
+<dd style="margin-left: 8">
+<br> Resource Directory Address Option.</dd>
+</dl>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> <a href="#arch" id="arch">Architecture and Use Cases</a>
+</h1>
+<p id="rfc.section.3.p.1">The resource directory architecture is illustrated in <a href="#fig-arch" class="xref">Figure 1</a>. A Resource Directory (RD) is used as a repository for Web Links <a href="#RFC5988" class="xref">[RFC5988]</a> about resources hosted on other web servers, which are called endpoints (EP).  An endpoint is a web server associated with a scheme, IP address and port (called Context), thus a physical node may host one or more endpoints. The RD implements a set of REST interfaces for endpoints to register and maintain sets of Web Links (called resource directory registration entries), and for clients to lookup resources from the RD or maintain groups. Endpoints themselves can also act as clients. An RD can be logically segmented by the use of Domains.  The domain an endpoint is associated with can be defined by the RD or configured by an outside entity. This information hierarchy is shown in <a href="#fig-hierarchy" class="xref">Figure 2</a>.</p>
+<p id="rfc.section.3.p.2">A mechanism to discover an RD using CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a> is defined.</p>
+<p id="rfc.section.3.p.3">Endpoints proactively register and maintain resource directory registration entries on the RD, which are soft state and need to be periodically refreshed.</p>
+<p id="rfc.section.3.p.4">An endpoint is provided with interfaces to register, update and remove a resource directory registration entry. It is also possible for an RD to fetch Web Links from endpoints and add them as resource directory entries.</p>
+<p id="rfc.section.3.p.5">At the first registration of a set of entries, a &#8220;registration resource&#8221; is created, the location of which is returned to the registering endpoint. The registering endpoint uses this registration resource to manage the contents of the registration entry.</p>
+<p id="rfc.section.3.p.6">A lookup interface for discovering any of the Web Links held in the RD is provided using the CoRE Link Format.</p>
+<div id="rfc.figure.1"></div>
+<div id="fig-arch"></div>
+<pre>
+             Registration     Lookup, Group
+              Interface        Interfaces
+  +----+          |                 |
+  | EP |----      |                 |
+  +----+    ----  |                 |
+                --|-    +------+    |
+  +----+          | ----|      |    |     +--------+
+  | EP | ---------|-----|  RD  |----|-----| Client |
+  +----+          | ----|      |    |     +--------+
+                --|-    +------+    |
+  +----+    ----  |                 |
+  | EP |----      |                 |
+  +----+
+
+</pre>
+<p class="figure">Figure 1: The resource directory architecture.</p>
+<div id="rfc.figure.2"></div>
+<div id="fig-hierarchy"></div>
+<pre>
+               +------------+
+               |   Domain   | &lt;-- Name
+               +------------+
+                    |     |
+                    |   +------------+
+                    |   |   Group    | &lt;-- Name, Scheme, IP, Port
+                    |   +------------+
+                    |     |
+               +------------+
+               |  Endpoint  |  &lt;-- Name, Scheme, IP, Port
+               +------------+
+                     |
+                     |
+               +------------+
+               |  Resource  |  &lt;-- Target, Parameters
+               +------------+
+
+</pre>
+<p class="figure">Figure 2: The resource directory information hierarchy.</p>
+<h1 id="rfc.section.3.1">
+<a href="#rfc.section.3.1">3.1.</a> <a href="#cellular" id="cellular">Use Case: Cellular M2M</a>
+</h1>
+<p id="rfc.section.3.1.p.1">Over the last few years, mobile operators around the world have focused on development of M2M solutions in order to expand the business to the new type of users: machines. The machines are connected directly to a mobile network using an appropriate embedded air interface (GSM/GPRS, WCDMA, LTE) or via a gateway providing short and wide range wireless interfaces. From the system design point of view, the ambition is to design horizontal solutions that can enable utilization of machines in different applications depending on their current availability and capabilities as well as application requirements, thus avoiding silo like solutions. One of the crucial enablers of such design is the ability to discover resources (machines &#8212; endpoints) capable of providing required information at a given time or acting on instructions from the end users.</p>
+<p id="rfc.section.3.1.p.2">In a typical scenario, during a boot-up procedure (and periodically afterwards), the machines (endpoints) register with a Resource Directory (for example EPs installed on vehicles enabling tracking of their position for fleet management purposes and monitoring environment parameters) hosted by the mobile operator or somewhere else in the network, periodically a description of its own capabilities.  Due to the usual network configuration of mobile networks, the EPs attached to the mobile network may not always be efficiently reachable. Therefore, a remote server is usually used to provide proxy access to the EPs. The address of each (proxy) endpoint on this server is included in the resource description stored in the RD. The users, for example mobile applications for environment monitoring, contact the RD, look up the endpoints capable of providing information about the environment using appropriate set of link parameters, obtain information on how to contact them (URLs of the proxy server) and then initiate interaction to obtain information that is finally processed, displayed on the screen and usually stored in a database. Similarly, fleet management systems provide the appropriate link parameters to the RD to look up for EPs deployed on the vehicles the application is responsible for.</p>
+<h1 id="rfc.section.3.2">
+<a href="#rfc.section.3.2">3.2.</a> <a href="#automation" id="automation">Use Case: Home and Building Automation</a>
+</h1>
+<p id="rfc.section.3.2.p.1">Home and commercial building automation systems can benefit from the use of M2M web services.  The discovery requirements of these applications are demanding. Home automation usually relies on run-time discovery to commission the system, whereas in building automation a combination of professional commissioning and run-time discovery is used. Both home and building automation involve peer-to-peer interactions between endpoints, and involve battery-powered sleeping devices.</p>
+<h1 id="rfc.section.3.3">
+<a href="#rfc.section.3.3">3.3.</a> <a href="#usecase-catalogues" id="usecase-catalogues">Use Case: Link Catalogues</a>
+</h1>
+<p id="rfc.section.3.3.p.1">Resources may be shared through data brokers that have no knowledge beforehand of who is going to consume the data. Resource Directory can be used to hold links about resources and services hosted anywhere to make them discoverable by a general class of applications.</p>
+<p id="rfc.section.3.3.p.2">For example, environmental and weather sensors that generate data for public consumption may provide the data to an intermediary server, or broker. Sensor data are published to the intermediary upon changes or at regular intervals.  Descriptions of the sensors that resolve to links to sensor data may be published to a Resource Directory. Applications wishing to consume the data can use RD Lookup to discover and resolve links to the desired resources and endpoints. The Resource Directory service need not be coupled with the data intermediary service. Mapping of Resource Directories to data intermediaries may be many-to-many.</p>
+<p id="rfc.section.3.3.p.3">Metadata in web link formats like <a href="#RFC6690" class="xref">[RFC6690]</a> are supplied by Resource Directories, which may be internally stored as  triples, or relation/attribute pairs providing metadata about resource links. External catalogs that are represented in other formats may be converted to common web linking formats for storage and access by Resource Directories. Since it is common practice for these to be URN encoded, simple and lossless structural transforms should generally be sufficient to store external metadata in Resource Directories.</p>
+<p id="rfc.section.3.3.p.4">The additional features of Resource Directory allow domains to be defined to enable access to a particular set of resources from particular applications.  This provides isolation and protection of sensitive data when needed. Resource groups may defined to allow batched reads from multiple resources.</p>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#simple_finding" id="simple_finding">Finding a Resource Directory</a>
+</h1>
+<p id="rfc.section.4.p.1">Several mechanisms can be employed for discovering the RD, including assuming a default location (e.g. on an Edge Router in a LoWPAN), assigning an anycast address to the RD, using DHCP, or discovering the RD using .well-known/core and hyperlinks as specified in CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>.  Endpoints that want to contact a Resource Directory can obtain candidate IP addresses for such servers in a number of ways.</p>
+<p id="rfc.section.4.p.2">In a 6LoWPAN, good candidates can be taken from:</p>
+<p></p>
+
+<ul>
+<li>specific static configuration (e.g., anycast addresses), if any,</li>
+<li>the ABRO option of 6LoWPAN-ND <a href="#RFC6775" class="xref">[RFC6775]</a>,</li>
+<li>other ND options that happen to point to servers (such as RDNSS),</li>
+<li>DHCPv6 options that might be defined later.</li>
+<li>The IPv6 Neighbor Discovery Resource Directory Address Option described in <a href="#rdao" class="xref">Section 4.1</a>
+</li>
+</ul>
+<p id="rfc.section.4.p.4">In networks with more inexpensive use of multicast, the candidate IP address may be a well-known multicast address, i.e. directory servers are found by simply sending GET requests to that well-known multicast address (see <a href="#discovery" class="xref">Section 5.2</a>).</p>
+<p id="rfc.section.4.p.5">Constrained nodes configured in large batches may be configured for an anycast address for the RD.  Each target network environment in which some of these preconfigured nodes are to be brought up is then configured with a route for this anycast address that leads to an RD that is appropriate for the environment.</p>
+<p id="rfc.section.4.p.6">As some of these sources are just (more or less educated) guesses, endpoints MUST make use of any error messages to very strictly rate-limit requests to candidate IP addresses that don&#8217;t work out.  For example, an ICMP Destination Unreachable message (and, in particular, the port unreachable code for this message) may indicate the lack of a CoAP server on the candidate host, or a CoAP error response code such as 4.05 &#8220;Method Not Allowed&#8221; may indicate unwillingness of a CoAP server to act as a directory server.</p>
+<h1 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#rdao" id="rdao">Resource Directory Address Option (RDAO)</a>
+</h1>
+<p id="rfc.section.4.1.p.1">The Resource Directory Option (RDAO) using IPv6 neighbor Discovery (ND) carries information about the address of the Resource Directory (RD). This information is needed when endpoints cannot discover the Resource Directory with link-local multicast address because the endpoint and the RD are separated by a border Router (6LBR). In many circumstances the availability of DHCP cannot be guaranteed either during commissioning of the network. The presence and the use of the RD is essential during commissioning.</p>
+<p id="rfc.section.4.1.p.2">It is possible to send multiple RDAO options in one message, indicating as many resource directory addresses.</p>
+<p id="rfc.section.4.1.p.3">The lifetime 0x0 means that the RD address is invalid and to be removed.</p>
+<p id="rfc.section.4.1.p.4">The RDAO format is:</p>
+<div id="rfc.figure.3"></div>
+<div id="fig-rdao"></div>
+<pre>
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Type      |  Length = 3   |       Valid Lifetime          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Reserved                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                          RD Address                           +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+Fields:
+
+Type:                   38
+
+Length:                 8-bit unsigned integer.  The length of
+                        the option in units of 8 bytes.
+                        Always 3.
+
+Valid Lifetime:         16-bit unsigned integer.  The length of
+                        time in units of 60 seconds (relative to
+                        the time the packet is received) that
+                        this Resource Directory address is valid.
+                        A value of all zero bits (0x0) indicates
+                        that this Resource Directory address
+                        is not valid anymore.
+
+Reserved:               This field is unused.  It MUST be
+                        initialized to zero by the sender and
+                        MUST be ignored by the receiver.
+
+RD Address:             IPv6 address of the RD.
+</pre>
+<p class="figure">Figure 3: Resource Directory Address Option</p>
+<h1 id="rfc.section.5">
+<a href="#rfc.section.5">5.</a> <a href="#rd" id="rd">Resource Directory</a>
+</h1>
+<p id="rfc.section.5.p.1">This section defines the required set of REST interfaces between a Resource Directory (RD) and endpoints. Although the examples throughout this section assume the use of CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>, these REST interfaces can also be realized using HTTP <a href="#RFC7230" class="xref">[RFC7230]</a>.  In all definitions in this section, both CoAP response codes (with dot notation) and HTTP response codes (without dot notation) are shown. An RD implementing this specification MUST support the discovery, registration, update, lookup, and removal interfaces defined in this section.</p>
+<h1 id="rfc.section.5.1">
+<a href="#rfc.section.5.1">5.1.</a> <a href="#content-formats" id="content-formats">Content Formats</a>
+</h1>
+<p id="rfc.section.5.1.p.1">Resource Directory implementations using this specification MUST support the application/link-format content format (ct=40).</p>
+<p id="rfc.section.5.1.p.2">Resource Directories implementing this specification MAY support additional content formats.</p>
+<p id="rfc.section.5.1.p.3">Any additional content format supported by a Resource Directory implementing this specification MUST have an equivalent serialization in the application/link-format content format.</p>
+<h1 id="rfc.section.5.2">
+<a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">URI Discovery</a>
+</h1>
+<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. It is however expected that RDs will also be discoverable via other methods depending on the deployment.</p>
+<p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690" class="xref">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.gp&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
+<p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
+<p id="rfc.section.5.2.p.4">HTTP does not support multicast and consequently only unicast discovery can be supported using HTTP. Links to Resource Directories MAY be registered in other Resource Directories, and well-known entry points SHOULD be provided to enable the bootstrapping of unicast discovery.</p>
+<p id="rfc.section.5.2.p.5">An RD implementation of this specification MUST support query filtering for the rt parameter as defined in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.5.2.p.6">The discovery request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">EP -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">GET</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">/.well-known/core{?rt}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>rt :=</dt>
+<dd style="margin-left: 8">Resource Type (optional). MAY contain one of the values &#8220;core.rd&#8221;, &#8220;core.rd-lookup*&#8221;, &#8220;core.rd-lookup-d&#8221;, &#8220;core.rd-lookup-res&#8221;, &#8220;core.rd-lookup-ep&#8221;, &#8220;core.rd-lookup-gp&#8221;, &#8220;core.rd-group&#8221; or &#8220;core.rd*&#8221;</dd>
+</dl>
+<p> </p>
+</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format (if any)</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+json (if any)</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+cbor (if any)</dd>
+</dl>
+<p id="rfc.section.5.2.p.8">The following response codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; with an application/link-format, application/link-format+json, or application/link-format+cbor payload containing one or more matching entries for the RD resource.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221; is returned in case no matching entry is found for a unicast request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221; is returned in case of a malformed request for a unicast request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">No error response to a multicast request.</dd>
+<dt>HTTP support :</dt>
+<dd style="margin-left: 8">YES (Unicast only)</dd>
+</dl>
+<p id="rfc.section.5.2.p.10">The following example shows an endpoint discovering an RD using this interface, thus learning that the RD registration resource is, in this example, at /rd, and that the content-format delivered by the server hosting the resource is application/link-format (ct=40).  Note that it is up to the RD to choose its RD resource paths.</p>
+<div id="rfc.figure.4"></div>
+<div id="example-discovery"></div>
+<pre>
+Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
+
+Res: 2.05 Content
+&lt;/rd&gt;;rt="core.rd";ct=40,
+&lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct=40,
+&lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct=40,
+&lt;/rd-lookup/gp&gt;;rt="core.rd-lookup-gp";ct=40,
+&lt;/rd-lookup/d&gt;;rt="core.rd-lookup-d";ct=40,
+&lt;/rd-group&gt;;rt="core.rd-group";ct=40
+</pre>
+<p class="figure">Figure 4: Example discovery exchange</p>
+<p id="rfc.section.5.2.p.11">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252" class="xref">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as a more application-specific content format (picked as 65225 in this example; this is in the experimental space, not an assigned value).  The RD resource paths /rd, /rd-lookup, and /rd-group are example values.  This server only implements some of the interfaces described in this document.</p>
+<pre>
+Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
+
+Res: 2.05 Content
+&lt;/rd&gt;;rt="core.rd";ct="40 65225",
+&lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct="40 65225",
+&lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct="40 65225",
+&lt;/rd-group&gt;;rt="core.rd-group";ct="40 65225"
+</pre>
+<h1 id="rfc.section.5.3">
+<a href="#rfc.section.5.3">5.3.</a> <a href="#registration" id="registration">Registration</a>
+</h1>
+<p id="rfc.section.5.3.p.1">After discovering the location of an RD, an endpoint MAY register its resources using the registration interface. This interface accepts a POST from an endpoint containing the list of resources to be added to the directory as the message payload in the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>, JSON CoRE Link Format (application/link-format+json), or CBOR CoRE Link Format (application/link-format+cbor)  <a href="#I-D.ietf-core-links-json" class="xref">[I-D.ietf-core-links-json]</a>, along with query parameters indicating the name of the endpoint, and optionally its domain and the lifetime of the registration.  It is expected that other specifications will define further parameters (see <a href="#iana-registry" class="xref">Section 9.3</a>). The RD then creates a new registration resource in the RD and returns its location. An endpoint MUST use that location when refreshing registrations using this interface. Endpoint resources in the RD are kept active for the period indicated by the lifetime parameter. The endpoint is responsible for refreshing the entry within this period using either the registration or update interface. The registration interface MUST be implemented to be idempotent, so that registering twice with the same endpoint parameters ep and d does not create multiple RD entries.  A new registration may be created at any time to supersede an existing registration, replacing the registration parameters and links.</p>
+<p id="rfc.section.5.3.p.2">The registration request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">EP -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">POST</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+rd}{?ep,d,et,lt,con}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>rd :=</dt>
+<dd style="margin-left: 8">RD registration URI (mandatory). This is the location of the RD, as obtained from discovery.</dd>
+<dt>ep :=</dt>
+<dd style="margin-left: 8">Endpoint name (mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.</dd>
+<dt>d :=</dt>
+<dd style="margin-left: 8">Domain (optional). The domain to which this endpoint belongs. The maximum length of this parameter is 63 bytes. When this parameter is elided, the RD MAY associate the endpoint with a configured default domain.</dd>
+<dt>et :=</dt>
+<dd style="margin-left: 8">Endpoint Type (optional). The semantic type of the endpoint. This parameter SHOULD be less than 63 bytes.</dd>
+<dt>lt :=</dt>
+<dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included in the initial registration, a default value of 86400 (24 hours) SHOULD be assumed. If the lt parameter is not included in a registration refresh  or update operation, the most recently supplied value SHALL be re-used.</dd>
+<dt>con :=</dt>
+<dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address, port and path at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.  If the endpoint uses an ephemeral port to register with, it MUST include the con: parameter in the registration to provide a valid network path.  If the endpoint which is located behind a NAT gateway is registering with a Resource Directory which is on the network service side of the NAT gateway, the endpoint MUST use a persistent port for the outgoing registration in order to provide the NAT gateway with a valid network address for replies and incoming requests.</dd>
+</dl>
+<p> </p>
+</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+json</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+cbor</dd>
+</dl>
+<p id="rfc.section.5.3.p.4">The following response codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.01 &#8220;Created&#8221; or 201 &#8220;Created&#8221;. The Location header option MUST be included in the response when a new registration resource is created. This Location MUST be a stable identifier generated by the RD as it is used for all subsequent operations on this registration resource. The registration resource location thus returned is for the purpose of updating the lifetime of the registration and for maintaining the content of the registered links, including updating and deleting links.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+<dt>HTTP support:</dt>
+<dd style="margin-left: 8">YES</dd>
+</dl>
+<p id="rfc.section.5.3.p.6">The following example shows an endpoint with the name &#8220;node1&#8221; registering two resources to an RD using this interface. The location &#8220;/rd&#8221; is an example RD location discovered in a request similar to <a href="#example-discovery" class="xref">Figure 4</a>.</p>
+<pre>
+Req: POST coap://rd.example.com/rd?ep=node1
+Content-Format: 40
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
+
+Res: 2.01 Created
+Location: /rd/4521
+</pre>
+<p id="rfc.section.5.3.p.7">A Resource Directory may optionally support HTTP. Here is an example of the same registration operation above, when done using HTTP.</p>
+<pre>
+Req: POST /rd?ep=node1&amp;con=http://[2001:db8:1::1] HTTP/1.1
+Host : example.com
+Content-Type: application/link-format
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
+
+Res: 201 Created
+Location: /rd/4521
+</pre>
+<h1 id="rfc.section.5.3.1">
+<a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#simple" id="simple">Simple Registration</a>
+</h1>
+<p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
+<p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
+<p id="rfc.section.5.3.1.p.4">An endpoint can send (a selection of) hosted resources to a directory server for publication as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
+<p id="rfc.section.5.3.1.p.5">The directory server integrates the information it received this way into its resource directory.  It MAY make the information available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
+<h1 id="rfc.section.5.3.2">
+<a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
+</h1>
+<p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable occasionally sends a POST request to the <samp>/.well-known/core</samp> URI of any candidate directory server that it finds. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
+<p id="rfc.section.5.3.2.p.2">The endpoint MUST include the endpoint name and MAY include the registration parameters d, lt, and et, in the POST request as per <a href="#registration" class="xref">Section 5.3</a>.</p>
+<p id="rfc.section.5.3.2.p.3">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
+<pre>
+Req:(to RD server from [2001:db8:2::1])
+POST coap://rd.example.com/.well-known/core?lt=6000;ep=node1
+
+Content-Format: 40
+
+payload:
+
+(empty payload)
+
+Res: 2.04 Changed
+
+(later)
+
+Req: (from RD server to [2001:db8:2::1])
+GET coap://[2001:db8:2::1]/.well-known/core
+
+Accept: 40
+
+Res: 2.05 Content
+
+payload:
+
+&lt;/sen/temp&gt;
+</pre>
+<h1 id="rfc.section.5.3.3">
+<a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a>
+</h1>
+<p id="rfc.section.5.3.3.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
+<p id="rfc.section.5.3.3.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration" class="xref">Section 5.3</a>.</p>
+<h1 id="rfc.section.5.3.4">
+<a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#link-plurality" id="link-plurality">Plurality of link references in a Registration</a>
+</h1>
+<p id="rfc.section.5.3.4.p.1">Plurality of link references within a Registration (registration resource) is an indication of some error condition and should not be allowed.</p>
+<p id="rfc.section.5.3.4.p.2">Plurality of link references exists if, and only if, two or more links in a Registration contain identical context, target, and relation values. This condition would be likely to arise if there were multiple co-ordinators or configuration tools, each with a different set of configuration values for the same resource.</p>
+<p id="rfc.section.5.3.4.p.3">A Resource Directory SHOULD reject a registration, or an operation on a registration, which would result in a plurality of link references within the the context of the registration. There is no requirement in this document for a resource directory to check for plurality of reference between different registrations. Resource Directory operations which are rejected due to reference plurality SHOULD be returned the &#8220;Conflict&#8221; code, indicating that there is someting wrong with the request.</p>
+<h1 id="rfc.section.5.4">
+<a href="#rfc.section.5.4">5.4.</a> <a href="#operations-on-the-registration-resource" id="operations-on-the-registration-resource">Operations on the Registration Resource</a>
+</h1>
+<p id="rfc.section.5.4.p.1">After the initial registration, an endpoint should retain the returned location of the Registration Resource for further operations, including refreshing the registration in order to extend the lifetime and &#8220;keep-alive&#8221; the registration. If the lifetime of the registration expires, the RD SHOULD NOT respond to discovery queries with information from the endpoint. The RD SHOULD continue to provide access to the Registration Resource after a registration time-out occurs in order to enable the registering endpoint to eventually refresh the registration. The RD MAY eventually remove the registration resource for the purpose of resource recovery and garbage collection. If the Registration Resource is removed, the endpoint will need to re-register.</p>
+<p id="rfc.section.5.4.p.2">The Registration Resource may also be used to inspect the registration resource using GET, update the registration link contents using PATCH (as introduced in <a href="#RFC8132" class="xref">[RFC8132]</a>), or cancel the registration using DELETE.</p>
+<p id="rfc.section.5.4.p.3">These operations are described in this section.</p>
+<p id="rfc.section.5.4.p.4">In accordance with <a href="#link-plurality" class="xref">Section 5.3.4</a>, operations which would result in plural link references within the context of a registration resource SHOULD be rejected using the &#8220;Conflict&#8221; result code.</p>
+<h1 id="rfc.section.5.4.1">
+<a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
+</h1>
+<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the intial registration operation.</p>
+<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
+<p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
+<p id="rfc.section.5.4.1.p.4">An update MAY optionally add or replace links for the endpoint by including those links in the payload of the update as a CoRE Link Format document. A link is replaced only if all of the target URI and relation type (if present) and anchor value (if present) match.</p>
+<p id="rfc.section.5.4.1.p.5">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
+<p id="rfc.section.5.4.1.p.6">In addition to the use of POST, as described in this section, there is an alternate way to add, replace, and delete links using PATCH as described in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
+<p id="rfc.section.5.4.1.p.7">The update registration request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">EP -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">POST</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+location}{?lt,con}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>location :=</dt>
+<dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
+<dt>lt :=</dt>
+<dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included, the previous last lifetime set on a previous update or the original registration (falling back to 86400) SHOULD be used.</dd>
+<dt>con :=</dt>
+<dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address and port at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.</dd>
+</dl>
+<p> </p>
+</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format (mandatory)</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+json (optional)</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+cbor (optional)</dd>
+</dl>
+<p id="rfc.section.5.4.1.p.9">The following response codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.04 &#8220;Changed&#8221; or 204 &#8220;No Content&#8221; if the update was successfully processed.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration does not exist (e.g. may have expired).</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+<dt>HTTP support:</dt>
+<dd style="margin-left: 8">YES</dd>
+</dl>
+<p id="rfc.section.5.4.1.p.11">The following example shows an endpoint updating its registration at an RD using this interface with the example location value: /rd/4521.</p>
+<pre>
+Req: POST /rd/4521
+
+Res: 2.04 Changed
+</pre>
+<p id="rfc.section.5.4.1.p.12">The following example shows an endpoint updating its registration with a new lifetime and context, changing an existing link, and adding a new link using this interface with the example location value /rd/4521.  With the initial registration the client set the following values:</p>
+<p></p>
+
+<ul>
+<li>lifetime (lt)=500</li>
+<li>context (con)=coap://local-proxy-old.example.com:5683</li>
+<li>resource= &lt;/sensors/temp&gt;;ct=41;rt=&#8221;foobar&#8221;;if=&#8221;sensor&#8221;</li>
+</ul>
+<pre>
+Req: POST /rd/4521?lt=600&amp;con="coap://local-proxy.example.com:5683"
+Content-Format: 40
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature-f";if="sensor",
+&lt;/sensors/door&gt;;ct=41;rt="door";if="sensor"
+
+Res: 2.04 Changed
+</pre>
+<h1 id="rfc.section.5.4.2">
+<a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#removal" id="removal">Registration Removal</a>
+</h1>
+<p id="rfc.section.5.4.2.p.1">Although RD entries have soft state and will eventually timeout after their lifetime, an endpoint SHOULD explicitly remove its entry from the RD if it knows it will no longer be available (for example on shut-down). This is accomplished using a removal interface on the RD by performing a DELETE on the endpoint resource.</p>
+<p id="rfc.section.5.4.2.p.2">The removal request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">EP -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">DELETE</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+location}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>location :=</dt>
+<dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
+</dl>
+<p> </p>
+</dd>
+</dl>
+<p id="rfc.section.5.4.2.p.4">The following responses codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.02 &#8220;Deleted&#8221; or 204 &#8220;No Content&#8221; upon successful deletion</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration does not exist (e.g. may have expired).</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+</dl>
+<p id="rfc.section.5.4.2.p.6">HTTP support: YES</p>
+<p id="rfc.section.5.4.2.p.7">The following examples shows successful removal of the endpoint from the RD with example location value /rd/4521.</p>
+<pre>
+Req: DELETE /rd/4521
+
+Res: 2.02 Deleted
+</pre>
+<h1 id="rfc.section.5.4.3">
+<a href="#rfc.section.5.4.3">5.4.3.</a> <a href="#read" id="read">Read Endpoint Links</a>
+</h1>
+<p id="rfc.section.5.4.3.p.1">Some endpoints may wish to manage their links as a collection, and may need to read the current set of links stored in the registration resource, in order to determine link maintenance operations.</p>
+<p id="rfc.section.5.4.3.p.2">One or more links MAY be selected by using query filtering as specified in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 4.1</p>
+<p id="rfc.section.5.4.3.p.3">If no links are selected, the Resource Directory SHOULD return an empty payload.</p>
+<p id="rfc.section.5.4.3.p.4">The read request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">EP -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">GET</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+location}{?href,rel,rt,if,ct}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>location :=</dt>
+<dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
+</dl>
+<p> </p>
+</dd>
+<dt></dt>
+<dd style="margin-left: 8">href,rel,rt,if,ct := link relations and attributes specified in the query in order to select particular links based on their relations and attributes. &#8220;href&#8221; denotes the URI target of the link. See <a href="#RFC6690" class="xref">[RFC6690]</a> Sec. 4.1</dd>
+</dl>
+<p id="rfc.section.5.4.3.p.6">The following responses codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; upon success with an <samp>application/link-format</samp>, <samp>application/link-format+cbor</samp>, or <samp>application/link-format+json</samp> payload.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration does not exist (e.g. may have expired).</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+</dl>
+<p id="rfc.section.5.4.3.p.8">HTTP support: YES</p>
+<p id="rfc.section.5.4.3.p.9">The following examples show successful read of the endpoint links from the RD, with example location value /rd/4521.</p>
+<pre>
+Req: GET /rd/4521
+
+Res: 2.01 Content
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
+</pre>
+<h1 id="rfc.section.5.4.4">
+<a href="#rfc.section.5.4.4">5.4.4.</a> <a href="#link-up" id="link-up">Update Endpoint Links</a>
+</h1>
+<p id="rfc.section.5.4.4.p.1">A PATCH update adds, removes or changes links for the endpoint by including link update information in the payload of the update as a merge-patch+json format <a href="#RFC7396" class="xref">[RFC7396]</a> document.</p>
+<p id="rfc.section.5.4.4.p.2">Other PATCH document formats may be used as appropriate for patching the array of objects format of a Registration Resource. In particular, a select-merge patch document format could combine the function of link selection query and link attribute replacement values.</p>
+<p id="rfc.section.5.4.4.p.3">One or more links are selected for update by using query filtering as specified in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 4.1</p>
+<p id="rfc.section.5.4.4.p.4">The query filter selects the links to be modified or deleted, by matching the query parameter values to the values of the link attributes.</p>
+<p id="rfc.section.5.4.4.p.5">When the query parameters are not present in the request, the payload specifies links to be added to the target document. When the query parameters are present, the attribute names and values in the query parameters select one or more links on which to apply the PATCH operation.</p>
+<p id="rfc.section.5.4.4.p.6">If no links are selected by the query parameters, the PATCH operation SHOULD NOT update the state of any resource, and SHOULD return a reply of &#8220;Changed&#8221;.</p>
+<p id="rfc.section.5.4.4.p.7">If an attribute name specified in the PATCH document exists in any the set of selected links, all occurrences of the attribute value in the target document MUST be updated using the value from the PATCH payload. If the attribute name is not present in any selected links, the attribute MUST be added to the links.</p>
+<p id="rfc.section.5.4.4.p.8">If the PATCH payload contains plural link references, or processing the PATCH payload would result in plural link references, the request SHOULD be rejected with a &#8220;Conflict&#8221; result.</p>
+<p id="rfc.section.5.4.4.p.9">If the PATCH payload results in the modification of link target, context, or relation values, that is &#8220;href&#8221;, &#8220;rel&#8221;, or &#8220;anchor&#8221;, the request SHOULD be rejected with a &#8220;Conflict&#8221; result code.</p>
+<p id="rfc.section.5.4.4.p.10">The update request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">EP -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">PATCH</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+location}{?href,rel,rt,if,ct}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>location :=</dt>
+<dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
+</dl>
+<p> </p>
+</dd>
+<dt></dt>
+<dd style="margin-left: 8">href,rel,rt,if,ct := link relations and attributes specified in the query in order to select particular links based on their relations and attributes. &#8220;href&#8221; denotes the URI target of the link. See <a href="#RFC6690" class="xref">[RFC6690]</a> Sec. 4.1</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/merge-patch+json (mandatory)</dd>
+</dl>
+<p id="rfc.section.5.4.4.p.12">The following response codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.04 &#8220;Changed&#8221; 0r 204 &#8220;No Content&#8221; in the update was successfully processed.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration resource does not exist (e.g. may have expired).</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+</dl>
+<p id="rfc.section.5.4.4.p.14">HTTP support: YES</p>
+<p id="rfc.section.5.4.4.p.15">The following examples show an endpoint adding &lt;/sensors/humid&gt;, modifying &lt;/sensors/temp&gt;, and removing &lt;/sensors/light&gt; links in RD using the Update Endpoint Links function with the example location value /rd/4521.</p>
+<p id="rfc.section.5.4.4.p.16">The Registration Resource initial state is:</p>
+<pre>
+Req: GET /rd/4521
+
+Res: 2.01 Content
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
+</pre>
+<p id="rfc.section.5.4.4.p.17">The following example shows an EP adding the link &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221; to the collection of links at the location /rd/4521.</p>
+<pre>
+Req: PATCH /rd/4521
+
+Payload:
+[{"href":"/sensors/humid","ct": 41, "rt": "humid-s", "if": "sensor"}]
+
+Content-Format:
+application/merge-patch+json
+
+Res: 2.04 Changed
+</pre>
+<pre>
+Req: GET /rd/4521
+
+Res: 2.01 Content
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor",
+&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"
+</pre>
+<p id="rfc.section.5.4.4.p.18">The following example shows an EP modifying all links at the example location /rd/4521 which are  identified by href=&#8221;/sensors/temp&#8221;, from the initial link-value of &lt;/sensors/temp&gt;;rt=&#8221;temperature&#8221; to the new link-value &lt;/sensors/temp&gt;;rt=&#8221;temperature-c&#8221;;if=&#8221;sensor&#8221; by changing the value of the link attribute &#8220;rt&#8221; and adding the link attribute if=&#8221;sensor&#8221; using the PATCH operation with the supplied merge-patch+json document payload.</p>
+<pre>
+Req: PATCH /rd/4521?href=/sensors/temp
+
+Payload:
+{"rt": "temperature-c", "if": "sensor"},
+
+Content-Format:
+application/merge-patch+json
+
+Res: 2.04 Changed
+</pre>
+<pre>
+Req: GET /rd/4521
+
+Res: 2.01 Content
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor",
+&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"
+</pre>
+<p id="rfc.section.5.4.4.p.19">This example shows an EP removing all links at the example location /rd/4521 which are identified by href=&#8221;/sensors/light&#8221;.</p>
+<pre>
+Req: PATCH /rd/4521?href=/sensors/light
+
+Payload:
+{}
+
+Content-Format:
+application/merge-patch+json
+
+Res: 2.04 Changed
+</pre>
+<pre>
+Req: GET /rd/4521
+
+Res: 2.01 Content
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
+&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"
+</pre>
+<h1 id="rfc.section.6">
+<a href="#rfc.section.6">6.</a> <a href="#group" id="group">RD Groups</a>
+</h1>
+<p id="rfc.section.6.p.1">This section defines the REST API for the creation, management, and lookup of endpoints for group operations.  Similar to endpoint registration entries in the RD, groups may be created or removed. However unlike an endpoint entry, a group entry consists of a list of endpoints and does not have a lifetime associated with it. In order to make use of multicast requests with CoAP, a group MAY have a multicast address associated with it.</p>
+<h1 id="rfc.section.6.1">
+<a href="#rfc.section.6.1">6.1.</a> <a href="#group-register" id="group-register">Register a Group</a>
+</h1>
+<p id="rfc.section.6.1.p.1">In order to create a group, a commissioning tool (CT) used to configure groups, makes a request to the RD indicating the name of the group to create (or update), optionally the domain the group belongs to, and optionally the multicast address of the group. The registration message includes the list of endpoints that belong to that group.</p>
+<p id="rfc.section.6.1.p.2">All the endpoints in the group MUST be registered with the RD before registering a group. If an endpoint is not yet registered to the RD before registering the group, the registration message returns an error. The RD sends a blank target URI for every endpoint link when registering the group.</p>
+<p id="rfc.section.6.1.p.3">Configuration of the endpoints themselves is out of scope of this specification. Such an interface for managing the group membership of an endpoint has been defined in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
+<p id="rfc.section.6.1.p.4">The registration request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">CT -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">POST</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+rd-group}{?gp,d,con}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>rd-group :=</dt>
+<dd style="margin-left: 8">RD Group URI (mandatory). This is the location of the RD Group REST API.</dd>
+<dt>gp :=</dt>
+<dd style="margin-left: 8">Group Name (mandatory). The name of the group to be created or replaced, unique within that domain. The maximum length of this parameter is 63 bytes.</dd>
+<dt>d :=</dt>
+<dd style="margin-left: 8">Domain (optional). The domain to which this group belongs. The maximum length of this parameter is 63 bytes. Optional. When this parameter is elided, the RD MAY associate the endpoint with a configured default domain.</dd>
+<dt>con :=</dt>
+<dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address and port at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.</dd>
+</dl>
+<p> </p>
+</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+json</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+cbor</dd>
+</dl>
+<p id="rfc.section.6.1.p.6">The following response codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.01 &#8220;Created&#8221; or 201 &#8220;Created&#8221;. The Location header option MUST be returned in response to a successful group CREATE operation.  This Location MUST be a stable identifier generated by the RD as it is used for delete operations of the group registration resource.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;.  An Endpoint is not registered in the RD (e.g. may have expired).</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+<dt>HTTP support:</dt>
+<dd style="margin-left: 8">YES</dd>
+</dl>
+<p id="rfc.section.6.1.p.8">The following example shows an EP registering a group with the name &#8220;lights&#8221; which has two endpoints to an RD using this interface. The RD group path /rd-group is an example RD location discovered in a request similar to <a href="#example-discovery" class="xref">Figure 4</a>.</p>
+<pre>
+Req: POST coap://rd.example.com/rd-group?gp=lights
+Content-Format: 40
+Payload:
+&lt;&gt;;ep="node1",
+&lt;&gt;;ep="node2"
+
+Res: 2.01 Created
+Location: /rd-group/12
+</pre>
+<h1 id="rfc.section.6.2">
+<a href="#rfc.section.6.2">6.2.</a> <a href="#group-removal" id="group-removal">Group Removal</a>
+</h1>
+<p id="rfc.section.6.2.p.1">A group can be removed simply by sending a removal message to the location of the group registration resource which was returned when intially registering the group. Removing a group MUST NOT remove the endpoints of the group from the RD.</p>
+<p id="rfc.section.6.2.p.2">The removal request interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">CT -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">DELETE</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+location}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>location :=</dt>
+<dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful group registration.</dd>
+</dl>
+<p> </p>
+</dd>
+</dl>
+<p id="rfc.section.6.2.p.4">The following responses codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.02 &#8220;Deleted&#8221; or 204 &#8220;No Content&#8221; upon successful deletion</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Group does not exist.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+<dt>HTTP support:</dt>
+<dd style="margin-left: 8">YES</dd>
+</dl>
+<p id="rfc.section.6.2.p.6">The following examples shows successful removal of the group from the RD with the example location value /rd-group/12.</p>
+<pre>
+Req: DELETE /rd-group/12
+
+Res: 2.02 Deleted
+</pre>
+<h1 id="rfc.section.7">
+<a href="#rfc.section.7">7.</a> <a href="#lookup" id="lookup">RD Lookup</a>
+</h1>
+<p id="rfc.section.7.p.1">In order for an RD to be used for discovering resources registered with it, an optional lookup interface may be provided. This lookup interface is defined as a default, and it is assumed that RDs may also support lookups to return resource descriptions in alternative formats (e.g. Atom or HTML Link) or using more advanced interfaces (e.g. supporting context or semantic based lookup).</p>
+<p id="rfc.section.7.p.2">RD Lookup allows lookups for domains, groups, endpoints and resources using attributes defined in this document and for use with the CoRE Link Format. The result of a lookup request is the list of links (if any) corresponding to the type of lookup.  Thus, a domain lookup MUST return a list of domains, a group lookup MUST return a list of groups, an endpoint lookup MUST return a list of endpoints and a resource lookup MUST return a list of links to resources.</p>
+<p id="rfc.section.7.p.3">RD Lookup does not expose registration resources directly, but returns link content from registration resource entries which satisfy RD Lookup queries.</p>
+<p id="rfc.section.7.p.4">The lookup type is selected by a URI endpoint, which is indicated by a Resource Type as per <a href="#lookup-types" class="xref">Table 1</a> below:</p>
+<div id="rfc.table.1"></div>
+<div id="lookup-types"></div>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+<caption>Lookup Types</caption>
+<thead><tr>
+<th class="left">Lookup Type</th>
+<th class="left">Resource Type</th>
+<th class="left">Mandatory</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="left">Resource</td>
+<td class="left">core.rd-lookup-res</td>
+<td class="left">Mandatory</td>
+</tr>
+<tr>
+<td class="left">Endpoint</td>
+<td class="left">core.rd-lookup-ep</td>
+<td class="left">Mandatory</td>
+</tr>
+<tr>
+<td class="left">Domain</td>
+<td class="left">core.rd-lookup-d</td>
+<td class="left">Optional</td>
+</tr>
+<tr>
+<td class="left">Group</td>
+<td class="left">core.rd-lookup-gp</td>
+<td class="left">Optional</td>
+</tr>
+</tbody>
+</table>
+<p id="rfc.section.7.p.5">Each endpoint and resource lookup result returns respectively the scheme (IP address and port) followed by the path part of the URI of every endpoint and resource inside angle brackets (&#8220;&lt;&gt;&#8221;) and followed by the other parameters.</p>
+<p id="rfc.section.7.p.6">The target of these links SHOULD be the actual location of the domain, endpoint or resource, but MAY be an intermediate proxy e.g. in the case of an HTTP lookup interface for CoAP endpoints.</p>
+<p id="rfc.section.7.p.7">The domain lookup returns every lookup domain with a base RD resource value (e.g. &#8220;/rd&#8221;) encapsulated within angle brackets.</p>
+<p id="rfc.section.7.p.8">In case that a group does not implement any multicast address, the group lookup returns every group lookup with a group base resource value encapsulated within angle brackets (e.g. &#8220;/rd/look-up&#8221;). Otherwise, the group lookup returns the multicast address of the group inside angle brackets.</p>
+<p id="rfc.section.7.p.9">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
+<p id="rfc.section.7.p.10">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
+<p id="rfc.section.7.p.11">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
+<p id="rfc.section.7.p.12">RD Lookup requests MAY use any set of query parameters to match the registered attributes and relations.  In addition, this interface MAY be used with queries that specify domains, endpoints, and groups.  For example, a domain lookup filtering on groups would return a list of domains that contain the specified groups.  An endpoint lookup filtering on groups would return a list of endpoints that are in the specified groups.</p>
+<p id="rfc.section.7.p.13">Clients that are interested in a lookup result repeatedly or continuously can use mechanisms like ETag caching, resource observation (<a href="#RFC7641" class="xref">[RFC7641]</a>), or any future mechanism that might allow more efficient observations of collections.  These are advertised, detected and used according to their own specifications and can be used with the lookup interface as with any other resource.</p>
+<p id="rfc.section.7.p.14">The lookup interface is specified as follows:</p>
+<p></p>
+
+<dl>
+<dt>Interaction:</dt>
+<dd style="margin-left: 8">Client -&gt; RD</dd>
+<dt>Method:</dt>
+<dd style="margin-left: 8">GET</dd>
+<dt>URI Template:</dt>
+<dd style="margin-left: 8">{+type-lookup-location}{?d,res,ep,gp,et,rt,page,count,resource-param}</dd>
+<dt>URI Template Variables:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>type-lookup-location :=</dt>
+<dd style="margin-left: 8">RD Lookup URI for a given lookup type (mandatory). The address is discovered as described in <a href="#discovery" class="xref">Section 5.2</a>.</dd>
+<dt>ep :=</dt>
+<dd style="margin-left: 8">Endpoint name (optional). Used for endpoint, group and resource lookups.</dd>
+<dt>d :=</dt>
+<dd style="margin-left: 8">Domain (optional). Used for domain, group, endpoint and resource lookups.</dd>
+<dt>res :=</dt>
+<dd style="margin-left: 8">resource (optional). Used for domain, group, endpoint and resource lookups.</dd>
+</dl>
+<p> gp :=  Group name (optional).  Used for endpoint, group and resource lookups.  </p>
+<dl>
+<dt>page :=</dt>
+<dd style="margin-left: 8">Page (optional). Parameter can not be used without the count parameter. Results are returned from result set in pages that contain &#8216;count&#8217; links starting from index (page * count). Page numbering starts with zero.</dd>
+<dt>count :=</dt>
+<dd style="margin-left: 8">Count (optional). Number of results is limited to this parameter value. If the page parameter is also present, the response MUST only include &#8216;count&#8217; links starting with the (page * count) link in the result set from the query. If the count parameter is not present, then the response MUST return all matching links in the result set. Link numbering starts with zero.</dd>
+<dt>rt :=</dt>
+<dd style="margin-left: 8">Resource type (optional). Used for group, endpoint and resource lookups.</dd>
+<dt>et :=</dt>
+<dd style="margin-left: 8">Endpoint type (optional). Used for group, endpoint and resource lookups.</dd>
+<dt>resource-param :=</dt>
+<dd style="margin-left: 8">Link attribute parameters (optional). Any link target attribute as defined in Section 4.1 of <a href="#RFC6690" class="xref">[RFC6690]</a>, used for resource lookups.</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format (optional)</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+json (optional)</dd>
+<dt>Content-Format:</dt>
+<dd style="margin-left: 8">application/link-format+cbor (optional)</dd>
+</dl>
+<p> </p>
+</dd>
+</dl>
+<p id="rfc.section.7.p.16">The following responses codes are defined for this interface:</p>
+<p></p>
+
+<dl>
+<dt>Success:</dt>
+<dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; with an <samp>application/link-format</samp>, <samp>application/link-format+cbor</samp>, or <samp>application/link-format+json</samp> payload containing matching entries for the lookup.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221; in case no matching entry is found for a unicast request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">No error response to a multicast request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
+<dt>Failure:</dt>
+<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
+<dt>HTTP support:</dt>
+<dd style="margin-left: 8">YES</dd>
+</dl>
+<p id="rfc.section.7.p.18">The examples in this section assume CoAP hosts with a default CoAP port 61616. HTTP hosts are possible and do not change the nature of the examples.</p>
+<p id="rfc.section.7.p.19">The following example shows a client performing a resource lookup with the example resource look-up locations discovered in <a href="#example-discovery" class="xref">Figure 4</a>:</p>
+<pre>
+Req: GET /rd-lookup/res?rt=temperature
+
+Res: 2.05 Content
+&lt;coap://[2001:db8:3::123]:61616/temp&gt;;rt="temperature"
+</pre>
+<p id="rfc.section.7.p.20">The following example shows a client performing an endpoint type lookup:</p>
+<pre>
+Req: GET /rd-lookup/ep?et=power-node
+
+Res: 2.05 Content
+&lt;coap://[2001:db8:3::127]:61616&gt;;ep="node5",
+&lt;coap://[2001:db8:3::129]:61616&gt;;ep="node7"
+</pre>
+<p id="rfc.section.7.p.21">The following example shows a client performing a domain lookup:</p>
+<pre>
+Req: GET /rd-lookup/d
+
+Res: 2.05 Content
+&lt;&gt;;d="domain1",
+&lt;&gt;;d="domain2"
+</pre>
+<p id="rfc.section.7.p.22">The following example shows a client performing a group lookup for all groups:</p>
+<pre>
+Req: GET /rd-lookup/gp
+
+Res: 2.05 Content
+&lt;&gt;;gp="lights1";d="example.com"
+&lt;&gt;;gp="lights2";d="ecample.com"
+</pre>
+<p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
+<pre>
+Req: GET /rd-lookup/ep?gp=lights1
+
+Res: 2.05 Content
+&lt;coap://[2001:db8:3::123]:61616&gt;;ep="node1",
+&lt;coap://[2001:db8:3::124]:61616&gt;;ep="node2"
+</pre>
+<p id="rfc.section.7.p.24">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
+<pre>
+Req: GET /rd-lookup/gp?ep=node1
+
+Res: 2.05 Content
+&lt;&gt;;gp="lights1"
+</pre>
+<p id="rfc.section.7.p.25">The following example shows a client performing a paginated lookup</p>
+<pre>
+Req: GET /rd-lookup/res?page=0&amp;count=5
+
+Res: 2.05 Content
+&lt;coap://[2001:db8:3::123]:61616/res/0&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/1&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/2&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/3&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/4&gt;;rt=sensor;ct=60
+
+Req: GET /rd-lookup/res?page=1&amp;count=5
+
+Res: 2.05 Content
+&lt;coap://[2001:db8:3::123]:61616/res/5&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/6&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/7&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/8&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/9&gt;;rt=sensor;ct=60
+</pre>
+<h1 id="rfc.section.8">
+<a href="#rfc.section.8">8.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
+</h1>
+<p id="rfc.section.8.p.1">The security considerations as described in Section 7 of <a href="#RFC5988" class="xref">[RFC5988]</a> and Section 6 of <a href="#RFC6690" class="xref">[RFC6690]</a> apply. The <samp>/.well-known/core</samp> resource may be protected e.g. using DTLS when hosted on a CoAP server as described in <a href="#RFC7252" class="xref">[RFC7252]</a>. DTLS or TLS based security SHOULD be used on all resource directory interfaces defined in this document.</p>
+<h1 id="rfc.section.8.1">
+<a href="#rfc.section.8.1">8.1.</a> <a href="#endpoint_identification" id="endpoint_identification">Endpoint Identification and Authentication</a>
+</h1>
+<p id="rfc.section.8.1.p.1">An Endpoint is determined to be unique by an RD by the Endpoint identifier parameter included during Registration, and any associated TLS or DTLS security bindings. An Endpoint MUST NOT be identified by its protocol, port or IP address as these may change over the lifetime of an Endpoint.</p>
+<p id="rfc.section.8.1.p.2">Every operation performed by an Endpoint or Client on a resource directory SHOULD be mutually authenticated using Pre-Shared Key, Raw Public Key or Certificate based security. Endpoints using a Certificate MUST include the Endpoint identifier as the Subject of the Certificate, and this identifier MUST be checked by a resource directory to match the Endpoint identifier included in the Registration message.</p>
+<h1 id="rfc.section.8.2">
+<a href="#rfc.section.8.2">8.2.</a> <a href="#access-control" id="access-control">Access Control</a>
+</h1>
+<p id="rfc.section.8.2.p.1">Access control SHOULD be performed separately for the RD registration, Lookup, and group API paths, as different endpoints may be authorized to register with an RD from those authorized to lookup endpoints from the RD. Such access control SHOULD be performed in as fine-grained a level as possible. For example access control for lookups could be performed either at the domain, endpoint or resource level.</p>
+<h1 id="rfc.section.8.3">
+<a href="#rfc.section.8.3">8.3.</a> <a href="#denial-of-service-attacks" id="denial-of-service-attacks">Denial of Service Attacks</a>
+</h1>
+<p id="rfc.section.8.3.p.1">Services that run over UDP unprotected are vulnerable to unknowingly become part of a DDoS attack as UDP does not require return routability check. Therefore, an attacker can easily spoof the source IP of the target entity and send requests to such a service which would then respond to the target entity. This can be used for large-scale DDoS attacks on the target. Especially, if the service returns a response that is order of magnitudes larger than the request, the situation becomes even worse as now the attack can be amplified. DNS servers have been widely used for DDoS amplification attacks. There is also a danger that NTP Servers could become implicated in denial-of-service (DoS) attacks since they run on unprotected UDP, there is no return routability check, and they can have a large amplification factor.  The responses from the NTP server were found to be 19 times larger than the request. A Resource Directory (RD) which responds to wild-card lookups is potentially vulnerable if run with CoAP over UDP.  Since there is no return routability check and the responses can be significantly larger than requests, RDs can unknowingly become part of a DDoS amplification attack.</p>
+<h1 id="rfc.section.9">
+<a href="#rfc.section.9">9.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
+</h1>
+<h1 id="rfc.section.9.1">
+<a href="#rfc.section.9.1">9.1.</a> <a href="#iana-rt" id="iana-rt">Resource Types</a>
+</h1>
+<p id="rfc.section.9.1.p.1">&#8220;core.rd&#8221;, &#8220;core.rd-group&#8221;, &#8220;core.rd-lookup-ep&#8221;, &#8220;core.rd-lookup-res&#8221;, &#8220;core.rd-lookup-d&#8221;, and &#8220;core.rd-lookup-gp&#8221; resource types need to be registered with the resource type registry defined by <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<h1 id="rfc.section.9.2">
+<a href="#rfc.section.9.2">9.2.</a> <a href="#ipv6-nd-resource-directory-address-option" id="ipv6-nd-resource-directory-address-option">IPv6 ND Resource Directory Address Option</a>
+</h1>
+<p id="rfc.section.9.2.p.1">This document registers one new ND option type under the subregistry &#8220;IPv6 Neighbor Discovery Option Formats&#8221;:</p>
+<p></p>
+
+<ul><li>Resource Directory address Option (38)</li></ul>
+<h1 id="rfc.section.9.3">
+<a href="#rfc.section.9.3">9.3.</a> <a href="#iana-registry" id="iana-registry">RD Parameter Registry</a>
+</h1>
+<p id="rfc.section.9.3.p.1">This specification defines a new sub-registry for registration and lookup parameters called &#8220;RD Parameters&#8221; under &#8220;CoRE Parameters&#8221;. Although this specification defines a basic set of parameters, it is expected that other standards that make use of this interface will define new ones.</p>
+<p id="rfc.section.9.3.p.2">Each entry in the registry must include the human readable name of the parameter, the query parameter, validity requirements if any and a description. The query parameter MUST be a valid URI query key <a href="#RFC3986" class="xref">[RFC3986]</a>.</p>
+<p id="rfc.section.9.3.p.3">Initial entries in this sub-registry are as follows:</p>
+<div id="rfc.table.2"></div>
+<div id="tab-registry"></div>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+<caption>RD Parameters</caption>
+<thead><tr>
+<th class="left">Name</th>
+<th class="left">Query</th>
+<th class="left">Validity</th>
+<th class="left">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="left">Endpoint Name</td>
+<td class="left">ep</td>
+<td class="left"></td>
+<td class="left">Name of the endpoint, max 63 bytes</td>
+</tr>
+<tr>
+<td class="left">Lifetime</td>
+<td class="left">lt</td>
+<td class="left">60-4294967295</td>
+<td class="left">Lifetime of the registration in seconds</td>
+</tr>
+<tr>
+<td class="left">Domain</td>
+<td class="left">d</td>
+<td class="left"></td>
+<td class="left">Domain to which this endpoint belongs</td>
+</tr>
+<tr>
+<td class="left">Endpoint Type</td>
+<td class="left">et</td>
+<td class="left"></td>
+<td class="left">Semantic name of the endpoint</td>
+</tr>
+<tr>
+<td class="left">Context</td>
+<td class="left">con</td>
+<td class="left">URI</td>
+<td class="left">The scheme, address and port and path at which this server is available</td>
+</tr>
+<tr>
+<td class="left">Resource Name</td>
+<td class="left">res</td>
+<td class="left"></td>
+<td class="left">Name of the resource</td>
+</tr>
+<tr>
+<td class="left">Group Name</td>
+<td class="left">gp</td>
+<td class="left"></td>
+<td class="left">Name of a group in the RD</td>
+</tr>
+<tr>
+<td class="left">Page</td>
+<td class="left">page</td>
+<td class="left">Integer</td>
+<td class="left">Used for pagination</td>
+</tr>
+<tr>
+<td class="left">Count</td>
+<td class="left">count</td>
+<td class="left">Integer</td>
+<td class="left">Used for pagination</td>
+</tr>
+</tbody>
+</table>
+<p id="rfc.section.9.3.p.4">The IANA policy for future additions to the sub-registry is &#8220;Expert Review&#8221; as described in <a href="#RFC5226" class="xref">[RFC5226]</a>.</p>
+<h1 id="rfc.section.10">
+<a href="#rfc.section.10">10.</a> <a href="#examples" id="examples">Examples</a>
+</h1>
+<p id="rfc.section.10.p.1">Two examples are presented: a Lighting Installation example in <a href="#lt-ex" class="xref">Section 10.1</a> and a LWM2M example in <a href="#lwm2m-ex" class="xref">Section 10.2</a>.</p>
+<h1 id="rfc.section.10.1">
+<a href="#rfc.section.10.1">10.1.</a> <a href="#lt-ex" id="lt-ex">Lighting Installation</a>
+</h1>
+<p id="rfc.section.10.1.p.1">This example shows a simplified lighting installation which makes use of the Resource Directory (RD) with a CoAP interface to facilitate the installation and start up of the application code in the lights and sensors. In particular, the example leads to the definition of a group and the enabling of the corresponding multicast address. No conclusions must be drawn on the realization of actual installation or naming procedures, because the example only &#8220;emphasizes&#8221; some of the issues that may influence the use of the RD and does not pretend to be normative.</p>
+<h1 id="rfc.section.10.1.1">
+<a href="#rfc.section.10.1.1">10.1.1.</a> <a href="#lt-in-ch" id="lt-in-ch">Installation Characteristics</a>
+</h1>
+<p id="rfc.section.10.1.1.p.1">The example assumes that the installation is managed. That means that a Commissioning Tool (CT) is used to authorize the addition of nodes, name them, and name their services. The CT can be connected to the installation in many ways: the CT can be part of the installation network, connected by WiFi to the installation network, or connected via GPRS link, or other method.</p>
+<p id="rfc.section.10.1.1.p.2">It is assumed that there are two naming authorities for the installation: (1) the network manager that is responsible for the correct operation of the network and the connected interfaces, and (2) the lighting manager that is responsible for the correct functioning of networked lights and sensors.  The result is the existence of two naming schemes coming from the two managing entities.</p>
+<p id="rfc.section.10.1.1.p.3">The example installation consists of one presence sensor, and two luminaries, luminary1 and luminary2, each with their own wireless interface. Each luminary contains three lamps: left, right and middle. Each luminary is accessible through one endpoint. For each lamp a resource exists to modify the settings of a lamp in a luminary. The purpose of the installation is that the presence sensor notifies the presence of persons to a group of lamps. The group of lamps consists of: middle and left lamps of luminary1 and right lamp of luminary2.</p>
+<p id="rfc.section.10.1.1.p.4">Before commissioning by the lighting manager, the network is installed and access to the interfaces is proven to work by the network manager.</p>
+<p id="rfc.section.10.1.1.p.5">At the moment of installation, the network under installation is not necessarily connected to the DNS infra structure. Therefore, SLAAC IPv6 addresses are assigned to CT, RD, luminaries and sensor shown in <a href="#interface-S" class="xref">Table 3</a> below:</p>
+<div id="rfc.table.3"></div>
+<div id="interface-S"></div>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+<caption>interface SLAAC addresses</caption>
+<thead><tr>
+<th class="left">Name</th>
+<th class="left">IPv6 address</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="left">luminary1</td>
+<td class="left">2001:db8:4::1</td>
+</tr>
+<tr>
+<td class="left">luminary2</td>
+<td class="left">2001:db8:4::2</td>
+</tr>
+<tr>
+<td class="left">Presence sensor</td>
+<td class="left">2001:db8:4::3</td>
+</tr>
+<tr>
+<td class="left">Resource directory</td>
+<td class="left">2001:db8:4::ff</td>
+</tr>
+</tbody>
+</table>
+<p id="rfc.section.10.1.1.p.6">In <a href="#rd-en" class="xref">Section 10.1.2</a> the use of resource directory during installation is presented.</p>
+<h1 id="rfc.section.10.1.2">
+<a href="#rfc.section.10.1.2">10.1.2.</a> <a href="#rd-en" id="rd-en">RD entries</a>
+</h1>
+<p id="rfc.section.10.1.2.p.1">It is assumed that access to the DNS infrastructure is not always possible during installation. Therefore, the SLAAC addresses are used in this section.</p>
+<p id="rfc.section.10.1.2.p.2">For discovery, the resource types (rt) of the devices are important. The lamps in the luminaries have rt: light, and the presence sensor has rt: p-sensor.  The endpoints have names which are relevant to the light installation manager.  In this case luminary1, luminary2, and the presence sensor are located in room 2-4-015, where luminary1 is located at the window and luminary2 and the presence sensor are located at the door. The endpoint names reflect this physical location. The middle, left and right lamps are accessed via path /light/middle, /light/left, and /light/right respectively. The identifiers relevant to the Resource Directory are shown in <a href="#endpoint" class="xref">Table 4</a> below:</p>
+<div id="rfc.table.4"></div>
+<div id="endpoint"></div>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+<caption>Resource Directory identifiers</caption>
+<thead><tr>
+<th class="left">Name</th>
+<th class="left">endpoint</th>
+<th class="left">resource path</th>
+<th class="left">resource type</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="left">luminary1</td>
+<td class="left">lm_R2-4-015_wndw</td>
+<td class="left">/light/left</td>
+<td class="left">light</td>
+</tr>
+<tr>
+<td class="left">luminary1</td>
+<td class="left">lm_R2-4-015_wndw</td>
+<td class="left">/light/middle</td>
+<td class="left">light</td>
+</tr>
+<tr>
+<td class="left">luminary1</td>
+<td class="left">lm_R2-4-015_wndw</td>
+<td class="left">/light/right</td>
+<td class="left">light</td>
+</tr>
+<tr>
+<td class="left">luminary2</td>
+<td class="left">lm_R2-4-015_door</td>
+<td class="left">/light/left</td>
+<td class="left">light</td>
+</tr>
+<tr>
+<td class="left">luminary2</td>
+<td class="left">lm_R2-4-015_door</td>
+<td class="left">/light/middle</td>
+<td class="left">light</td>
+</tr>
+<tr>
+<td class="left">luminary2</td>
+<td class="left">lm_R2-4-015_door</td>
+<td class="left">/light/right</td>
+<td class="left">light</td>
+</tr>
+<tr>
+<td class="left">Presence sensor</td>
+<td class="left">ps_R2-4-015_door</td>
+<td class="left">/ps</td>
+<td class="left">p-sensor</td>
+</tr>
+</tbody>
+</table>
+<p id="rfc.section.10.1.2.p.3">It is assumed that the CT knows of the RD&#8217;s address, and has performed URI discovery on it that gave a response like the one in the <a href="#discovery" class="xref">Section 5.2</a> example.</p>
+<p id="rfc.section.10.1.2.p.4">The CT inserts the endpoints of the luminaries and the sensor in the RD using the Context parameter (con) to specify the interface address:</p>
+<pre>
+Req: POST coap://[2001:db8:4::ff]/rd
+  ?ep=lm_R2-4-015_wndw&amp;con=coap://[2001:db8:4::1]&amp;d=R2-4-015
+Payload:
+&lt;/light/left&gt;;rt="light",
+&lt;/light/middle&gt;;rt="light",
+&lt;/light/right&gt;;rt="light"
+
+Res: 2.01 Created
+Location: /rd/4521
+</pre>
+<pre>
+Req: POST coap://[2001:db8:4::ff]/rd
+  ?ep=lm_R2-4-015_door&amp;con=coap://[2001:db8:4::2]&amp;d=R2-4-015
+Payload:
+&lt;/light/left&gt;;rt="light",
+&lt;/light/middle&gt;;rt="light",
+&lt;/light/right&gt;;rt="light"
+
+Res: 2.01 Created
+Location: /rd/4522
+</pre>
+<pre>
+Req: POST coap://[2001:db8:4::ff]/rd
+  ?ep=ps_R2-4-015_door&amp;con=coap://[2001:db8:4::3]d&amp;d=R2-4-015
+Payload:
+&lt;/ps&gt;;rt="p-sensor"
+
+Res: 2.01 Created
+Location: /rd/4523
+</pre>
+<p id="rfc.section.10.1.2.p.5">The domain name d=R2-4-015 has been added for an efficient lookup because filtering on &#8220;ep&#8221; name is more awkward. The same domain name is communicated to the two luminaries and the presence sensor by the CT.</p>
+<p id="rfc.section.10.1.2.p.6">The group is specified in the RD. The Context parameter is set to the site-local multicast address allocated to the group.  In the POST in the example below, these two endpoints and the endpoint of the presence sensor are registered as members of the group.</p>
+<pre>
+Req: POST coap://[2001:db8:4::ff]/rd-group
+?gp=grp_R2-4-015&amp;con=coap://[ff05::1]
+Payload:
+&lt;&gt;;ep=lm_R2-4-015_wndw,
+&lt;&gt;;ep=lm_R2-4-015_door,
+&lt;&gt;;ep=ps_R2-4-015_door
+
+Res: 2.01 Created
+Location: /rd-group/501
+</pre>
+<p id="rfc.section.10.1.2.p.7">After the filling of the RD by the CT, the application in the luminaries can learn to which groups they belong, and enable their interface for the multicast address.</p>
+<p id="rfc.section.10.1.2.p.8">The luminary, knowing its domain, queries the RD for the endpoint with rt=light and d=R2-4-015. The RD returns all endpoints in the domain.</p>
+<pre>
+Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
+  ?d=R2-4-015;rt=light
+
+Res: 2.05 Content
+&lt;coap://[2001:db8:4::1]&gt;;
+  ep="lm_R2-4-015_wndw",
+&lt;coap://[2001:db8:4::2]&gt;;
+   ep="lm_R2-4-015_door"
+</pre>
+<p id="rfc.section.10.1.2.p.9">Knowing its own IPv6 address, the luminary discovers its endpoint name. With the endpoint name the luminary queries the RD for all groups to which the endpoint belongs.</p>
+<pre>
+Req: GET coap://[2001:db8:4::ff]/rd-lookup/gp
+  ?ep=lm_R2-4-015_wndw
+
+Res: 2.05 Content
+&lt;coap://[ff05::1]&gt;;gp="grp_R2-4-015"
+</pre>
+<p id="rfc.section.10.1.2.p.10">From the context parameter value, the luminary learns the multicast address of the multicast group.</p>
+<p id="rfc.section.10.1.2.p.11">Alternatively, the CT can communicate the multicast address directly to the luminaries by using the &#8220;coap-group&#8221; resource specified in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
+<pre>
+Req: POST //[2001:db8:4::1]/coap-group
+          Content-Format: application/coap-group+json
+       { "a": "[ff05::1]",
+          "n": "grp_R2-4-015"}
+
+Res: 2.01 Created
+Location-Path: /coap-group/1
+</pre>
+<p id="rfc.section.10.1.2.p.12">Dependent on the situation, only the address, &#8220;a&#8221;, or the name, &#8220;n&#8221;, is specified in the coap-group resource.</p>
+<h1 id="rfc.section.10.2">
+<a href="#rfc.section.10.2">10.2.</a> <a href="#lwm2m-ex" id="lwm2m-ex">OMA Lightweight M2M (LWM2M) Example</a>
+</h1>
+<p id="rfc.section.10.2.p.1">This example shows how the OMA LWM2M specification makes use of Resource Directory (RD).</p>
+<p id="rfc.section.10.2.p.2">OMA LWM2M is a profile for device services based on CoAP(OMA Name Authority). LWM2M defines a simple object model and a number of abstract interfaces and operations for device management and device service enablement.</p>
+<p id="rfc.section.10.2.p.3">An LWM2M server is an instance of an LWM2M middleware service layer, containing a Resource Directory along with other LWM2M interfaces defined by the LWM2M specification.</p>
+<p id="rfc.section.10.2.p.4">CoRE Resource Directory (RD) is used to provide the LWM2M Registration interface.</p>
+<p id="rfc.section.10.2.p.5">LWM2M does not provide for registration domains and does not currently use the rd-group or rd-lookup interfaces.</p>
+<p id="rfc.section.10.2.p.6">The LWM2M specification describes a set of interfaces and a resource model used between a LWM2M device and an LWM2M server. Other interfaces, proxies, and applications are currently out of scope for LWM2M.</p>
+<p id="rfc.section.10.2.p.7">The location of the LWM2M Server and RD URI path is provided by the LWM2M Bootstrap process, so no dynamic discovery of the RD is used. LWM2M Servers and endpoints are not required to implement the /.well-known/core resource.</p>
+<h1 id="rfc.section.10.2.1">
+<a href="#rfc.section.10.2.1">10.2.1.</a> <a href="#lwm2m-obj" id="lwm2m-obj">The LWM2M Object Model</a>
+</h1>
+<p id="rfc.section.10.2.1.p.1">The OMA LWM2M object model is based on a simple 2 level class hierarchy consisting of Objects and Resources.</p>
+<p id="rfc.section.10.2.1.p.2">An LWM2M Resource is a REST endpoint, allowed to be a single value or an array of values of the same data type.</p>
+<p id="rfc.section.10.2.1.p.3">An LWM2M Object is a resource template and container type that encapsulates a set of related resources. An LWM2M Object represents a specific type of information source; for example, there is a LWM2M Device Management object that represents a network connection, containing resources that represent individual properties like radio signal strength.</p>
+<p id="rfc.section.10.2.1.p.4">Since there may potentially be more than one of a given type object, for example more than one network connection, LWM2M defines instances of objects that contain the resources that represent a specific physical thing.</p>
+<p id="rfc.section.10.2.1.p.5">The URI template for LWM2M consists of a base URI followed by Object, Instance, and Resource IDs:</p>
+<p id="rfc.section.10.2.1.p.6">{/base-uri}{/object-id}{/object-instance}{/resource-id}{/resource-instance}</p>
+<p id="rfc.section.10.2.1.p.7">The five variables given here are strings.  base-uri can also have the special value &#8220;undefined&#8221; (sometimes called &#8220;null&#8221; in RFC 6570).  Each of the variables object-instance, resource-id, and resource-instance can be the special value &#8220;undefined&#8221; only if the values behind it in this sequence also are &#8220;undefined&#8221;.  As a special case, object-instance can be &#8220;empty&#8221; (which is different from &#8220;undefined&#8221;) if resource-id is not &#8220;undefined&#8221;.</p>
+<p id="rfc.section.10.2.1.p.8">base-uri := Base URI for LWM2M resources or &#8220;undefined&#8221; for default (empty) base URI</p>
+<p id="rfc.section.10.2.1.p.9">object-id := OMNA (OMA Name Authority) registered object ID (0-65535)</p>
+<p id="rfc.section.10.2.1.p.10">object-instance := Object instance identifier (0-65535) or &#8220;undefined&#8221;/&#8221;empty&#8221; (see above)) to refer to all instances of an object ID</p>
+<p id="rfc.section.10.2.1.p.11">resource-id := OMNA (OMA Name Authority) registered resource ID (0-65535) or &#8220;undefined&#8221; to refer to all resources within an instance</p>
+<p id="rfc.section.10.2.1.p.12">resource-instance := Resource instance identifier or &#8220;undefined&#8221; to refer to single instance of a resource</p>
+<p id="rfc.section.10.2.1.p.13">LWM2M IDs are 16 bit unsigned integers represented in decimal (no leading zeroes except for the value 0) by URI format strings. For example, a LWM2M URI might be:</p>
+<pre>
+/1/0/1
+</pre>
+<p id="rfc.section.10.2.1.p.14">The base uri is empty, the Object ID is 1, the instance ID is 0, the resource ID is 1, and the resource instance is &#8220;undefined&#8221;. This example URI points to internal resource 1, which represents the registration lifetime configured, in instance 0 of a type 1 object (LWM2M Server Object).</p>
+<h1 id="rfc.section.10.2.2">
+<a href="#rfc.section.10.2.2">10.2.2.</a> <a href="#lwm2m-reg" id="lwm2m-reg">LWM2M Register Endpoint</a>
+</h1>
+<p id="rfc.section.10.2.2.p.1">LWM2M defines a registration interface based on the REST API, described in <a href="#rd" class="xref">Section 5</a>. The RD registration URI path of the LWM2M Resource Directory is specified to be &#8220;/rd&#8221;.</p>
+<p id="rfc.section.10.2.2.p.2">LWM2M endpoints register object IDs, for example &lt;/1&gt;, to indicate that a particular object type is supported, and register object instances, for example &lt;/1/0&gt;, to indicate that a particular instance of that object type exists.</p>
+<p id="rfc.section.10.2.2.p.3">Resources within the LWM2M object instance are not registered with the RD, but may be discovered by reading the resource links from the object instance using GET with a CoAP Content-Format of application/link-format. Resources may also be read as a structured object by performing a GET to the object instance with a Content-Format of senml+json.</p>
+<p id="rfc.section.10.2.2.p.4">When an LWM2M object or instance is registered, this indicates to the LWM2M server that the object and its resources are available for management and service enablement (REST API) operations.</p>
+<p id="rfc.section.10.2.2.p.5">LWM2M endpoints may use the following RD registration parameters as defined in <a href="#tab-registry" class="xref">Table 2</a> :</p>
+<pre>
+ep - Endpoint Name
+lt - registration lifetime
+</pre>
+<p id="rfc.section.10.2.2.p.6">Endpoint Name is mandatory, all other registration parameters are optional.</p>
+<p id="rfc.section.10.2.2.p.7">Additional optional LWM2M registration parameters are defined:</p>
+<div id="rfc.table.5"></div>
+<div id="tab-lwm2m-registry"></div>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+<caption>LWM2M Additional Registration Parameters</caption>
+<thead><tr>
+<th class="left">Name</th>
+<th class="left">Query</th>
+<th class="left">Validity</th>
+<th class="left">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="left">Protocol Binding</td>
+<td class="left">b</td>
+<td class="left">{&#8220;U&#8221;,UQ&#8221;,&#8221;S&#8221;,&#8221;SQ&#8221;,&#8221;US&#8221;,&#8221;UQS&#8221;}</td>
+<td class="left">Available Protocols</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="left"></td>
+<td class="left"></td>
+<td class="left"></td>
+</tr>
+<tr>
+<td class="left">LWM2M Version</td>
+<td class="left">ver</td>
+<td class="left">1.0</td>
+<td class="left">Spec Version</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="left"></td>
+<td class="left"></td>
+<td class="left"></td>
+</tr>
+<tr>
+<td class="left">SMS Number</td>
+<td class="left">sms</td>
+<td class="left"></td>
+<td class="left">MSISDN</td>
+</tr>
+</tbody>
+</table>
+<p id="rfc.section.10.2.2.p.8">The following RD registration parameters are not currently specified for use in LWM2M:</p>
+<pre>
+et - Endpoint Type
+con - Context
+</pre>
+<p id="rfc.section.10.2.2.p.9">The endpoint registration must include a payload containing links to all supported objects and existing object instances, optionally including the appropriate link-format relations.</p>
+<p id="rfc.section.10.2.2.p.10">Here is an example LWM2M registration payload:</p>
+<pre>
+&lt;/1&gt;,&lt;/1/0&gt;,&lt;/3/0&gt;,&lt;/5&gt;
+</pre>
+<p id="rfc.section.10.2.2.p.11">This link format payload indicates that object ID 1 (LWM2M Server Object) is supported, with a single instance 0 existing, object ID 3 (LWM2M Device object) is supported, with a single instance 0 existing, and object 5 (LWM2M Firmware Object) is supported, with no existing instances.</p>
+<h1 id="rfc.section.10.2.3">
+<a href="#rfc.section.10.2.3">10.2.3.</a> <a href="#lwm2m-regupdate" id="lwm2m-regupdate">LWM2M Update Endpoint Registration</a>
+</h1>
+<p id="rfc.section.10.2.3.p.1">An LWM2M Registration update proceeds as described in <a href="#update" class="xref">Section 5.4.1</a>, and adds some optional parameter updates:</p>
+<pre>
+lt - Registration Lifetime
+b - Protocol Binding
+sms - MSISDN
+link payload - new or modified links
+</pre>
+<p id="rfc.section.10.2.3.p.2">A Registration update is also specified to be used to update the LWM2M server whenever the endpoint&#8217;s UDP port or IP address are changed.</p>
+<h1 id="rfc.section.10.2.4">
+<a href="#rfc.section.10.2.4">10.2.4.</a> <a href="#lwm2m-dereg" id="lwm2m-dereg">LWM2M De-Register Endpoint</a>
+</h1>
+<p id="rfc.section.10.2.4.p.1">LWM2M allows for de-registration using the delete method on the returned location from the initial registration operation. LWM2M de-registration proceeds as described in <a href="#removal" class="xref">Section 5.4.2</a>.</p>
+<h1 id="rfc.section.11">
+<a href="#rfc.section.11">11.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
+</h1>
+<p id="rfc.section.11.p.1">Oscar Novo, Srdjan Krco, Szymon Sasin, Kerry Lynn, Esko Dijk, Anders Brandt, Matthieu Vial, Mohit Sethi, Sampo Ukkola, Linyi Tian, Chistian Amsuss, and Jan Newmarch have provided helpful comments, discussions and ideas to improve and shape this document. Zach would also like to thank his colleagues from the EU FP7 SENSEI project, where many of the resource directory concepts were originally developed.</p>
+<h1 id="rfc.section.12">
+<a href="#rfc.section.12">12.</a> <a href="#changelog" id="changelog">Changelog</a>
+</h1>
+<p id="rfc.section.12.p.1">changes from -09 to -10</p>
+<p></p>
+
+<ul>
+<li>removed &#8220;ins&#8221; and &#8220;exp&#8221; link-format extensions.</li>
+<li>removed all text concerning DNS-SD.</li>
+<li>removed inconsistency in RDAO text.</li>
+<li>suggestions taken over from various sources</li>
+<li>replaced &#8220;Function Set&#8221; with &#8220;REST API&#8221;, &#8220;base URI&#8221;, &#8220;base path&#8221;</li>
+<li>moved simple registration to registration section</li>
+</ul>
+<p id="rfc.section.12.p.3">changes from -08 to -09</p>
+<p></p>
+
+<ul>
+<li>clarified the &#8220;example use&#8221; of the base RD resource values /rd, /rd-lookup, and /rd-group.</li>
+<li>changed &#8220;ins&#8221; ABNF notation.</li>
+<li>various editorial improvements, including in examples</li>
+<li>clarifications for RDAO</li>
+</ul>
+<p id="rfc.section.12.p.5">changes from -07 to -08</p>
+<p></p>
+
+<ul>
+<li>removed link target value returned from domain and group lookup types</li>
+<li>Maximum length of domain parameter 63 bytes for consistency with group</li>
+<li>removed option for simple POST of link data, don&#8217;t require a .well-known/core resource to accept POST data and handle it in a special way; we already have /rd for that</li>
+<li>add IPv6 ND Option for discovery of an RD</li>
+<li>clarify group configuration section 6.1 that endpoints must be registered before including them in a group</li>
+<li>removed all superfluous client-server diagrams</li>
+<li>simplified lighting example</li>
+<li>introduced Commissioning Tool</li>
+<li>RD-Look-up text is extended.</li>
+</ul>
+<p id="rfc.section.12.p.7">changes from -06 to -07</p>
+<p></p>
+
+<ul>
+<li>added text in the discovery section to allow content format hints to be exposed in the discovery link attributes</li>
+<li>editorial updates to section 9</li>
+<li>update author information</li>
+<li>minor text corrections</li>
+</ul>
+<p id="rfc.section.12.p.9">Changes from -05 to -06</p>
+<p></p>
+
+<ul><li>added note that the PATCH section is contingent on the progress of the PATCH method</li></ul>
+<p id="rfc.section.12.p.11">changes from -04 to -05</p>
+<p></p>
+
+<ul>
+<li>added Update Endpoint Links using PATCH</li>
+<li>http access made explicit in interface specification</li>
+<li>Added http examples</li>
+</ul>
+<p id="rfc.section.12.p.13">Changes from -03 to -04:</p>
+<p></p>
+
+<ul>
+<li>Added http response codes</li>
+<li>Clarified endpoint name usage</li>
+<li>Add application/link-format+cbor content-format</li>
+</ul>
+<p id="rfc.section.12.p.15">Changes from -02 to -03:</p>
+<p></p>
+
+<ul>
+<li>Added an example for lighting and DNS integration</li>
+<li>Added an example for RD use in OMA LWM2M</li>
+<li>Added Read Links operation for link inspection by endpoints</li>
+<li>Expanded DNS-SD section</li>
+<li>Added draft authors Peter van der Stok and Michael Koster</li>
+</ul>
+<p id="rfc.section.12.p.17">Changes from -01 to -02:</p>
+<p></p>
+
+<ul>
+<li>Added a catalogue use case.</li>
+<li>Changed the registration update to a POST with optional link format payload. Removed the endpoint type update from the update.</li>
+<li>Additional examples section added for more complex use cases.</li>
+<li>New DNS-SD mapping section.</li>
+<li>Added text on endpoint identification and authentication.</li>
+<li>Error code 4.04 added to Registration Update and Delete requests.</li>
+<li>Made 63 bytes a SHOULD rather than a MUST for endpoint name and resource type parameters.</li>
+</ul>
+<p id="rfc.section.12.p.19">Changes from -00 to -01:</p>
+<p></p>
+
+<ul>
+<li>Removed the ETag validation feature.</li>
+<li>Place holder for the DNS-SD mapping section.</li>
+<li>Explicitly disabled GET or POST on returned Location.</li>
+<li>New registry for RD parameters.</li>
+<li>Added support for the JSON Link Format.</li>
+<li>Added reference to the Groupcomm WG draft.</li>
+</ul>
+<p id="rfc.section.12.p.21">Changes from -05 to WG Document -00:</p>
+<p></p>
+
+<ul><li>Updated the version and date.</li></ul>
+<p id="rfc.section.12.p.23">Changes from -04 to -05:</p>
+<p></p>
+
+<ul>
+<li>Restricted Update to parameter updates.</li>
+<li>Added pagination support for the Lookup interface.</li>
+<li>Minor editing, bug fixes and reference updates.</li>
+<li>Added group support.</li>
+<li>Changed rt to et for the registration and update interface.</li>
+</ul>
+<p id="rfc.section.12.p.25">Changes from -03 to -04:</p>
+<p></p>
+
+<ul>
+<li>Added the ins= parameter back for the DNS-SD mapping.</li>
+<li>Integrated the Simple Directory Discovery from Carsten.</li>
+<li>Editorial improvements.</li>
+<li>Fixed the use of ETags.</li>
+<li>Fixed tickets 383 and 372</li>
+</ul>
+<p id="rfc.section.12.p.27">Changes from -02 to -03:</p>
+<p></p>
+
+<ul>
+<li>Changed the endpoint name back to a single registration parameter ep= and removed the h= and ins= parameters.</li>
+<li>Updated REST interface descriptions to use RFC6570 URI Template format.</li>
+<li>Introduced an improved RD Lookup design as its own function set.</li>
+<li>Improved the security considerations section.</li>
+<li>Made the POST registration interface idempotent by requiring the ep= parameter to be present.</li>
+</ul>
+<p id="rfc.section.12.p.29">Changes from -01 to -02:</p>
+<p></p>
+
+<ul>
+<li>Added a terminology section.</li>
+<li>Changed the inclusion of an ETag in registration or update to a MAY.</li>
+<li>Added the concept of an RD Domain and a registration parameter for it.</li>
+<li>Recommended the Location returned from a registration to be stable, allowing for endpoint and Domain information to be changed during updates.</li>
+<li>Changed the lookup interface to accept endpoint and Domain as query string parameters to control the scope of a lookup.</li>
+</ul>
+<h1 id="rfc.references">
+<a href="#rfc.references">13.</a> References</h1>
+<h1 id="rfc.references.1">
+<a href="#rfc.references.1">13.1.</a> Normative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="I-D.ietf-core-links-json">[I-D.ietf-core-links-json]</b></td>
+<td class="top">
+<a>Li, K.</a>, <a>Rahman, A.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-links-json-08">Representing Constrained RESTful Environments (CoRE) Link Format in JSON and CBOR</a>", Internet-Draft draft-ietf-core-links-json-08, April 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+<td class="top">
+<a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC3986">[RFC3986]</b></td>
+<td class="top">
+<a>Berners-Lee, T.</a>, <a>Fielding, R.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5226">[RFC5226]</b></td>
+<td class="top">
+<a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5988">[RFC5988]</b></td>
+<td class="top">
+<a>Nottingham, M.</a>, "<a href="http://tools.ietf.org/html/rfc5988">Web Linking</a>", RFC 5988, DOI 10.17487/RFC5988, October 2010.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6570">[RFC6570]</b></td>
+<td class="top">
+<a>Gregorio, J.</a>, <a>Fielding, R.</a>, <a>Hadley, M.</a>, <a>Nottingham, M.</a> and <a>D. Orchard</a>, "<a href="http://tools.ietf.org/html/rfc6570">URI Template</a>", RFC 6570, DOI 10.17487/RFC6570, March 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6690">[RFC6690]</b></td>
+<td class="top">
+<a>Shelby, Z.</a>, "<a href="http://tools.ietf.org/html/rfc6690">Constrained RESTful Environments (CoRE) Link Format</a>", RFC 6690, DOI 10.17487/RFC6690, August 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7396">[RFC7396]</b></td>
+<td class="top">
+<a>Hoffman, P.</a> and <a>J. Snell</a>, "<a href="http://tools.ietf.org/html/rfc7396">JSON Merge Patch</a>", RFC 7396, DOI 10.17487/RFC7396, October 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8132">[RFC8132]</b></td>
+<td class="top">
+<a>van der Stok, P.</a>, <a>Bormann, C.</a> and <a>A. Sehgal</a>, "<a href="http://tools.ietf.org/html/rfc8132">PATCH and FETCH Methods for the Constrained Application Protocol (CoAP)</a>", RFC 8132, DOI 10.17487/RFC8132, April 2017.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.references.2">
+<a href="#rfc.references.2">13.2.</a> Informative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="RFC6775">[RFC6775]</b></td>
+<td class="top">
+<a>Shelby, Z.</a>, <a>Chakrabarti, S.</a>, <a>Nordmark, E.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/rfc6775">Neighbor Discovery Optimization for IPv6 over Low-Power Wireless Personal Area Networks (6LoWPANs)</a>", RFC 6775, DOI 10.17487/RFC6775, November 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7230">[RFC7230]</b></td>
+<td class="top">
+<a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, DOI 10.17487/RFC7230, June 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7252">[RFC7252]</b></td>
+<td class="top">
+<a>Shelby, Z.</a>, <a>Hartke, K.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/rfc7252">The Constrained Application Protocol (CoAP)</a>", RFC 7252, DOI 10.17487/RFC7252, June 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7390">[RFC7390]</b></td>
+<td class="top">
+<a>Rahman, A.</a> and <a>E. Dijk</a>, "<a href="http://tools.ietf.org/html/rfc7390">Group Communication for the Constrained Application Protocol (CoAP)</a>", RFC 7390, DOI 10.17487/RFC7390, October 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7641">[RFC7641]</b></td>
+<td class="top">
+<a>Hartke, K.</a>, "<a href="http://tools.ietf.org/html/rfc7641">Observing Resources in the Constrained Application Protocol (CoAP)</a>", RFC 7641, DOI 10.17487/RFC7641, September 2015.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Zach Shelby</span> 
+	  <span class="n hidden">
+		<span class="family-name">Shelby</span>
+	  </span>
+	</span>
+	<span class="org vcardline">ARM</span>
+	<span class="adr">
+	  <span class="vcardline">150 Rose Orchard</span>
+
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region"></span>
+		<span class="code">95134</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">Phone: +1-408-203-9434</span>
+
+<span class="vcardline">EMail: <a href="mailto:zach.shelby@arm.com">zach.shelby@arm.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Michael Koster</span> 
+	  <span class="n hidden">
+		<span class="family-name">Koster</span>
+	  </span>
+	</span>
+	<span class="org vcardline">SmartThings</span>
+	<span class="adr">
+	  <span class="vcardline">665 Clyde Avenue</span>
+
+	  <span class="vcardline">
+		<span class="locality">Mountain View</span>,  
+		<span class="region"></span>
+		<span class="code">94043</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">Phone: +1-707-502-5136</span>
+
+<span class="vcardline">EMail: <a href="mailto:Michael.Koster@smartthings.com">Michael.Koster@smartthings.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Carsten Bormann</span> 
+	  <span class="n hidden">
+		<span class="family-name">Bormann</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Universitaet Bremen TZI</span>
+	<span class="adr">
+	  <span class="vcardline">Postfach 330440</span>
+
+	  <span class="vcardline">
+		<span class="locality">Bremen</span>,  
+		<span class="region"></span>
+		<span class="code">D-28359</span>
+	  </span>
+	  <span class="country-name vcardline">Germany</span>
+	</span>
+	<span class="vcardline">Phone: +49-421-218-63921</span>
+
+<span class="vcardline">EMail: <a href="mailto:cabo@tzi.org">cabo@tzi.org</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Peter van der Stok</span> 
+	  <span class="n hidden">
+		<span class="family-name">van der Stok</span>
+	  </span>
+	</span>
+	<span class="org vcardline">consultant</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">Phone: +31-492474673 (Netherlands), +33-966015248 (France)</span>
+
+<span class="vcardline">EMail: <a href="mailto:consultancy@vanderstok.org">consultancy@vanderstok.org</a></span>
+
+<span class="vcardline">URI: <a href="www.vanderstok.org">www.vanderstok.org</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Christian Ams&#252;ss</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Ams&#252;ss</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Energy Harvesting Solutions</span>
+	<span class="adr">
+	  <span class="vcardline">Hollandstr. 12/4</span>
+
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code">1020</span>
+	  </span>
+	  <span class="country-name vcardline">Austria</span>
+	</span>
+	<span class="vcardline">Phone: +43-664-9790639</span>
+
+<span class="vcardline">EMail: <a href="mailto:c.amsuess@energyharvesting.at">c.amsuess@energyharvesting.at</a></span>
+
+  </address>
+</div>
+
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/core-wg/resource-directory">Fork me on GitHub</a></div></div>
+</body>
+</html>
