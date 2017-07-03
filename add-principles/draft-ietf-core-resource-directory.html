@@ -560,10 +560,10 @@ address {
 <h1 id="rfc.section.3.1">
 <a href="#rfc.section.3.1">3.1.</a> <a href="#principles" id="principles">Principles</a>
 </h1>
-<p id="rfc.section.3.1.p.1">The Resource Directory is primarily a tool that enables discovery operations that are already present for CoRE devices to happen more efficiently, or across boundaries that would be limiting those operations.</p>
-<p id="rfc.section.3.1.p.2">It provides a cache (in the high-level sense, not as defined in <a href="#RFC7252" class="xref">[RFC7252]</a>/<a href="#RFC2616" class="xref">[RFC2616]</a>) of data that could otherwise only be obtained by directly querying the link-format resources on the target device, or by accessing those resources with a multicast request.</p>
-<p id="rfc.section.3.1.p.3">From that, it follows that no information should be stored in the resource directory that can not be discovered from querying the described device&#8217;s link-format resources directly.</p>
-<p id="rfc.section.3.1.p.4">It also follows that data in the resource directory can only be provided by the device whose descriptions are cached. (Commissioning tools are an exception here because they are thought to act on behalf agents too constrained to present that information themselves). No other client can modify data in the resource directory or even expect those changes to propagate back to its source.</p>
+<p id="rfc.section.3.1.p.1">The Resource Directory is primarily a tool to make discovery operations more efficient than querying /.well-known/core on all connected device, or across boundaries that would be limiting those operations.</p>
+<p id="rfc.section.3.1.p.2">It provides a cache (in the high-level sense, not as defined in <a href="#RFC7252" class="xref">[RFC7252]</a>/<a href="#RFC2616" class="xref">[RFC2616]</a>) of data that could otherwise only be obtained by directly querying the /.well-known/core resource on the target device, or by accessing those resources with a multicast request.</p>
+<p id="rfc.section.3.1.p.3">From that, it follows that no information should be stored in the resource directory that cannot be discovered from querying the described device&#8217;s /.well-known/core resource directly.</p>
+<p id="rfc.section.3.1.p.4">It also follows that data in the resource directory can only be provided by the device whose descriptions are cached or a dedicated Commissioning Tool (CT).  These CTs are thought to act on behalf agents too constrained, or generally unable, to present that information themselves. No other client can modify data in the resource directory or even expect those changes to propagate back to its source.</p>
 <h1 id="rfc.section.3.2">
 <a href="#rfc.section.3.2">3.2.</a> <a href="#architecture" id="architecture">Architecture</a>
 </h1>
