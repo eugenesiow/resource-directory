@@ -1080,8 +1080,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    An update MAY update the lifetime or context registration parameters
    "lt", "con" as in Section 5.3 ) if the previous settings are to be
-   retained.  Parameters that are not being changed changed SHOULD NOT
-   be included in an update.  Adding parameters that have not changed
+   retained.  Parameters that are not being changed SHOULD NOT be
+   included in an update.  Adding parameters that have not changed
    increases the size of the message but does not have any other
    implications.  Parameters MUST be included as query parameters in an
    update operation as in Section 5.3.
@@ -2822,8 +2822,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    [I-D.ietf-core-links-json]
               Li, K., Rahman, A., and C. Bormann, "Representing
               Constrained RESTful Environments (CoRE) Link Format in
-              JSON and CBOR", draft-ietf-core-links-json-08 (work in
-              progress), April 2017.
+              JSON and CBOR", draft-ietf-core-links-json-09 (work in
+              progress), July 2017.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
