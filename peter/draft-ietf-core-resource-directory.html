@@ -334,7 +334,7 @@ address {
 
   <meta name="dct.creator" content="Shelby, Z., Koster, M., Bormann, C., van der Stok, P., and C. Ams&#252;ss, Ed." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-resource-directory-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-7-03" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-3-26" />
   <meta name="dct.abstract" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
   <meta name="description" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
 
@@ -358,7 +358,7 @@ address {
 <td class="right">M. Koster</td>
 </tr>
 <tr>
-<td class="left">Expires: January 4, 2018</td>
+<td class="left">Expires: September 27, 2017</td>
 <td class="right">SmartThings</td>
 </tr>
 <tr>
@@ -387,7 +387,7 @@ address {
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">July 03, 2017</td>
+<td class="right">March 26, 2017</td>
 </tr>
 
     	
@@ -403,7 +403,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 4, 2018.</p>
+<p>This Internet-Draft will expire on September 27, 2017.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -918,7 +918,7 @@ payload:
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
 <p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the intial registration operation.</p>
-<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
+<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
 <p id="rfc.section.5.4.1.p.4">An update MAY optionally add or replace links for the endpoint by including those links in the payload of the update as a CoRE Link Format document. A link is replaced only if all of the target URI and relation type (if present) and anchor value (if present) match.</p>
 <p id="rfc.section.5.4.1.p.5">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
@@ -2050,7 +2050,7 @@ link payload - new or modified links
 <tr>
 <td class="reference"><b id="I-D.ietf-core-links-json">[I-D.ietf-core-links-json]</b></td>
 <td class="top">
-<a>Li, K.</a>, <a>Rahman, A.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-links-json-08">Representing Constrained RESTful Environments (CoRE) Link Format in JSON and CBOR</a>", Internet-Draft draft-ietf-core-links-json-08, April 2017.</td>
+<a>Li, K.</a>, <a>Rahman, A.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-links-json-09">Representing Constrained RESTful Environments (CoRE) Link Format in JSON and CBOR</a>", Internet-Draft draft-ietf-core-links-json-09, July 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
