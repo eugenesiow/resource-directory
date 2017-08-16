@@ -789,6 +789,8 @@ RD Address:             IPv6 address of the RD.
 <a href="#rfc.section.5">5.</a> <a href="#rd" id="rd">Resource Directory</a>
 </h1>
 <p id="rfc.section.5.p.1">This section defines the required set of REST interfaces between a Resource Directory (RD) and endpoints. Although the examples throughout this section assume the use of CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>, these REST interfaces can also be realized using HTTP <a href="#RFC7230" class="xref">[RFC7230]</a>.  In all definitions in this section, both CoAP response codes (with dot notation) and HTTP response codes (without dot notation) are shown. An RD implementing this specification MUST support the discovery, registration, update, lookup, and removal interfaces defined in this section.</p>
+<p id="rfc.section.5.p.2">All operations on the contents of the Resource Directory MUST be atomic and idempotent.</p>
+<p id="rfc.section.5.p.3">A Resource Directory MUST accept query filtering with multiple query parameters in the URI.</p>
 <h1 id="rfc.section.5.1">
 <a href="#rfc.section.5.1">5.1.</a> <a href="#content-formats" id="content-formats">Content Formats</a>
 </h1>
@@ -799,7 +801,7 @@ RD Address:             IPv6 address of the RD.
 <a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">URI Discovery</a>
 </h1>
 <p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. It is however expected that RDs will also be discoverable via other methods depending on the deployment.</p>
-<p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690" class="xref">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.gp&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
+<p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690" class="xref">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.rd-group&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
 <p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
 <p id="rfc.section.5.2.p.4">HTTP does not support multicast and consequently only unicast discovery can be supported using HTTP. Links to Resource Directories MAY be registered in other Resource Directories, and well-known entry points SHOULD be provided to enable the bootstrapping of unicast discovery.</p>
 <p id="rfc.section.5.2.p.5">An RD implementation of this specification MUST support query filtering for the rt parameter as defined in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
@@ -872,7 +874,8 @@ Res: 2.05 Content
 <a href="#rfc.section.5.3">5.3.</a> <a href="#registration" id="registration">Registration</a>
 </h1>
 <p id="rfc.section.5.3.p.1">After discovering the location of an RD, an endpoint MAY register its resources using the registration interface. This interface accepts a POST from an endpoint containing the list of resources to be added to the directory as the message payload in the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>, JSON CoRE Link Format (application/link-format+json), or CBOR CoRE Link Format (application/link-format+cbor)  <a href="#I-D.ietf-core-links-json" class="xref">[I-D.ietf-core-links-json]</a>, along with query parameters indicating the name of the endpoint, and optionally its domain and the lifetime of the registration.  It is expected that other specifications will define further parameters (see <a href="#iana-registry" class="xref">Section 9.3</a>). The RD then creates a new registration resource in the RD and returns its location. An endpoint MUST use that location when refreshing registrations using this interface. Endpoint resources in the RD are kept active for the period indicated by the lifetime parameter. The endpoint is responsible for refreshing the entry within this period using either the registration or update interface. The registration interface MUST be implemented to be idempotent, so that registering twice with the same endpoint parameters ep and d does not create multiple RD entries.  A new registration may be created at any time to supersede an existing registration, replacing the registration parameters and links.</p>
-<p id="rfc.section.5.3.p.2">The registration request interface is specified as follows:</p>
+<p id="rfc.section.5.3.p.2">An empty payload is considered a malformed request.</p>
+<p id="rfc.section.5.3.p.3">The registration request interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -907,7 +910,7 @@ Res: 2.05 Content
 <dt>Content-Format:</dt>
 <dd style="margin-left: 8">application/link-format+cbor</dd>
 </dl>
-<p id="rfc.section.5.3.p.4">The following response codes are defined for this interface:</p>
+<p id="rfc.section.5.3.p.5">The following response codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -922,7 +925,7 @@ Res: 2.05 Content
 <dt>HTTP support:</dt>
 <dd style="margin-left: 8">YES</dd>
 </dl>
-<p id="rfc.section.5.3.p.6">The following example shows an endpoint with the name &#8220;node1&#8221; registering two resources to an RD using this interface. The location &#8220;/rd&#8221; is an example RD location discovered in a request similar to <a href="#example-discovery" class="xref">Figure 6</a>.</p>
+<p id="rfc.section.5.3.p.7">The following example shows an endpoint with the name &#8220;node1&#8221; registering two resources to an RD using this interface. The location &#8220;/rd&#8221; is an example RD location discovered in a request similar to <a href="#example-discovery" class="xref">Figure 6</a>.</p>
 <pre>
 Req: POST coap://rd.example.com/rd?ep=node1
 Content-Format: 40
@@ -933,7 +936,7 @@ Payload:
 Res: 2.01 Created
 Location: /rd/4521
 </pre>
-<p id="rfc.section.5.3.p.7">A Resource Directory may optionally support HTTP. Here is an example of the same registration operation above, when done using HTTP.</p>
+<p id="rfc.section.5.3.p.8">A Resource Directory may optionally support HTTP. Here is an example of the same registration operation above, when done using HTTP.</p>
 <pre>
 Req: POST /rd?ep=node1&amp;con=http://[2001:db8::1:1] HTTP/1.1
 Host : example.com
@@ -956,9 +959,10 @@ Location: /rd/4521
 <h1 id="rfc.section.5.3.2">
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
 </h1>
-<p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable occasionally sends a POST request to the <samp>/.well-known/core</samp> URI of any candidate directory server that it finds. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
+<p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of any candidate directory server that it finds. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
 <p id="rfc.section.5.3.2.p.2">The endpoint MUST include the endpoint name and MAY include the registration parameters d, lt, and et, in the POST request as per <a href="#registration" class="xref">Section 5.3</a>.</p>
-<p id="rfc.section.5.3.2.p.3">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
+<p id="rfc.section.5.3.2.p.3">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
+<p id="rfc.section.5.3.2.p.4">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
 <pre>
 Req:(to RD server from [ff02::1])
 POST coap://rd.example.com/.well-known/core?lt=6000;ep=node1
@@ -1005,7 +1009,7 @@ payload:
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
-<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the intial registration operation.</p>
+<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the intial registration operation. The POST request (in contrats to PUT) allows replacing selection of a resource.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
 <p id="rfc.section.5.4.1.p.4">An update MAY optionally add or replace links for the endpoint by including those links in the payload of the update as a CoRE Link Format document. A link is replaced only if all of the target URI and relation type (if present) and anchor value (if present) match.</p>
@@ -1084,7 +1088,8 @@ Res: 2.04 Changed
 <a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#removal" id="removal">Registration Removal</a>
 </h1>
 <p id="rfc.section.5.4.2.p.1">Although RD entries have soft state and will eventually timeout after their lifetime, an endpoint SHOULD explicitly remove its entry from the RD if it knows it will no longer be available (for example on shut-down). This is accomplished using a removal interface on the RD by performing a DELETE on the endpoint resource.</p>
-<p id="rfc.section.5.4.2.p.2">The removal request interface is specified as follows:</p>
+<p id="rfc.section.5.4.2.p.2">Removed endpoints are implicitly removed from the groups to which they belong.</p>
+<p id="rfc.section.5.4.2.p.3">The removal request interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -1103,7 +1108,7 @@ Res: 2.04 Changed
 <p> </p>
 </dd>
 </dl>
-<p id="rfc.section.5.4.2.p.4">The following responses codes are defined for this interface:</p>
+<p id="rfc.section.5.4.2.p.5">The following responses codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -1116,8 +1121,8 @@ Res: 2.04 Changed
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 </dl>
-<p id="rfc.section.5.4.2.p.6">HTTP support: YES</p>
-<p id="rfc.section.5.4.2.p.7">The following examples shows successful removal of the endpoint from the RD with example location value /rd/4521.</p>
+<p id="rfc.section.5.4.2.p.7">HTTP support: YES</p>
+<p id="rfc.section.5.4.2.p.8">The following examples shows successful removal of the endpoint from the RD with example location value /rd/4521.</p>
 <pre>
 Req: DELETE /rd/4521
 
@@ -1546,7 +1551,7 @@ Req: GET /rd-lookup/gp
 
 Res: 2.05 Content
 &lt;&gt;;gp="lights1";d="example.com"
-&lt;&gt;;gp="lights2";d="ecample.com"
+&lt;&gt;;gp="lights2";d="example.com"
 </pre>
 <p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
 <pre>
@@ -1986,11 +1991,19 @@ link payload - new or modified links
 <h1 id="rfc.section.11">
 <a href="#rfc.section.11">11.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
 </h1>
-<p id="rfc.section.11.p.1">Oscar Novo, Srdjan Krco, Szymon Sasin, Kerry Lynn, Esko Dijk, Anders Brandt, Matthieu Vial, Mohit Sethi, Sampo Ukkola, Linyi Tian, Chistian Amsuss, and Jan Newmarch have provided helpful comments, discussions and ideas to improve and shape this document. Zach would also like to thank his colleagues from the EU FP7 SENSEI project, where many of the resource directory concepts were originally developed.</p>
+<p id="rfc.section.11.p.1">Oscar Novo, Srdjan Krco, Szymon Sasin, Kerry Lynn, Esko Dijk, Anders Brandt, Matthieu Vial, Jim Schaad, Mohit Sethi, Hauke Petersen, Sampo Ukkola, Linyi Tian, and Jan Newmarch have provided helpful comments, discussions and ideas to improve and shape this document. Zach would also like to thank his colleagues from the EU FP7 SENSEI project, where many of the resource directory concepts were originally developed.</p>
 <h1 id="rfc.section.12">
 <a href="#rfc.section.12">12.</a> <a href="#changelog" id="changelog">Changelog</a>
 </h1>
-<p id="rfc.section.12.p.1">changes from -09 to -10</p>
+<p id="rfc.section.12.p.1">changes from -11 to -12</p>
+<p></p>
+
+<ul>
+<li>added ER diagram</li>
+<li>updated discovery text</li>
+<li>improved text on: atomicity, idempotency, multiple query, ep removal, simple registration</li>
+</ul>
+<p id="rfc.section.12.p.3">changes from -09 to -10</p>
 <p></p>
 
 <ul>
@@ -2001,7 +2014,7 @@ link payload - new or modified links
 <li>replaced &#8220;Function Set&#8221; with &#8220;REST API&#8221;, &#8220;base URI&#8221;, &#8220;base path&#8221;</li>
 <li>moved simple registration to registration section</li>
 </ul>
-<p id="rfc.section.12.p.3">changes from -08 to -09</p>
+<p id="rfc.section.12.p.5">changes from -08 to -09</p>
 <p></p>
 
 <ul>
@@ -2010,7 +2023,7 @@ link payload - new or modified links
 <li>various editorial improvements, including in examples</li>
 <li>clarifications for RDAO</li>
 </ul>
-<p id="rfc.section.12.p.5">changes from -07 to -08</p>
+<p id="rfc.section.12.p.7">changes from -07 to -08</p>
 <p></p>
 
 <ul>
@@ -2024,7 +2037,7 @@ link payload - new or modified links
 <li>introduced Commissioning Tool</li>
 <li>RD-Look-up text is extended.</li>
 </ul>
-<p id="rfc.section.12.p.7">changes from -06 to -07</p>
+<p id="rfc.section.12.p.9">changes from -06 to -07</p>
 <p></p>
 
 <ul>
@@ -2033,11 +2046,11 @@ link payload - new or modified links
 <li>update author information</li>
 <li>minor text corrections</li>
 </ul>
-<p id="rfc.section.12.p.9">Changes from -05 to -06</p>
+<p id="rfc.section.12.p.11">Changes from -05 to -06</p>
 <p></p>
 
 <ul><li>added note that the PATCH section is contingent on the progress of the PATCH method</li></ul>
-<p id="rfc.section.12.p.11">changes from -04 to -05</p>
+<p id="rfc.section.12.p.13">changes from -04 to -05</p>
 <p></p>
 
 <ul>
@@ -2045,7 +2058,7 @@ link payload - new or modified links
 <li>http access made explicit in interface specification</li>
 <li>Added http examples</li>
 </ul>
-<p id="rfc.section.12.p.13">Changes from -03 to -04:</p>
+<p id="rfc.section.12.p.15">Changes from -03 to -04:</p>
 <p></p>
 
 <ul>
@@ -2053,7 +2066,7 @@ link payload - new or modified links
 <li>Clarified endpoint name usage</li>
 <li>Add application/link-format+cbor content-format</li>
 </ul>
-<p id="rfc.section.12.p.15">Changes from -02 to -03:</p>
+<p id="rfc.section.12.p.17">Changes from -02 to -03:</p>
 <p></p>
 
 <ul>
@@ -2063,7 +2076,7 @@ link payload - new or modified links
 <li>Expanded DNS-SD section</li>
 <li>Added draft authors Peter van der Stok and Michael Koster</li>
 </ul>
-<p id="rfc.section.12.p.17">Changes from -01 to -02:</p>
+<p id="rfc.section.12.p.19">Changes from -01 to -02:</p>
 <p></p>
 
 <ul>
@@ -2075,7 +2088,7 @@ link payload - new or modified links
 <li>Error code 4.04 added to Registration Update and Delete requests.</li>
 <li>Made 63 bytes a SHOULD rather than a MUST for endpoint name and resource type parameters.</li>
 </ul>
-<p id="rfc.section.12.p.19">Changes from -00 to -01:</p>
+<p id="rfc.section.12.p.21">Changes from -00 to -01:</p>
 <p></p>
 
 <ul>
@@ -2086,11 +2099,11 @@ link payload - new or modified links
 <li>Added support for the JSON Link Format.</li>
 <li>Added reference to the Groupcomm WG draft.</li>
 </ul>
-<p id="rfc.section.12.p.21">Changes from -05 to WG Document -00:</p>
+<p id="rfc.section.12.p.23">Changes from -05 to WG Document -00:</p>
 <p></p>
 
 <ul><li>Updated the version and date.</li></ul>
-<p id="rfc.section.12.p.23">Changes from -04 to -05:</p>
+<p id="rfc.section.12.p.25">Changes from -04 to -05:</p>
 <p></p>
 
 <ul>
@@ -2100,7 +2113,7 @@ link payload - new or modified links
 <li>Added group support.</li>
 <li>Changed rt to et for the registration and update interface.</li>
 </ul>
-<p id="rfc.section.12.p.25">Changes from -03 to -04:</p>
+<p id="rfc.section.12.p.27">Changes from -03 to -04:</p>
 <p></p>
 
 <ul>
@@ -2110,7 +2123,7 @@ link payload - new or modified links
 <li>Fixed the use of ETags.</li>
 <li>Fixed tickets 383 and 372</li>
 </ul>
-<p id="rfc.section.12.p.27">Changes from -02 to -03:</p>
+<p id="rfc.section.12.p.29">Changes from -02 to -03:</p>
 <p></p>
 
 <ul>
@@ -2120,7 +2133,7 @@ link payload - new or modified links
 <li>Improved the security considerations section.</li>
 <li>Made the POST registration interface idempotent by requiring the ep= parameter to be present.</li>
 </ul>
-<p id="rfc.section.12.p.29">Changes from -01 to -02:</p>
+<p id="rfc.section.12.p.31">Changes from -01 to -02:</p>
 <p></p>
 
 <ul>
