@@ -2953,13 +2953,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <http://www.rfc-editor.org/info/rfc2119>.
+              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
+              editor.org/info/rfc2119>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
-              <http://www.rfc-editor.org/info/rfc3986>.
+              <https://www.rfc-editor.org/info/rfc3986>.
 
 
 
@@ -2972,49 +2972,49 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", RFC 5226,
-              DOI 10.17487/RFC5226, May 2008,
-              <http://www.rfc-editor.org/info/rfc5226>.
+              DOI 10.17487/RFC5226, May 2008, <https://www.rfc-
+              editor.org/info/rfc5226>.
 
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
-              DOI 10.17487/RFC5988, October 2010,
-              <http://www.rfc-editor.org/info/rfc5988>.
+              DOI 10.17487/RFC5988, October 2010, <https://www.rfc-
+              editor.org/info/rfc5988>.
 
    [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
               and D. Orchard, "URI Template", RFC 6570,
-              DOI 10.17487/RFC6570, March 2012,
-              <http://www.rfc-editor.org/info/rfc6570>.
+              DOI 10.17487/RFC6570, March 2012, <https://www.rfc-
+              editor.org/info/rfc6570>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
-              <http://www.rfc-editor.org/info/rfc6690>.
+              <https://www.rfc-editor.org/info/rfc6690>.
 
    [RFC7396]  Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396,
-              DOI 10.17487/RFC7396, October 2014,
-              <http://www.rfc-editor.org/info/rfc7396>.
+              DOI 10.17487/RFC7396, October 2014, <https://www.rfc-
+              editor.org/info/rfc7396>.
 
    [RFC8132]  van der Stok, P., Bormann, C., and A. Sehgal, "PATCH and
               FETCH Methods for the Constrained Application Protocol
               (CoAP)", RFC 8132, DOI 10.17487/RFC8132, April 2017,
-              <http://www.rfc-editor.org/info/rfc8132>.
+              <https://www.rfc-editor.org/info/rfc8132>.
 
 13.2.  Informative References
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
-              DOI 10.17487/RFC2616, June 1999,
-              <http://www.rfc-editor.org/info/rfc2616>.
+              DOI 10.17487/RFC2616, June 1999, <https://www.rfc-
+              editor.org/info/rfc2616>.
 
    [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
               Bormann, "Neighbor Discovery Optimization for IPv6 over
               Low-Power Wireless Personal Area Networks (6LoWPANs)",
               RFC 6775, DOI 10.17487/RFC6775, November 2012,
-              <http://www.rfc-editor.org/info/rfc6775>.
+              <https://www.rfc-editor.org/info/rfc6775>.
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
-              <http://www.rfc-editor.org/info/rfc7230>.
+              <https://www.rfc-editor.org/info/rfc7230>.
 
 
 
@@ -3028,18 +3028,18 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
-              DOI 10.17487/RFC7252, June 2014,
-              <http://www.rfc-editor.org/info/rfc7252>.
+              DOI 10.17487/RFC7252, June 2014, <https://www.rfc-
+              editor.org/info/rfc7252>.
 
    [RFC7390]  Rahman, A., Ed. and E. Dijk, Ed., "Group Communication for
               the Constrained Application Protocol (CoAP)", RFC 7390,
-              DOI 10.17487/RFC7390, October 2014,
-              <http://www.rfc-editor.org/info/rfc7390>.
+              DOI 10.17487/RFC7390, October 2014, <https://www.rfc-
+              editor.org/info/rfc7390>.
 
    [RFC7641]  Hartke, K., "Observing Resources in the Constrained
               Application Protocol (CoAP)", RFC 7641,
-              DOI 10.17487/RFC7641, September 2015,
-              <http://www.rfc-editor.org/info/rfc7641>.
+              DOI 10.17487/RFC7641, September 2015, <https://www.rfc-
+              editor.org/info/rfc7641>.
 
 13.3.  URIs
 
