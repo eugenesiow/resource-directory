@@ -152,8 +152,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    description and discovery of resources hosted by constrained web
    servers is specified by the CoRE Link Format [RFC6690].  However,
    [RFC6690] only describes how to discover resources from the web
-   server that hosts them by requesting "/.well-known/core".  In many
-   M2M scenarios, direct discovery of resources is not practical due to
+   server that hosts them by querying "/.well-known/core".  In many M2M
+   scenarios, direct discovery of resources is not practical due to
    sleeping nodes, disperse networks, or networks where multicast
    traffic is inefficient.  These problems can be solved by employing an
    entity called a Resource Directory (RD), which hosts descriptions of
@@ -199,10 +199,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Domain
       In the context of a Resource Directory, a domain is a logical
-      grouping of endpoints.  This specification assumes that the list
-      of Domains supported by an RD is pre-configured by that RD.  When
-      a domain is exported to DNS, the domain value equates to the DNS
-      domain name.
+      grouping of endpoints.
 
    Group
       In the context of a Resource Directory, a group is a logical
@@ -218,6 +215,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
       the associated domain of the registration.
 
    Context
+      When registering links to a Resource Directory, the Context refers
+      to the scheme, address, port, and base path for all the links
+      registered on behalf of an endpoint, of the general form
 
 
 
@@ -226,9 +226,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 4]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      When registering links to a Resource Directory, the Context refers
-      to the scheme, address, port, and base path for all the links
-      registered on behalf of an endpoint, of the general form
       scheme://host:port/path/ where the client may explicitly set the
       scheme and host, and may supply the port and path as optional
       parameters.  When the context of a registration is explicitly set,
@@ -274,6 +271,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The resource directory architecture is illustrated in Figure 1.  A
    Resource Directory (RD) is used as a repository for Web Links
    [RFC5988] about resources hosted on other web servers, which are
+   called endpoints (EP).  An endpoint is a web server associated with a
+   scheme, IP address and port (called Context), thus a physical node
+   may host one or more endpoints.  The RD implements a set of REST
 
 
 
@@ -282,9 +282,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 5]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   called endpoints (EP).  An endpoint is a web server associated with a
-   scheme, IP address and port (called Context), thus a physical node
-   may host one or more endpoints.  The RD implements a set of REST
    interfaces for endpoints to register and maintain sets of Web Links
    (called resource directory registration entries), and for clients to
    lookup resources from the RD or maintain groups.  Endpoints
@@ -333,6 +330,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
 
+
+
+
 Shelby, et al.         Expires September 27, 2017               [Page 6]
 
 Internet-Draft           CoRE Resource Directory              March 2017
@@ -367,8 +367,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Attributes (ovals) are used for concepts that exist only in
    connection with related entity.  Relations (diamonds) give a semantic
    meaning to the relation between entities.  Numbers specify the
-   cardinality of the relations.  The relations of the values of the
-   attributes are explained in the interface sections.
+   cardinality of the relations.  The relations between the values of
+   the attributes are explained in the interface sections.
 
                   +----------------------+
                   |   /.well-known/core  |
@@ -459,15 +459,16 @@ Internet-Draft           CoRE Resource Directory              March 2017
    focused on development of M2M solutions in order to expand the
    business to the new type of users: machines.  The machines are
    connected directly to a mobile network using an appropriate embedded
-   air interface (GSM/GPRS, WCDMA, LTE) or via a gateway providing short
-   and wide range wireless interfaces.  From the system design point of
-   view, the ambition is to design horizontal solutions that can enable
-   utilization of machines in different applications depending on their
-   current availability and capabilities as well as application
-   requirements, thus avoiding silo like solutions.  One of the crucial
-   enablers of such design is the ability to discover resources
-   (machines -- endpoints) capable of providing required information at
-   a given time or acting on instructions from the end users.
+   wireless interface (GSM/GPRS, WCDMA, LTE) or via a gateway providing
+   short and wide range wireless interfaces.  From the system design
+   point of view, the ambition is to design horizontal solutions that
+   can enable utilization of machines in different applications
+   depending on their current availability and capabilities as well as
+   application requirements, thus avoiding silo like solutions.  One of
+   the crucial enablers of such design is the ability to discover
+   resources (machines -- endpoints) capable of providing required
+   information at a given time or acting on instructions from the end
+   users.
 
    In a typical scenario, during a boot-up procedure (and periodically
    afterwards), the machines (endpoints) register with a Resource
@@ -497,7 +498,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    applications are demanding.  Home automation usually relies on run-
    time discovery to commission the system, whereas in building
    automation a combination of professional commissioning and run-time
-   discovery is used.  Both home and building automation involve peer-
 
 
 
@@ -506,6 +506,7 @@ Shelby, et al.         Expires September 27, 2017               [Page 9]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   discovery is used.  Both home and building automation involve peer-
    to-peer interactions between endpoints, and involve battery-powered
    sleeping devices.
 
@@ -553,7 +554,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Directory (RD) can obtain candidate IP addresses of RD servers
    dependent on the operational conditions.  It is assumed that the
    nodes looking for a Resource Directory are connected to a Border
-   Router (6LBR).  Given the various existing network installation
 
 
 
@@ -562,15 +562,16 @@ Shelby, et al.         Expires September 27, 2017              [Page 10]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   Router (6LBR).  Given the various existing network installation
    procedures, the 6LBR is either connected or disconnected from the
    Internet and its services like DHCP and DNS.  Two conditions are
    separately considered: (1) Internet services present, and (2) no
    Internet services present.
 
-   When no Internet services are present the following techniques are
+   When no Internet services are present, the following techniques are
    used (in random order):
 
-   1.  Sending a Multicast to [ff02::1}/.well-known/core with
+   1.  Sending a Multicast to [ff02::1]/.well-known/core with
        ?rt=core.rd*. The receiving RDs will answer the query.
 
    2.  The Authoritative Border Router Option (ABRO) present in the
@@ -596,7 +597,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
        preconfigured.  All RD directory servers need to configure one of
        their interfaces with this multicast address.
 
-   7.  After installation of mDNS on all node, mDNS can be queried for
+   7.  After installation of mDNS on all nodes, mDNS can be queried for
        the IP-address of RD.
 
    When Internet services are present, the techniques cited above are
@@ -608,7 +609,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
        within the domain of the querying nodes.
 
    2.  Using DHCPv6 with options to be defined.
-
 
 
 
@@ -765,9 +765,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Before an endpoint can make use of an RD, it must first know the RD's
    address and port, and the URI path information for its REST APIs.
    This section defines discovery of the RD and its URIs using the well-
-   known interface of the CoRE Link Format [RFC6690].  It is however
-   expected that RDs will also be discoverable via other methods
-   depending on the deployment.
+   known interface of the CoRE Link Format [RFC6690].  A complete set of
+   RD discovery methods is described in Section 4.
 
    Discovery of the RD registration URI path is performed by sending
    either a multicast or unicast GET request to "/.well-known/core" and
@@ -778,6 +777,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    RD Group operations.  Upon success, the response will contain a
    payload with a link format entry for each RD function discovered,
    indicating the URI path of the RD function returned and the
+   corresponding Resource Type.  When performing multicast discovery,
 
 
 
@@ -786,7 +786,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 14]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   corresponding Resource Type.  When performing multicast discovery,
    the multicast IP address used will depend on the scope required and
    the multicast capabilities of the network.
 
@@ -833,7 +832,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
       payload containing one or more matching entries for the RD
       resource.
 
-
+   Failure:  4.04 "Not Found" or 404 "Not Found" is returned in case no
+      matching entry is found for a unicast request.
 
 
 
@@ -841,9 +841,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 15]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   Failure:  4.04 "Not Found" or 404 "Not Found" is returned in case no
-      matching entry is found for a unicast request.
 
    Failure:  4.00 "Bad Request" or 400 "Bad Request" is returned in case
       of a malformed request for a unicast request.
@@ -889,6 +886,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    </rd-lookup/res>;rt="core.rd-lookup-res";ct="40 65225",
    </rd-lookup/ep>;rt="core.rd-lookup-ep";ct="40 65225",
    </rd-group>;rt="core.rd-group";ct="40 65225"
+
+
+
 
 
 
@@ -1192,8 +1192,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    After the initial registration, an endpoint should retain the
    returned location of the Registration Resource for further
    operations, including refreshing the registration in order to extend
-   the lifetime and "keep-alive" the registration.  If the lifetime of
-   the registration expires, the RD SHOULD NOT respond to discovery
+   the lifetime and "keep-alive" the registration.  When the lifetime of
+   the registration has expired, the RD SHOULD NOT respond to discovery
    queries with information from the endpoint.  The RD SHOULD continue
    to provide access to the Registration Resource after a registration
    time-out occurs in order to enable the registering endpoint to
@@ -1204,8 +1204,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The Registration Resource may also be used to inspect the
    registration resource using GET, update the registration link
-   contents using PATCH (as introduced in [RFC8132]), or cancel the
-   registration using DELETE.
+   contents using iPATCH or PATCH (as introduced in [RFC8132]), or
+   cancel the registration using DELETE.
 
    These operations are described in this section.
 
@@ -1219,7 +1219,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    registration with an RD.  To use the interface, the endpoint sends a
    POST request to the registration resource returned in the Location
    header option in the response returned from the intial registration
-   operation.  The POST request (in contrats to PUT) allows replacing
+   operation.  The POST request (in contrast to PUT) allows replacing a
    selection of a resource.
 
    An update MAY update the lifetime or context registration parameters
@@ -1258,8 +1258,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    "Conflict" result if there are plural link references detected.
 
    In addition to the use of POST, as described in this section, there
-   is an alternate way to add, replace, and delete links using PATCH as
-   described in Section 5.4.4.
+   is an alternate way to add, replace, and delete links using iPATCH or
+   PATCH as described in Section 5.4.4.
 
    The update registration request interface is specified as follows:
 
@@ -1529,7 +1529,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Interaction:  EP -> RD
 
-   Method:  PATCH
+   Method:  PATCH, iPATCH
 
    URI Template:  {+location}{?href,rel,rt,if,ct}
 
@@ -1593,7 +1593,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Req: PATCH /rd/4521
 
    Payload:
-   [{"href":"/sensors/humid","ct": 41, "rt": "humid-s", "if": "sensor"}]
+   {"href":"/sensors/humid","ct": 41, "rt": "humid-s", "if": "sensor"}
 
    Content-Format:
    application/merge-patch+json
@@ -2953,13 +2953,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <http://www.rfc-editor.org/info/rfc2119>.
+              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
+              editor.org/info/rfc2119>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
-              <http://www.rfc-editor.org/info/rfc3986>.
+              <https://www.rfc-editor.org/info/rfc3986>.
 
 
 
@@ -2972,49 +2972,49 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", RFC 5226,
-              DOI 10.17487/RFC5226, May 2008,
-              <http://www.rfc-editor.org/info/rfc5226>.
+              DOI 10.17487/RFC5226, May 2008, <https://www.rfc-
+              editor.org/info/rfc5226>.
 
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
-              DOI 10.17487/RFC5988, October 2010,
-              <http://www.rfc-editor.org/info/rfc5988>.
+              DOI 10.17487/RFC5988, October 2010, <https://www.rfc-
+              editor.org/info/rfc5988>.
 
    [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
               and D. Orchard, "URI Template", RFC 6570,
-              DOI 10.17487/RFC6570, March 2012,
-              <http://www.rfc-editor.org/info/rfc6570>.
+              DOI 10.17487/RFC6570, March 2012, <https://www.rfc-
+              editor.org/info/rfc6570>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
-              <http://www.rfc-editor.org/info/rfc6690>.
+              <https://www.rfc-editor.org/info/rfc6690>.
 
    [RFC7396]  Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396,
-              DOI 10.17487/RFC7396, October 2014,
-              <http://www.rfc-editor.org/info/rfc7396>.
+              DOI 10.17487/RFC7396, October 2014, <https://www.rfc-
+              editor.org/info/rfc7396>.
 
    [RFC8132]  van der Stok, P., Bormann, C., and A. Sehgal, "PATCH and
               FETCH Methods for the Constrained Application Protocol
               (CoAP)", RFC 8132, DOI 10.17487/RFC8132, April 2017,
-              <http://www.rfc-editor.org/info/rfc8132>.
+              <https://www.rfc-editor.org/info/rfc8132>.
 
 13.2.  Informative References
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
-              DOI 10.17487/RFC2616, June 1999,
-              <http://www.rfc-editor.org/info/rfc2616>.
+              DOI 10.17487/RFC2616, June 1999, <https://www.rfc-
+              editor.org/info/rfc2616>.
 
    [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
               Bormann, "Neighbor Discovery Optimization for IPv6 over
               Low-Power Wireless Personal Area Networks (6LoWPANs)",
               RFC 6775, DOI 10.17487/RFC6775, November 2012,
-              <http://www.rfc-editor.org/info/rfc6775>.
+              <https://www.rfc-editor.org/info/rfc6775>.
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
-              <http://www.rfc-editor.org/info/rfc7230>.
+              <https://www.rfc-editor.org/info/rfc7230>.
 
 
 
@@ -3028,18 +3028,18 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
-              DOI 10.17487/RFC7252, June 2014,
-              <http://www.rfc-editor.org/info/rfc7252>.
+              DOI 10.17487/RFC7252, June 2014, <https://www.rfc-
+              editor.org/info/rfc7252>.
 
    [RFC7390]  Rahman, A., Ed. and E. Dijk, Ed., "Group Communication for
               the Constrained Application Protocol (CoAP)", RFC 7390,
-              DOI 10.17487/RFC7390, October 2014,
-              <http://www.rfc-editor.org/info/rfc7390>.
+              DOI 10.17487/RFC7390, October 2014, <https://www.rfc-
+              editor.org/info/rfc7390>.
 
    [RFC7641]  Hartke, K., "Observing Resources in the Constrained
               Application Protocol (CoAP)", RFC 7641,
-              DOI 10.17487/RFC7641, September 2015,
-              <http://www.rfc-editor.org/info/rfc7641>.
+              DOI 10.17487/RFC7641, September 2015, <https://www.rfc-
+              editor.org/info/rfc7641>.
 
 13.3.  URIs
 
