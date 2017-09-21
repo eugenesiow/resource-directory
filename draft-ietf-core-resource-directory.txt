@@ -104,7 +104,7 @@ Table of Contents
      6.2.  Group Removal . . . . . . . . . . . . . . . . . . . . . .  33
    7.  RD Lookup . . . . . . . . . . . . . . . . . . . . . . . . . .  33
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  38
-     8.1.  Endpoint Identification and Authentication  . . . . . . .  39
+     8.1.  Endpoint Identification and Authentication  . . . . . . .  38
      8.2.  Access Control  . . . . . . . . . . . . . . . . . . . . .  39
 
 
@@ -121,7 +121,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
      9.3.  RD Parameter Registry . . . . . . . . . . . . . . . . . .  40
    10. Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  41
      10.1.  Lighting Installation  . . . . . . . . . . . . . . . . .  41
-       10.1.1.  Installation Characteristics . . . . . . . . . . . .  42
+       10.1.1.  Installation Characteristics . . . . . . . . . . . .  41
        10.1.2.  RD entries . . . . . . . . . . . . . . . . . . . . .  43
      10.2.  OMA Lightweight M2M (LWM2M) Example  . . . . . . . . . .  46
        10.2.1.  The LWM2M Object Model . . . . . . . . . . . . . . .  46
@@ -1947,7 +1947,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Method:  GET
 
    URI Template:  {+type-lookup-
-      location}{?d,res,ep,gp,et,rt,page,count,resource-param}
+      location}{?d,ep,gp,et,rt,page,count,resource-param}
 
    URI Template Variables:
 
@@ -1966,9 +1966,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
          resource lookups.
 
       d :=  Domain (optional).  Used for domain, group, endpoint and
-         resource lookups.
-
-      res :=  resource (optional).  Used for domain, group, endpoint and
          resource lookups.
 
       gp := Group name (optional).  Used for endpoint, group and
@@ -2009,7 +2006,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
       format", "application/link-format+cbor", or "application/link-
       format+json" payload containing matching entries for the lookup.
 
+   Failure:  4.04 "Not Found" or 404 "Not Found" in case no matching
+      entry is found for a unicast request.
 
+   Failure:  No error response to a multicast request.
 
 
 
@@ -2017,11 +2017,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 36]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   Failure:  4.04 "Not Found" or 404 "Not Found" in case no matching
-      entry is found for a unicast request.
-
-   Failure:  No error response to a multicast request.
 
    Failure:  4.00 "Bad Request" or 400 "Bad Request".  Malformed
       request.
@@ -2063,17 +2058,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The following example shows a client performing a group lookup for
    all groups:
 
-
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 37]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    Req: GET /rd-lookup/gp
 
    Res: 2.05 Content
@@ -2082,6 +2066,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows a client performing a lookup for all
    endpoints in a particular group:
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 37]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Req: GET /rd-lookup/ep?gp=lights1
 
@@ -2122,14 +2113,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The security considerations as described in Section 7 of [RFC5988]
    and Section 6 of [RFC6690] apply.  The "/.well-known/core" resource
    may be protected e.g. using DTLS when hosted on a CoAP server as
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 38]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    described in [RFC7252].  DTLS or TLS based security SHOULD be used on
    all resource directory interfaces defined in this document.
 
@@ -2138,6 +2121,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
    An Endpoint is determined to be unique by an RD by the Endpoint
    identifier parameter included during Registration, and any associated
    TLS or DTLS security bindings.  An Endpoint MUST NOT be identified by
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 38]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    its protocol, port or IP address as these may change over the
    lifetime of an Endpoint.
 
@@ -2178,14 +2170,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Services that run over UDP unprotected are vulnerable to unknowingly
    become part of a DDoS attack as UDP does not require return
    routability check.  Therefore, an attacker can easily spoof the
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 39]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    source IP of the target entity and send requests to such a service
    which would then respond to the target entity.  This can be used for
    large-scale DDoS attacks on the target.  Especially, if the service
@@ -2194,6 +2178,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    amplified.  DNS servers have been widely used for DDoS amplification
    attacks.  There is also a danger that NTP Servers could become
    implicated in denial-of-service (DoS) attacks since they run on
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 39]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    unprotected UDP, there is no return routability check, and they can
    have a large amplification factor.  The responses from the NTP server
    were found to be 19 times larger than the request.  A Resource
@@ -2237,6 +2229,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
 
+
+
+
+
+
+
+
+
 Shelby, et al.         Expires September 27, 2017              [Page 40]
 
 Internet-Draft           CoRE Resource Directory              March 2017
@@ -2256,8 +2256,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    | Context  | con   | URI           | The scheme, address and port   |
    |          |       |               | and path at which this server  |
    |          |       |               | is available                   |
-   | Resource | res   |               | Name of the resource           |
-   | Name     |       |               |                                |
    | Group    | gp    |               | Name of a group in the RD      |
    | Name     |       |               |                                |
    | Page     | page  | Integer       | Used for pagination            |
@@ -2286,10 +2284,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the issues that may influence the use of the RD and does not pretend
    to be normative.
 
+10.1.1.  Installation Characteristics
 
-
-
-
+   The example assumes that the installation is managed.  That means
+   that a Commissioning Tool (CT) is used to authorize the addition of
+   nodes, name them, and name their services.  The CT can be connected
+   to the installation in many ways: the CT can be part of the
 
 
 
@@ -2298,12 +2298,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 41]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-10.1.1.  Installation Characteristics
-
-   The example assumes that the installation is managed.  That means
-   that a Commissioning Tool (CT) is used to authorize the addition of
-   nodes, name them, and name their services.  The CT can be connected
-   to the installation in many ways: the CT can be part of the
    installation network, connected by WiFi to the installation network,
    or connected via GPRS link, or other method.
 
@@ -2345,6 +2339,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
                     Table 3: interface SLAAC addresses
 
+   In Section 10.1.2 the use of resource directory during installation
+   is presented.
+
+
+
+
 
 
 
@@ -2353,9 +2353,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 42]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   In Section 10.1.2 the use of resource directory during installation
-   is presented.
 
 10.1.2.  RD entries
 
@@ -2397,6 +2394,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The CT inserts the endpoints of the luminaries and the sensor in the
    RD using the Context parameter (con) to specify the interface
    address:
+
+
+
 
 
 
@@ -2995,8 +2995,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
-              editor.org/info/rfc2119>.
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -3005,17 +3005,17 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", RFC 5226,
-              DOI 10.17487/RFC5226, May 2008, <https://www.rfc-
-              editor.org/info/rfc5226>.
+              DOI 10.17487/RFC5226, May 2008,
+              <https://www.rfc-editor.org/info/rfc5226>.
 
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
-              DOI 10.17487/RFC5988, October 2010, <https://www.rfc-
-              editor.org/info/rfc5988>.
+              DOI 10.17487/RFC5988, October 2010,
+              <https://www.rfc-editor.org/info/rfc5988>.
 
    [RFC6570]  Gregorio, J., Fielding, R., Hadley, M., Nottingham, M.,
               and D. Orchard, "URI Template", RFC 6570,
-              DOI 10.17487/RFC6570, March 2012, <https://www.rfc-
-              editor.org/info/rfc6570>.
+              DOI 10.17487/RFC6570, March 2012,
+              <https://www.rfc-editor.org/info/rfc6570>.
 
 
 
@@ -3031,8 +3031,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
               <https://www.rfc-editor.org/info/rfc6690>.
 
    [RFC7396]  Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396,
-              DOI 10.17487/RFC7396, October 2014, <https://www.rfc-
-              editor.org/info/rfc7396>.
+              DOI 10.17487/RFC7396, October 2014,
+              <https://www.rfc-editor.org/info/rfc7396>.
 
    [RFC8132]  van der Stok, P., Bormann, C., and A. Sehgal, "PATCH and
               FETCH Methods for the Constrained Application Protocol
@@ -3044,8 +3044,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
-              DOI 10.17487/RFC2616, June 1999, <https://www.rfc-
-              editor.org/info/rfc2616>.
+              DOI 10.17487/RFC2616, June 1999,
+              <https://www.rfc-editor.org/info/rfc2616>.
 
    [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
               Bormann, "Neighbor Discovery Optimization for IPv6 over
@@ -3060,18 +3060,18 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
-              DOI 10.17487/RFC7252, June 2014, <https://www.rfc-
-              editor.org/info/rfc7252>.
+              DOI 10.17487/RFC7252, June 2014,
+              <https://www.rfc-editor.org/info/rfc7252>.
 
    [RFC7390]  Rahman, A., Ed. and E. Dijk, Ed., "Group Communication for
               the Constrained Application Protocol (CoAP)", RFC 7390,
-              DOI 10.17487/RFC7390, October 2014, <https://www.rfc-
-              editor.org/info/rfc7390>.
+              DOI 10.17487/RFC7390, October 2014,
+              <https://www.rfc-editor.org/info/rfc7390>.
 
    [RFC7641]  Hartke, K., "Observing Resources in the Constrained
               Application Protocol (CoAP)", RFC 7641,
-              DOI 10.17487/RFC7641, September 2015, <https://www.rfc-
-              editor.org/info/rfc7641>.
+              DOI 10.17487/RFC7641, September 2015,
+              <https://www.rfc-editor.org/info/rfc7641>.
 
 
 
