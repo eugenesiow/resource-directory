@@ -624,10 +624,35 @@ address {
 <div id="rfc.figure.3"></div>
 <div id="fig-ER-WKC"></div>
 <pre>
-               +----------------------+
-               |   /.well-known/core  | 
-               +----------------------+
- 
+          /////\\\\\\                   +----------------------+
+         &lt;     has   &gt; -----------------|   /.well-known/core  | 
+          \\\\\//////                   +----------------------+
+               |                                     |
+               | 1-n2                                | 1
+      ooooooooooooooooooooo                  ////////\\\\\\\
+     o scheme://authority: o                &lt;    contains   &gt;
+     o     port            o                 \\\\\\\\///////
+      ooooooooooooooooooooo                          |
+                                                     | 1+
+                                          +--------------------+
+                                          |      link          |
+                                          +--------------------+
+                                                     |
+                                                     |  1   oooooooo
+                                                     +-----o  href  o
+                                                  0+ |      oooooooo
+                                oooooooooooo         |
+                               o    target  o--------+
+                               o  attribute o        | 0+   oooooo
+                                oooooooooooo         +-----o rel  o
+                                                     |      oooooo
+                                                     |
+                                                     | 0-1   oooooooo
+                                                     +------o anchor o
+                                                             oooooooo
+
+
+
 </pre>
 <p class="figure">Figure 3: E-R Model of the content of /.well-known/core</p>
 <p id="rfc.section.3.3.p.2">The model shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> models the contents of /.well-known/core which contains:</p>
@@ -651,10 +676,46 @@ address {
 <div id="rfc.figure.4"></div>
 <div id="fig-ER-RD"></div>
 <pre>
-               +-----------------------+
-               |   resource-directory  | 
-               +-----------------------+
- 
+                            +----------------------+          +-------------+
+                            |   resource-diretory  |          |  MC address |
+                            +----------------------+          +-------------+
+                                       |                              |
+                                       |                           ////\\\\
+                                       |                          &lt;  has   &gt;
+                                       |                           \\\\////
+                                       |                              |
+                                  //////\\\\                  0+  +--------+
+                                 &lt; contains &gt;---------------------| group  |
+                                  \\\\\/////                      +--------+
+                                       |                              |
+                                   0-n |                              | 1+
+ oooooooooooooooooooooo     1  +---------------+               ///////\\\\\\
+o  scheme://authority: o-------|  registration |--------------&lt; composed of &gt;    
+o      port            o       +---------------+               \\\\\\\//////
+ oooooooooooooooooooooo            |       |
+                                   |       +-------------------+  
+                      oooooooo   1 |                           |
+                     o  loc   o----+                       /////\\\\
+                      oooooooo     |                      &lt; contains&gt;
+                                   |                       \\\\\////
+                      oooooooo   1 |                            |
+                     o   ep   o----+                            | 1+
+                      oooooooo     |                     +--------------------+
+                                   |                     |      link          |
+                      oooooooo 0-1 |                     +--------------------+
+                     o    d   o----+                            |
+                      oooooooo     |                            |  1   ooooooo
+                                   |                            +-----o href  o
+                      oooooooo 0-1 |                            |      ooooooo
+                     o   et   o----+          oooooooooooo  0+  |
+                      oooooooo     |         o    target  o-----+
+                                   |         o  attribute o     | 0+   oooooo
+                      oooooooo 0-1 |          oooooooooooo      +-----o rel  o
+                     o   lt   o----+                            |      oooooo
+                      oooooooo                                  |
+                                                                | 0-1 ooooooo
+                                                                +----o anchoro
+                                                                      ooooooo
 </pre>
 <p class="figure">Figure 4: E-R Model of the content of the Resource Directory</p>
 <p id="rfc.section.3.3.p.6">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
