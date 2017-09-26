@@ -1073,7 +1073,7 @@ payload:
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
-<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the intial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
+<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
 <p id="rfc.section.5.4.1.p.4">An update MAY optionally add or replace links for the endpoint by including those links in the payload of the update as a CoRE Link Format document. A link is replaced only if all of the target URI and relation type (if present) and anchor value (if present) match.</p>
@@ -1435,7 +1435,7 @@ Location: /rd-group/12
 <h1 id="rfc.section.6.2">
 <a href="#rfc.section.6.2">6.2.</a> <a href="#group-removal" id="group-removal">Group Removal</a>
 </h1>
-<p id="rfc.section.6.2.p.1">A group can be removed simply by sending a removal message to the location of the group registration resource which was returned when intially registering the group. Removing a group MUST NOT remove the endpoints of the group from the RD.</p>
+<p id="rfc.section.6.2.p.1">A group can be removed simply by sending a removal message to the location of the group registration resource which was returned when initially registering the group. Removing a group MUST NOT remove the endpoints of the group from the RD.</p>
 <p id="rfc.section.6.2.p.2">The removal request interface is specified as follows:</p>
 <p></p>
 
