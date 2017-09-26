@@ -133,7 +133,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  57
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  57
      13.2.  Informative References . . . . . . . . . . . . . . . . .  58
-     13.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  59
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  59
 
 1.  Introduction
@@ -162,6 +161,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    This document specifies the web interfaces that a Resource Directory
    supports in order for web servers to discover the RD and to register,
+   maintain, lookup and remove resource descriptions.  Furthermore, new
 
 
 
@@ -170,7 +170,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 3]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   maintain, lookup and remove resource descriptions.  Furthermore, new
    link attributes useful in conjunction with a Resource Directory are
    defined.  Although the examples in this document show the use of
    these interfaces with CoAP [RFC7252], they can be applied in an
@@ -218,6 +217,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
       When registering links to a Resource Directory, the Context refers
       to the scheme, address, port, and base path for all the links
       registered on behalf of an endpoint, of the general form
+      scheme://host:port/path/ where the client may explicitly set the
 
 
 
@@ -226,7 +226,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 4]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      scheme://host:port/path/ where the client may explicitly set the
       scheme and host, and may supply the port and path as optional
       parameters.  When the context of a registration is explicitly set,
       the URI resolution rules in [RFC3986] MUST be applied.
@@ -274,6 +273,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    called endpoints (EP).  An endpoint is a web server associated with a
    scheme, IP address and port (called Context), thus a physical node
    may host one or more endpoints.  The RD implements a set of REST
+   interfaces for endpoints to register and maintain sets of Web Links
 
 
 
@@ -282,7 +282,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 5]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   interfaces for endpoints to register and maintain sets of Web Links
    (called resource directory registration entries), and for clients to
    lookup resources from the RD or maintain groups.  Endpoints
    themselves can also act as clients.  An RD can be logically segmented
@@ -333,6 +332,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
 
+
 Shelby, et al.         Expires September 27, 2017               [Page 6]
 
 Internet-Draft           CoRE Resource Directory              March 2017
@@ -360,15 +360,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 3.3.  Content model
 
-   The Entity-Relationship (ER) models shown in Figure 3 and
-   Figure 4model the contents of /.well-known/core and the resource
-   directory respectively, with entity-relationship diagrams ER [1].
-   Entities (rectangles) are used for concepts that exist independently.
+   The Entity-Relationship (ER) models shown in Figure 3 and Figure 4
+   model the contents of /.well-known/core and the resource directory
+   respectively, with entity-relationship diagrams [ER].  Entities
+   (rectangles) are used for concepts that exist independently.
    Attributes (ovals) are used for concepts that exist only in
-   connection with related entity.  Relations (diamonds) give a semantic
-   meaning to the relation between entities.  Numbers specify the
-   cardinality of the relations.  The relations between the values of
-   the attributes are explained in the interface sections.
+   connection with a related entity.  Relations (diamonds) give a
+   semantic meaning to the relation between entities.  Numbers specify
+   the cardinality of the relations.  The relations between the values
+   of the attributes are explained in the interface sections.
 
 
 
@@ -507,7 +507,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
                             +----------------------+          +-------------+
-                            |   resource-diretory  |          |  MC address |
+                            |  resource-directory  |          |  MC address |
                             +----------------------+          +-------------+
                                        |                              |
                                        |                           ////\\\\
@@ -1365,7 +1365,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The update interface is used by an endpoint to refresh or update its
    registration with an RD.  To use the interface, the endpoint sends a
    POST request to the registration resource returned in the Location
-   header option in the response returned from the intial registration
+   header option in the response returned from the initial registration
    operation.  The POST request (in contrast to PUT) allows replacing a
    selection of a resource.
 
@@ -1932,8 +1932,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    A group can be removed simply by sending a removal message to the
    location of the group registration resource which was returned when
-   intially registering the group.  Removing a group MUST NOT remove the
-   endpoints of the group from the RD.
+   initially registering the group.  Removing a group MUST NOT remove
+   the endpoints of the group from the RD.
 
    The removal request interface is specified as follows:
 
@@ -3209,6 +3209,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 13.2.  Informative References
 
+   [ER]       Chen, P., "The entity-relationship model---toward a
+              unified view of data", ACM Transactions on Database
+              Systems Vol. 1, pp. 9-36, DOI 10.1145/320434.320440, March
+              1976.
+
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
@@ -3236,11 +3241,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
               DOI 10.17487/RFC7390, October 2014,
               <https://www.rfc-editor.org/info/rfc7390>.
 
-   [RFC7641]  Hartke, K., "Observing Resources in the Constrained
-              Application Protocol (CoAP)", RFC 7641,
-              DOI 10.17487/RFC7641, September 2015,
-              <https://www.rfc-editor.org/info/rfc7641>.
-
 
 
 
@@ -3250,10 +3250,10 @@ Shelby, et al.         Expires September 27, 2017              [Page 58]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-13.3.  URIs
-
-   [1] Ppins Chen - &#8206;entity-relationship model, Transactions on
-       Database.  Systems, Vol. 1, No. 1.  March. 1976, Pages 9-36.
+   [RFC7641]  Hartke, K., "Observing Resources in the Constrained
+              Application Protocol (CoAP)", RFC 7641,
+              DOI 10.17487/RFC7641, September 2015,
+              <https://www.rfc-editor.org/info/rfc7641>.
 
 Authors' Addresses
 
