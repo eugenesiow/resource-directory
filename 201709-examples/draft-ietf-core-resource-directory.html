@@ -1596,41 +1596,33 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?et=power-node
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::127]:61616&gt;;ep="node5",
-&lt;coap://[2001:db8:3::129]:61616&gt;;ep="node7"
+&lt;/reg/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5",
+&lt;/reg/5678&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7"
 </pre>
-<p id="rfc.section.7.p.21">The following example shows a client performing a domain lookup:</p>
-<pre>
-Req: GET /rd-lookup/d
-
-Res: 2.05 Content
-&lt;&gt;;d="domain1",
-&lt;&gt;;d="domain2"
-</pre>
-<p id="rfc.section.7.p.22">The following example shows a client performing a group lookup for all groups:</p>
+<p id="rfc.section.7.p.21">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
 Req: GET /rd-lookup/gp
 
 Res: 2.05 Content
-&lt;&gt;;gp="lights1";d="example.com"
-&lt;&gt;;gp="lights2";d="example.com"
+&lt;/rd-group/1&gt;;gp="lights1";d="example.com"
+&lt;/rd-group/2&gt;;gp="lights2";d="example.com"
 </pre>
-<p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
+<p id="rfc.section.7.p.22">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
 <pre>
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::123]:61616&gt;;ep="node1",
-&lt;coap://[2001:db8:3::124]:61616&gt;;ep="node2"
+&lt;/reg/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1",
+&lt;/reg/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2"
 </pre>
-<p id="rfc.section.7.p.24">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
+<p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
-&lt;&gt;;gp="lights1"
+&lt;/rd-group/1&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.p.25">The following example shows a client performing a paginated lookup</p>
+<p id="rfc.section.7.p.24">The following example shows a client performing a paginated lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
@@ -1650,8 +1642,8 @@ Res: 2.05 Content
 &lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
 &lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.p.26">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that endpoints with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp> have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
-<p id="rfc.section.7.p.27">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
+<p id="rfc.section.7.p.25">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that endpoints with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp> have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.p.26">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
 Req: POST /rd?ep=mynode
 
@@ -1911,6 +1903,7 @@ Location: /rd/4523
 Req: POST coap://[2001:db8:4::ff]/rd-group
 ?gp=grp_R2-4-015&amp;con=coap://[ff05::1]
 Payload:
+[ request still unclear -- can we require group manager to just look up the endpoint registrations first? ]
 &lt;&gt;;ep=lm_R2-4-015_wndw,
 &lt;&gt;;ep=lm_R2-4-015_door,
 &lt;&gt;;ep=ps_R2-4-015_door
@@ -1925,9 +1918,9 @@ Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
   ?d=R2-4-015;rt=light
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:4::1]&gt;;
+&lt;/rd/4521&gt;;con="coap://[2001:db8:4::1]",
   ep="lm_R2-4-015_wndw",
-&lt;coap://[2001:db8:4::2]&gt;;
+&lt;/rd/4522&gt;;con="coap://[2001:db8:4::2]",
    ep="lm_R2-4-015_door"
 </pre>
 <p id="rfc.section.10.1.2.p.9">Knowing its own IPv6 address, the luminary discovers its endpoint name. With the endpoint name the luminary queries the RD for all groups to which the endpoint belongs.</p>
@@ -1936,7 +1929,7 @@ Req: GET coap://[2001:db8:4::ff]/rd-lookup/gp
   ?ep=lm_R2-4-015_wndw
 
 Res: 2.05 Content
-&lt;coap://[ff05::1]&gt;;gp="grp_R2-4-015"
+&lt;/rd-group/501&gt;;gp="grp_R2-4-015";con="coap://[ff05::1]"
 </pre>
 <p id="rfc.section.10.1.2.p.10">From the context parameter value, the luminary learns the multicast address of the multicast group.</p>
 <p id="rfc.section.10.1.2.p.11">Alternatively, the CT can communicate the multicast address directly to the luminaries by using the &#8220;coap-group&#8221; resource specified in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
