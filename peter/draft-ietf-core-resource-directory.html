@@ -23,13 +23,12 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    right: calc(50vw - 500px);
+    right: calc(50vw - 525px);
     width: 300px;
-    padding: 0 1em;
     z-index: 1;
   }
   #rfc\.toc {
-    top: 16px;
+    top: 15px;
   }
   ul.toc {
     top: 80px;
@@ -37,8 +36,7 @@
   }
 
   body {
-    padding-left: 1.5em;
-    padding-right: 29em;
+    padding-right: 350px;
   }
 }
 
@@ -47,7 +45,7 @@ body {
   color: #333;
   font-size-adjust: 0.5;
   line-height: 130%;
-  margin: 2.5em auto;
+  margin: 25px auto;
   max-width: 724px;
 }
 
@@ -620,7 +618,7 @@ address {
 <h1 id="rfc.section.3.3">
 <a href="#rfc.section.3.3">3.3.</a> <a href="#ER-model" id="ER-model">Content model</a>
 </h1>
-<p id="rfc.section.3.3.p.1">The Entity-Relationship (ER) models shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> and <a href="#fig-ER-RD" class="xref">Figure 4</a>model the contents of /.well-known/core and the resource directory respectively, with entity-relationship diagrams <a href="Ppins%20Chen%20-%20%E2%80%8Eentity-relationship%20model,%20Transactions%20on%20Database.%20Systems,%20Vol.%201,%20No.%201.%20March.%201976,%20Pages%209-36.">ER</a>. Entities (rectangles) are used for concepts that exist independently. Attributes (ovals) are used for concepts that exist only in connection with related entity. Relations (diamonds) give a semantic meaning to the relation between entities. Numbers specify the cardinality of the relations. The relations between the values of the attributes are explained in the interface sections.</p>
+<p id="rfc.section.3.3.p.1">The Entity-Relationship (ER) models shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> and <a href="#fig-ER-RD" class="xref">Figure 4</a> model the contents of /.well-known/core and the resource directory respectively, with entity-relationship diagrams <a href="#ER" class="xref">[ER]</a>. Entities (rectangles) are used for concepts that exist independently. Attributes (ovals) are used for concepts that exist only in connection with a related entity. Relations (diamonds) give a semantic meaning to the relation between entities. Numbers specify the cardinality of the relations. The relations between the values of the attributes are explained in the interface sections.</p>
 <div id="rfc.figure.3"></div>
 <div id="fig-ER-WKC"></div>
 <pre>
@@ -677,7 +675,7 @@ address {
 <div id="fig-ER-RD"></div>
 <pre>
                             +----------------------+          +-------------+
-                            |   resource-diretory  |          |  MC address |
+                            |  resource-directory  |          |  MC address |
                             +----------------------+          +-------------+
                                        |                              |
                                        |                           ////\\\\
@@ -1001,7 +999,7 @@ Location: /rd/4521
 </pre>
 <p id="rfc.section.5.3.p.8">A Resource Directory may optionally support HTTP. Here is an example of the same registration operation above, when done using HTTP.</p>
 <pre>
-Req: POST /rd?ep=node1&amp;con=http://[2001:db8::1:1] HTTP/1.1
+Req: POST /rd?ep=node1&amp;con=http://[2001:db8:1::1] HTTP/1.1
 Host : example.com
 Content-Type: application/link-format
 Payload:
@@ -1027,7 +1025,7 @@ Location: /rd/4521
 <p id="rfc.section.5.3.2.p.3">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
 <p id="rfc.section.5.3.2.p.4">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
 <pre>
-Req:(to RD server from [ff02::1])
+Req:(to RD server from [2001:db8:2::1])
 POST coap://rd.example.com/.well-known/core?lt=6000;ep=node1
 
 Content-Format: 40
@@ -1040,8 +1038,8 @@ Res: 2.04 Changed
 
 (later)
 
-Req: (from RD server to [ff02::1])
-GET coap://[ff02::1]/.well-known/core
+Req: (from RD server to [2001:db8:2::1])
+GET coap://[2001:db8:2::1]/.well-known/core
 
 Accept: 40
 
@@ -1073,7 +1071,7 @@ payload:
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
-<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the intial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
+<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
 <p id="rfc.section.5.4.1.p.4">An update MAY optionally add or replace links for the endpoint by including those links in the payload of the update as a CoRE Link Format document. A link is replaced only if all of the target URI and relation type (if present) and anchor value (if present) match.</p>
@@ -1435,7 +1433,7 @@ Location: /rd-group/12
 <h1 id="rfc.section.6.2">
 <a href="#rfc.section.6.2">6.2.</a> <a href="#group-removal" id="group-removal">Group Removal</a>
 </h1>
-<p id="rfc.section.6.2.p.1">A group can be removed simply by sending a removal message to the location of the group registration resource which was returned when intially registering the group. Removing a group MUST NOT remove the endpoints of the group from the RD.</p>
+<p id="rfc.section.6.2.p.1">A group can be removed simply by sending a removal message to the location of the group registration resource which was returned when initially registering the group. Removing a group MUST NOT remove the endpoints of the group from the RD.</p>
 <p id="rfc.section.6.2.p.2">The removal request interface is specified as follows:</p>
 <p></p>
 
@@ -1589,15 +1587,15 @@ Res: 2.02 Deleted
 Req: GET /rd-lookup/res?rt=temperature
 
 Res: 2.05 Content
-&lt;coap://[FDFD::123]:61616/temp&gt;;rt="temperature"
+&lt;coap://[2001:db8:3::123]:61616/temp&gt;;rt="temperature"
 </pre>
 <p id="rfc.section.7.p.20">The following example shows a client performing an endpoint type lookup:</p>
 <pre>
 Req: GET /rd-lookup/ep?et=power-node
 
 Res: 2.05 Content
-&lt;coap://[FDFD::127]:61616&gt;;ep="node5",
-&lt;coap://[FDFD::129]:61616&gt;;ep="node7"
+&lt;coap://[2001:db8:3::127]:61616&gt;;ep="node5",
+&lt;coap://[2001:db8:3::129]:61616&gt;;ep="node7"
 </pre>
 <p id="rfc.section.7.p.21">The following example shows a client performing a domain lookup:</p>
 <pre>
@@ -1620,8 +1618,8 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-&lt;coap://[FDFD::123]:61616&gt;;ep="node1",
-&lt;coap://[FDFD::124]:61616&gt;;ep="node2"
+&lt;coap://[2001:db8:3::123]:61616&gt;;ep="node1",
+&lt;coap://[2001:db8:3::124]:61616&gt;;ep="node2"
 </pre>
 <p id="rfc.section.7.p.24">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
 <pre>
@@ -1635,20 +1633,20 @@ Res: 2.05 Content
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
 Res: 2.05 Content
-&lt;coap://[FDFD::123]:61616/res/0&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/1&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/2&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/3&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/4&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/0&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/1&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/2&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/3&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/4&gt;;rt=sensor;ct=60
 
 Req: GET /rd-lookup/res?page=1&amp;count=5
 
 Res: 2.05 Content
-&lt;coap://[FDFD::123]:61616/res/5&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/6&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/7&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/8&gt;;rt=sensor;ct=60
-&lt;coap://[FDFD::123]:61616/res/9&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/5&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/6&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/7&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/8&gt;;rt=sensor;ct=60
+&lt;coap://[2001:db8:3::123]:61616/res/9&gt;;rt=sensor;ct=60
 </pre>
 <h1 id="rfc.section.8">
 <a href="#rfc.section.8">8.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
@@ -1779,19 +1777,19 @@ Res: 2.05 Content
 <tbody>
 <tr>
 <td class="left">luminary1</td>
-<td class="left">FDFD::ABCD:1</td>
+<td class="left">2001:db8:4::1</td>
 </tr>
 <tr>
 <td class="left">luminary2</td>
-<td class="left">FDFD::ABCD:2</td>
+<td class="left">2001:db8:4::2</td>
 </tr>
 <tr>
 <td class="left">Presence sensor</td>
-<td class="left">FDFD::ABCD:3</td>
+<td class="left">2001:db8:4::3</td>
 </tr>
 <tr>
 <td class="left">Resource directory</td>
-<td class="left">FDFD::ABCD:0</td>
+<td class="left">2001:db8:4::ff</td>
 </tr>
 </tbody>
 </table>
@@ -1859,8 +1857,8 @@ Res: 2.05 Content
 <p id="rfc.section.10.1.2.p.3">It is assumed that the CT knows of the RD&#8217;s address, and has performed URI discovery on it that gave a response like the one in the <a href="#discovery" class="xref">Section 5.2</a> example.</p>
 <p id="rfc.section.10.1.2.p.4">The CT inserts the endpoints of the luminaries and the sensor in the RD using the Context parameter (con) to specify the interface address:</p>
 <pre>
-Req: POST coap://[FDFD::ABCD:0]/rd
-  ?ep=lm_R2-4-015_wndw&amp;con=coap://[FDFD::ABCD:1]&amp;d=R2-4-015
+Req: POST coap://[2001:db8:4::ff]/rd
+  ?ep=lm_R2-4-015_wndw&amp;con=coap://[2001:db8:4::1]&amp;d=R2-4-015
 Payload:
 &lt;/light/left&gt;;rt="light",
 &lt;/light/middle&gt;;rt="light",
@@ -1870,8 +1868,8 @@ Res: 2.01 Created
 Location: /rd/4521
 </pre>
 <pre>
-Req: POST coap://[FDFD::ABCD:0]/rd
-  ?ep=lm_R2-4-015_door&amp;con=coap://[FDFD::ABCD:2]&amp;d=R2-4-015
+Req: POST coap://[2001:db8:4::ff]/rd
+  ?ep=lm_R2-4-015_door&amp;con=coap://[2001:db8:4::2]&amp;d=R2-4-015
 Payload:
 &lt;/light/left&gt;;rt="light",
 &lt;/light/middle&gt;;rt="light",
@@ -1881,8 +1879,8 @@ Res: 2.01 Created
 Location: /rd/4522
 </pre>
 <pre>
-Req: POST coap://[FDFD::ABCD:0]/rd
-  ?ep=ps_R2-4-015_door&amp;con=coap://[FDFD::ABCD:3]d&amp;d=R2-4-015
+Req: POST coap://[2001:db8:4::ff]/rd
+  ?ep=ps_R2-4-015_door&amp;con=coap://[2001:db8:4::3]d&amp;d=R2-4-015
 Payload:
 &lt;/ps&gt;;rt="p-sensor"
 
@@ -1892,8 +1890,8 @@ Location: /rd/4523
 <p id="rfc.section.10.1.2.p.5">The domain name d=R2-4-015 has been added for an efficient lookup because filtering on &#8220;ep&#8221; name is more awkward. The same domain name is communicated to the two luminaries and the presence sensor by the CT.</p>
 <p id="rfc.section.10.1.2.p.6">The group is specified in the RD. The Context parameter is set to the site-local multicast address allocated to the group.  In the POST in the example below, these two endpoints and the endpoint of the presence sensor are registered as members of the group.</p>
 <pre>
-Req: POST coap://[FDFD::ABCD:0]/rd-group
-?gp=grp_R2-4-015&amp;con=coap://[FF05::1]
+Req: POST coap://[2001:db8:4::ff]/rd-group
+?gp=grp_R2-4-015&amp;con=coap://[ff05::1]
 Payload:
 &lt;&gt;;ep=lm_R2-4-015_wndw,
 &lt;&gt;;ep=lm_R2-4-015_door,
@@ -1905,29 +1903,29 @@ Location: /rd-group/501
 <p id="rfc.section.10.1.2.p.7">After the filling of the RD by the CT, the application in the luminaries can learn to which groups they belong, and enable their interface for the multicast address.</p>
 <p id="rfc.section.10.1.2.p.8">The luminary, knowing its domain, queries the RD for the endpoint with rt=light and d=R2-4-015. The RD returns all endpoints in the domain.</p>
 <pre>
-Req: GET coap://[FDFD::ABCD:0]/rd-lookup/ep
+Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
   ?d=R2-4-015;rt=light
 
 Res: 2.05 Content
-&lt;coap://[FDFD::ABCD:1]&gt;;
+&lt;coap://[2001:db8:4::1]&gt;;
   ep="lm_R2-4-015_wndw",
-&lt;coap://[FDFD::ABCD:2]&gt;;
+&lt;coap://[2001:db8:4::2]&gt;;
    ep="lm_R2-4-015_door"
 </pre>
 <p id="rfc.section.10.1.2.p.9">Knowing its own IPv6 address, the luminary discovers its endpoint name. With the endpoint name the luminary queries the RD for all groups to which the endpoint belongs.</p>
 <pre>
-Req: GET coap://[FDFD::ABCD:0]/rd-lookup/gp
+Req: GET coap://[2001:db8:4::ff]/rd-lookup/gp
   ?ep=lm_R2-4-015_wndw
 
 Res: 2.05 Content
-&lt;coap://[FF05::1]&gt;;gp="grp_R2-4-015"
+&lt;coap://[ff05::1]&gt;;gp="grp_R2-4-015"
 </pre>
 <p id="rfc.section.10.1.2.p.10">From the context parameter value, the luminary learns the multicast address of the multicast group.</p>
 <p id="rfc.section.10.1.2.p.11">Alternatively, the CT can communicate the multicast address directly to the luminaries by using the &#8220;coap-group&#8221; resource specified in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
 <pre>
-Req: POST //[FDFD::ABCD:1]/coap-group
+Req: POST //[2001:db8:4::1]/coap-group
           Content-Format: application/coap-group+json
-       { "a": "[FF05::1]",
+       { "a": "[ff05::1]",
           "n": "grp_R2-4-015"}
 
 Res: 2.01 Created
@@ -2258,6 +2256,11 @@ link payload - new or modified links
 <h1 id="rfc.references.2">
 <a href="#rfc.references.2">13.2.</a> Informative References</h1>
 <table><tbody>
+<tr>
+<td class="reference"><b id="ER">[ER]</b></td>
+<td class="top">
+<a>Chen, P.</a>, "<a>The entity-relationship model---toward a unified view of data</a>", ACM Transactions on Database Systems Vol. 1, pp. 9-36, DOI 10.1145/320434.320440, March 1976.</td>
+</tr>
 <tr>
 <td class="reference"><b id="RFC2616">[RFC2616]</b></td>
 <td class="top">

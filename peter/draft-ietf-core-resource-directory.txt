@@ -133,7 +133,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  56
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  56
      13.2.  Informative References . . . . . . . . . . . . . . . . .  57
-     13.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  58
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  58
 
 1.  Introduction
@@ -162,6 +161,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    This document specifies the web interfaces that a Resource Directory
    supports in order for web servers to discover the RD and to register,
+   maintain, lookup and remove resource descriptions.  Furthermore, new
 
 
 
@@ -170,7 +170,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 3]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   maintain, lookup and remove resource descriptions.  Furthermore, new
    link attributes useful in conjunction with a Resource Directory are
    defined.  Although the examples in this document show the use of
    these interfaces with CoAP [RFC7252], they can be applied in an
@@ -218,6 +217,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
       When registering links to a Resource Directory, the Context refers
       to the scheme, address, port, and base path for all the links
       registered on behalf of an endpoint, of the general form
+      scheme://host:port/path/ where the client may explicitly set the
 
 
 
@@ -226,7 +226,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 4]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      scheme://host:port/path/ where the client may explicitly set the
       scheme and host, and may supply the port and path as optional
       parameters.  When the context of a registration is explicitly set,
       the URI resolution rules in [RFC3986] MUST be applied.
@@ -274,6 +273,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    called endpoints (EP).  An endpoint is a web server associated with a
    scheme, IP address and port (called Context), thus a physical node
    may host one or more endpoints.  The RD implements a set of REST
+   interfaces for endpoints to register and maintain sets of Web Links
 
 
 
@@ -282,7 +282,6 @@ Shelby, et al.         Expires September 27, 2017               [Page 5]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   interfaces for endpoints to register and maintain sets of Web Links
    (called resource directory registration entries), and for clients to
    lookup resources from the RD or maintain groups.  Endpoints
    themselves can also act as clients.  An RD can be logically segmented
@@ -333,6 +332,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
 
+
 Shelby, et al.         Expires September 27, 2017               [Page 6]
 
 Internet-Draft           CoRE Resource Directory              March 2017
@@ -360,15 +360,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 3.3.  Content model
 
-   The Entity-Relationship (ER) models shown in Figure 3 and
-   Figure 4model the contents of /.well-known/core and the resource
-   directory respectively, with entity-relationship diagrams ER [1].
-   Entities (rectangles) are used for concepts that exist independently.
+   The Entity-Relationship (ER) models shown in Figure 3 and Figure 4
+   model the contents of /.well-known/core and the resource directory
+   respectively, with entity-relationship diagrams [ER].  Entities
+   (rectangles) are used for concepts that exist independently.
    Attributes (ovals) are used for concepts that exist only in
-   connection with related entity.  Relations (diamonds) give a semantic
-   meaning to the relation between entities.  Numbers specify the
-   cardinality of the relations.  The relations between the values of
-   the attributes are explained in the interface sections.
+   connection with a related entity.  Relations (diamonds) give a
+   semantic meaning to the relation between entities.  Numbers specify
+   the cardinality of the relations.  The relations between the values
+   of the attributes are explained in the interface sections.
 
 
 
@@ -507,7 +507,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
                             +----------------------+          +-------------+
-                            |   resource-diretory  |          |  MC address |
+                            |  resource-directory  |          |  MC address |
                             +----------------------+          +-------------+
                                        |                              |
                                        |                           ////\\\\
@@ -1193,7 +1193,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    A Resource Directory may optionally support HTTP.  Here is an example
    of the same registration operation above, when done using HTTP.
 
-   Req: POST /rd?ep=node1&con=http://[2001:db8::1:1] HTTP/1.1
+   Req: POST /rd?ep=node1&con=http://[2001:db8:1::1] HTTP/1.1
    Host : example.com
    Content-Type: application/link-format
    Payload:
@@ -1257,7 +1257,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The following example shows an endpoint using simple publishing, by
    simply sending an empty POST to a resource directory.
 
-   Req:(to RD server from [ff02::1])
+   Req:(to RD server from [2001:db8:2::1])
    POST coap://rd.example.com/.well-known/core?lt=6000;ep=node1
 
    Content-Format: 40
@@ -1270,8 +1270,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    (later)
 
-   Req: (from RD server to [ff02::1])
-   GET coap://[ff02::1]/.well-known/core
+   Req: (from RD server to [2001:db8:2::1])
+   GET coap://[2001:db8:2::1]/.well-known/core
 
    Accept: 40
 
@@ -1365,7 +1365,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The update interface is used by an endpoint to refresh or update its
    registration with an RD.  To use the interface, the endpoint sends a
    POST request to the registration resource returned in the Location
-   header option in the response returned from the intial registration
+   header option in the response returned from the initial registration
    operation.  The POST request (in contrast to PUT) allows replacing a
    selection of a resource.
 
@@ -1932,8 +1932,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    A group can be removed simply by sending a removal message to the
    location of the group registration resource which was returned when
-   intially registering the group.  Removing a group MUST NOT remove the
-   endpoints of the group from the RD.
+   initially registering the group.  Removing a group MUST NOT remove
+   the endpoints of the group from the RD.
 
    The removal request interface is specified as follows:
 
@@ -2169,7 +2169,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Req: GET /rd-lookup/res?rt=temperature
 
    Res: 2.05 Content
-   <coap://[FDFD::123]:61616/temp>;rt="temperature"
+   <coap://[2001:db8:3::123]:61616/temp>;rt="temperature"
 
    The following example shows a client performing an endpoint type
    lookup:
@@ -2189,8 +2189,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Req: GET /rd-lookup/ep?et=power-node
 
    Res: 2.05 Content
-   <coap://[FDFD::127]:61616>;ep="node5",
-   <coap://[FDFD::129]:61616>;ep="node7"
+   <coap://[2001:db8:3::127]:61616>;ep="node5",
+   <coap://[2001:db8:3::129]:61616>;ep="node7"
 
    The following example shows a client performing a domain lookup:
 
@@ -2215,8 +2215,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Req: GET /rd-lookup/ep?gp=lights1
 
    Res: 2.05 Content
-   <coap://[FDFD::123]:61616>;ep="node1",
-   <coap://[FDFD::124]:61616>;ep="node2"
+   <coap://[2001:db8:3::123]:61616>;ep="node1",
+   <coap://[2001:db8:3::124]:61616>;ep="node2"
 
    The following example shows a client performing a lookup for all
    groups an endpoint belongs to:
@@ -2245,20 +2245,20 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Req: GET /rd-lookup/res?page=0&count=5
 
    Res: 2.05 Content
-   <coap://[FDFD::123]:61616/res/0>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/1>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/2>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/3>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/4>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/0>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/1>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/2>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/3>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/4>;rt=sensor;ct=60
 
    Req: GET /rd-lookup/res?page=1&count=5
 
    Res: 2.05 Content
-   <coap://[FDFD::123]:61616/res/5>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/6>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/7>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/8>;rt=sensor;ct=60
-   <coap://[FDFD::123]:61616/res/9>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/5>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/6>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/7>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/8>;rt=sensor;ct=60
+   <coap://[2001:db8:3::123]:61616/res/9>;rt=sensor;ct=60
 
 8.  Security Considerations
 
@@ -2471,14 +2471,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    IPv6 addresses are assigned to CT, RD, luminaries and sensor shown in
    Table 3 below:
 
-                   +--------------------+--------------+
-                   | Name               | IPv6 address |
-                   +--------------------+--------------+
-                   | luminary1          | FDFD::ABCD:1 |
-                   | luminary2          | FDFD::ABCD:2 |
-                   | Presence sensor    | FDFD::ABCD:3 |
-                   | Resource directory | FDFD::ABCD:0 |
-                   +--------------------+--------------+
+                  +--------------------+----------------+
+                  | Name               | IPv6 address   |
+                  +--------------------+----------------+
+                  | luminary1          | 2001:db8:4::1  |
+                  | luminary2          | 2001:db8:4::2  |
+                  | Presence sensor    | 2001:db8:4::3  |
+                  | Resource directory | 2001:db8:4::ff |
+                  +--------------------+----------------+
 
                     Table 3: interface SLAAC addresses
 
@@ -2545,8 +2545,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    RD using the Context parameter (con) to specify the interface
    address:
 
-   Req: POST coap://[FDFD::ABCD:0]/rd
-     ?ep=lm_R2-4-015_wndw&con=coap://[FDFD::ABCD:1]&d=R2-4-015
+   Req: POST coap://[2001:db8:4::ff]/rd
+     ?ep=lm_R2-4-015_wndw&con=coap://[2001:db8:4::1]&d=R2-4-015
    Payload:
    </light/left>;rt="light",
    </light/middle>;rt="light",
@@ -2555,8 +2555,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Res: 2.01 Created
    Location: /rd/4521
 
-   Req: POST coap://[FDFD::ABCD:0]/rd
-     ?ep=lm_R2-4-015_door&con=coap://[FDFD::ABCD:2]&d=R2-4-015
+   Req: POST coap://[2001:db8:4::ff]/rd
+     ?ep=lm_R2-4-015_door&con=coap://[2001:db8:4::2]&d=R2-4-015
    Payload:
    </light/left>;rt="light",
    </light/middle>;rt="light",
@@ -2578,8 +2578,8 @@ Shelby, et al.         Expires September 27, 2017              [Page 46]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   Req: POST coap://[FDFD::ABCD:0]/rd
-     ?ep=ps_R2-4-015_door&con=coap://[FDFD::ABCD:3]d&d=R2-4-015
+   Req: POST coap://[2001:db8:4::ff]/rd
+     ?ep=ps_R2-4-015_door&con=coap://[2001:db8:4::3]d&d=R2-4-015
    Payload:
    </ps>;rt="p-sensor"
 
@@ -2596,8 +2596,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    in the example below, these two endpoints and the endpoint of the
    presence sensor are registered as members of the group.
 
-   Req: POST coap://[FDFD::ABCD:0]/rd-group
-   ?gp=grp_R2-4-015&con=coap://[FF05::1]
+   Req: POST coap://[2001:db8:4::ff]/rd-group
+   ?gp=grp_R2-4-015&con=coap://[ff05::1]
    Payload:
    <>;ep=lm_R2-4-015_wndw,
    <>;ep=lm_R2-4-015_door,
@@ -2614,13 +2614,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
    with rt=light and d=R2-4-015.  The RD returns all endpoints in the
    domain.
 
-   Req: GET coap://[FDFD::ABCD:0]/rd-lookup/ep
+   Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
      ?d=R2-4-015;rt=light
 
    Res: 2.05 Content
-   <coap://[FDFD::ABCD:1]>;
+   <coap://[2001:db8:4::1]>;
      ep="lm_R2-4-015_wndw",
-   <coap://[FDFD::ABCD:2]>;
+   <coap://[2001:db8:4::2]>;
       ep="lm_R2-4-015_door"
 
    Knowing its own IPv6 address, the luminary discovers its endpoint
@@ -2634,11 +2634,11 @@ Shelby, et al.         Expires September 27, 2017              [Page 47]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   Req: GET coap://[FDFD::ABCD:0]/rd-lookup/gp
+   Req: GET coap://[2001:db8:4::ff]/rd-lookup/gp
      ?ep=lm_R2-4-015_wndw
 
    Res: 2.05 Content
-   <coap://[FF05::1]>;gp="grp_R2-4-015"
+   <coap://[ff05::1]>;gp="grp_R2-4-015"
 
    From the context parameter value, the luminary learns the multicast
    address of the multicast group.
@@ -2647,9 +2647,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    to the luminaries by using the "coap-group" resource specified in
    [RFC7390].
 
-   Req: POST //[FDFD::ABCD:1]/coap-group
+   Req: POST //[2001:db8:4::1]/coap-group
              Content-Format: application/coap-group+json
-          { "a": "[FF05::1]",
+          { "a": "[ff05::1]",
              "n": "grp_R2-4-015"}
 
    Res: 2.01 Created
@@ -3172,17 +3172,17 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 13.2.  Informative References
 
+   [ER]       Chen, P., "The entity-relationship model---toward a
+              unified view of data", ACM Transactions on Database
+              Systems Vol. 1, pp. 9-36, DOI 10.1145/320434.320440, March
+              1976.
+
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
               DOI 10.17487/RFC2616, June 1999,
               <https://www.rfc-editor.org/info/rfc2616>.
 
-   [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
-              Bormann, "Neighbor Discovery Optimization for IPv6 over
-              Low-Power Wireless Personal Area Networks (6LoWPANs)",
-              RFC 6775, DOI 10.17487/RFC6775, November 2012,
-              <https://www.rfc-editor.org/info/rfc6775>.
 
 
 
@@ -3193,6 +3193,12 @@ Shelby, et al.         Expires September 27, 2017              [Page 57]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   [RFC6775]  Shelby, Z., Ed., Chakrabarti, S., Nordmark, E., and C.
+              Bormann, "Neighbor Discovery Optimization for IPv6 over
+              Low-Power Wireless Personal Area Networks (6LoWPANs)",
+              RFC 6775, DOI 10.17487/RFC6775, November 2012,
+              <https://www.rfc-editor.org/info/rfc6775>.
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
@@ -3214,11 +3220,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
               DOI 10.17487/RFC7641, September 2015,
               <https://www.rfc-editor.org/info/rfc7641>.
 
-13.3.  URIs
-
-   [1] Ppins Chen - &#8206;entity-relationship model, Transactions on
-       Database.  Systems, Vol. 1, No. 1.  March. 1976, Pages 9-36.
-
 Authors' Addresses
 
    Zach Shelby
@@ -3239,7 +3240,6 @@ Authors' Addresses
 
    Phone: +1-707-502-5136
    Email: Michael.Koster@smartthings.com
-
 
 
 
