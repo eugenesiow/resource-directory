@@ -1979,11 +1979,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
 7.  RD Lookup
 
    In order for an RD to be used for discovering resources registered
-   with it, an optional lookup interface may be provided.  This lookup
-   interface is defined as a default, and it is assumed that RDs may
-   also support lookups to return resource descriptions in alternative
-   formats (e.g.  Atom or HTML Link) or using more advanced interfaces
-   (e.g. supporting context or semantic based lookup).
+   with it, a lookup interface must be provided.  This lookup interface
+   is defined as a default, and it is assumed that RDs may also support
+   lookups to return resource descriptions in alternative formats (e.g.
+   Atom or HTML Link) or using more advanced interfaces (e.g. supporting
+   context or semantic based lookup).
 
    RD Lookup allows lookups for domains, groups, endpoints and resources
    using attributes defined in this document and for use with the CoRE
