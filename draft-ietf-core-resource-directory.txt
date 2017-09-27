@@ -1110,10 +1110,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
       lt :=  Lifetime (optional).  Lifetime of the registration in
          seconds.  Range of 60-4294967295.  If no lifetime is included
          in the initial registration, a default value of 86400 (24
-         hours) SHOULD be assumed.  If the lt parameter is not included
-         in a registration refresh or update operation, the most
-         recently supplied value SHALL be re-used.
+         hours) SHOULD be assumed.
 
+      con :=  Context (optional).  This parameter sets the scheme,
+         address, port and path at which this server is available in the
 
 
 
@@ -1122,8 +1122,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 20]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      con :=  Context (optional).  This parameter sets the scheme,
-         address, port and path at which this server is available in the
          form scheme://host:port/path.  In the absence of this parameter
          the scheme of the protocol, source address and source port of
          the register request are assumed.  This parameter is mandatory
@@ -1170,6 +1168,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows an endpoint with the name "node1"
    registering two resources to an RD using this interface.  The
+   location "/rd" is an example RD location discovered in a request
+   similar to Figure 6.
 
 
 
@@ -1177,9 +1177,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 21]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   location "/rd" is an example RD location discovered in a request
-   similar to Figure 6.
 
    Req: POST coap://rd.example.com/rd?ep=node1
    Content-Format: 40
@@ -1225,6 +1222,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The directory server integrates the information it received this way
    into its resource directory.  It MAY make the information available
    to further directories, if it can ensure that a loop does not form.
+   The protocol used between directories to ensure loop-free operation
+   is outside the scope of this document.
+
 
 
 
@@ -1233,9 +1233,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 22]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The protocol used between directories to ensure loop-free operation
-   is outside the scope of this document.
 
 5.3.2.  Simple publishing to Resource Directory Server
 
@@ -1280,6 +1277,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    payload:
 
    </sen/temp>
+
+
+
 
 
 
