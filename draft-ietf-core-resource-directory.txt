@@ -394,32 +394,32 @@ Shelby, et al.         Expires September 27, 2017               [Page 7]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-            /////\\\\\\                   +----------------------+
-           <     has   > -----------------|   /.well-known/core  |
-            \\\\\//////                   +----------------------+
-                 |                                     |
-                 | 1-n2                                | 1
-        ooooooooooooooooooooo                  ////////\\\\\\\
-       o scheme://authority: o                <    contains   >
-       o     port            o                 \\\\\\\\///////
-        ooooooooooooooooooooo                          |
-                                                       | 1+
-                                            +--------------------+
-                                            |      link          |
-                                            +--------------------+
-                                                       |
-                                                       |  1   oooooooo
-                                                       +-----o  href  o
-                                                    0+ |      oooooooo
-                                  oooooooooooo         |
-                                 o    target  o--------+
-                                 o  attribute o        | 0+   oooooo
-                                  oooooooooooo         +-----o rel  o
-                                                       |      oooooo
-                                                       |
-                                                       | 0-1   oooooooo
-                                                       +------o anchor o
-                                                               oooooooo
+                       +----------------------+
+                       |   /.well-known/core  |
+                       +----------------------+
+                                  |
+                                  | 1
+                          ////////\\\\\\\
+                         <    contains   >
+                          \\\\\\\\///////
+                                  |
+                                  | 1+
+                        +--------------------+
+                        |      link          |
+                        +--------------------+
+                                  |
+                                  |  1   oooooooo
+                                  +-----o  href  o
+                               0+ |      oooooooo
+             oooooooooooo         |
+            o    target  o--------+
+            o  attribute o        | 0+   oooooo
+             oooooooooooo         +-----o rel  o
+                                  |      oooooo
+                                  |
+                                  | 0-1   oooooooo
+                                  +------o anchor o
+                                          oooooooo
 
 
 
@@ -431,17 +431,17 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  a set of links belonging to the host
 
-   o  a set of strings describing the scheme://authority part
-
-   The scheme://authority string represents the base URI of the links.
-   The current cardinality is 1 (n2 = 1).  In the future, links can have
-   multiple base URIs (n2 > 1) when transport negotiation is used.  The
-   names of the attributes of the links correspond with the link-format
-   attributes that can be set.  A link has the following attributes:
+   The names of the attributes of the links correspond with the link-
+   format attributes that can be set.  A link has the following
+   attributes:
 
    o  Unique rt (resource type)
 
-   o  Unique href (path of this link)
+   o  Unique href (URI this link points to)
+
+   o  One or more ct (content-types for transport format)
+
+
 
 
 
@@ -450,13 +450,13 @@ Shelby, et al.         Expires September 27, 2017               [Page 8]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   o  One or more ct (content-types for transport format)
-
-   o  Optional one anchor
+   o  Optional anchor (URI this link points from; default is the scheme/
+      authority of the /.well-known/core)
 
    o  and associated rel (relation)
 
    o  Optional one if (interface description reference)
+
 
 
 
@@ -506,13 +506,13 @@ Shelby, et al.         Expires September 27, 2017               [Page 9]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-                            +----------------------+          +-------------+
-                            |  resource-directory  |          |  MC address |
-                            +----------------------+          +-------------+
-                                       |                              |
-                                       |                           ////\\\\
-                                       |                          <  has   >
-                                       |                           \\\\////
+                            +----------------------+
+                            |  resource-directory  |
+                            +----------------------+
+                                       |
+                                       |              oooooooooooo
+                                       |             o MC address o---+
+                                       |              oooooooooooo    |
                                        |                              |
                                   //////\\\\                  0+  +--------+
                                  < contains >---------------------| group  |
@@ -521,8 +521,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
                                    0-n |                              | 1+
  oooooooooooooooooooooo     1  +---------------+               ///////\\\\\\
 o  scheme://authority: o-------|  registration |--------------< composed of >
-o      port            o       +---------------+               \\\\\\\//////
- oooooooooooooooooooooo            |       |
+ oooooooooooooooooooooo        +---------------+               \\\\\\\//////
+                                   |       |
                                    |       +-------------------+
                       oooooooo   1 |                           |
                      o  loc   o----+                       /////\\\\
@@ -564,15 +564,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  0 to k Groups
 
-   A Group has one Multicast address and is composed of 0 to n1
-   endpoints.  A registration is associated with one endpoint (ep).  An
-   endpoint can be part of 0 to k1 Groups . An endpoint is contained in
-   1 to m RDs.  A registration defines a set of links as defined for
+   A Group has one Multicast address attribute and is composed of 0 to
+   n1 endpoints.  A registration is associated with one endpoint (ep).
+   An endpoint can be part of 0 to k1 Groups . An endpoint is contained
+   in 1 to m RDs.  A registration defines a set of links as defined for
    /.well-known/core.  A Registration has six attributes:
 
    o  one ep (endpoint with a unique name)
 
-   o  a set of strings describing the scheme://authority part
+   o  string describing the scheme://authority part
 
    o  one lt (lifetime),
 
