@@ -209,7 +209,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Group
       In the context of a Resource Directory, a group is a logical
       grouping of endpoints for the purpose of group communications.
-      All groups within a domain are unique.
+      All groups within a domain have unique names.
 
    Endpoint
       Endpoint (EP) is a term used to describe a web server or client in
@@ -905,9 +905,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    All operations on the contents of the Resource Directory MUST be
    atomic and idempotent.
 
-   A Resource Directory MUST accept query filtering with multiple query
-   parameters in the URI.
-
 5.1.  Content Formats
 
    Resource Directory implementations using this specification MUST
@@ -947,14 +944,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
    hints to select alternate content-formats for interaction with the
    Resource Directory.
 
+   TODO: Suggestion to add a version, ver, parameter.
+
+
 
 
 Shelby, et al.         Expires September 27, 2017              [Page 17]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   TODO: Suggestion to add a version, ver, parameter.
 
    HTTP does not support multicast and consequently only unicast
    discovery can be supported using HTTP.  Links to Resource Directories
@@ -1002,6 +1000,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    HTTP support :  YES (Unicast only)
 
+   The following example shows an endpoint discovering an RD using this
+   interface, thus learning that the RD registration resource is, in
 
 
 
@@ -1010,8 +1010,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 18]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   The following example shows an endpoint discovering an RD using this
-   interface, thus learning that the RD registration resource is, in
    this example, at /rd, and that the content-format delivered by the
    server hosting the resource is application/link-format (ct=40).  Note
    that it is up to the RD to choose its RD resource paths.
@@ -1058,6 +1056,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    [I-D.ietf-core-links-json], along with query parameters indicating
    the name of the endpoint, and optionally its domain and the lifetime
    of the registration.  It is expected that other specifications will
+   define further parameters (see Section 9.3).  The RD then creates a
+   new registration resource in the RD and returns its location.  An
 
 
 
@@ -1066,8 +1066,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 19]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   define further parameters (see Section 9.3).  The RD then creates a
-   new registration resource in the RD and returns its location.  An
    endpoint MUST use that location when refreshing registrations using
    this interface.  Endpoint resources in the RD are kept active for the
    period indicated by the lifetime parameter.  The endpoint is
@@ -1114,6 +1112,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
       con :=  Context (optional).  This parameter sets the Default Base
          URI under which the request's body are be interpreted.  The URI
          scheme provided MUST allow a path component, but the path
+         component of the Context parameter MUST be empty.  The
+         parameter is therefore of the shape "scheme://authority" for
 
 
 
@@ -1122,8 +1122,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 20]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-         component of the Context parameter MUST be empty.  The
-         parameter is therefore of the shape "scheme://authority" for
          HTTP and CoAP URIs.  In the absence of this parameter the
          scheme of the protocol, source address and source port of the
          register request are assumed.  This parameter is mandatory when
@@ -1173,6 +1171,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
 
+
+
 Shelby, et al.         Expires September 27, 2017              [Page 21]
 
 Internet-Draft           CoRE Resource Directory              March 2017
@@ -1216,8 +1216,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The endpoint then finds one or more addresses of the directory server
    as described in Section 4.
 
-   An endpoint can send (a selection of) hosted resources to a directory
-   server for publication as described in Section 5.3.2.
+   An endpoint finally asks the directory server to probe it for
+   resources and publish them as described in Section 5.3.2.
 
    The directory server integrates the information it received this way
    into its resource directory.  It MAY make the information available
@@ -3259,7 +3259,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    [1] http://www.example.com/sensors/t123
 
-   [2] http://www2.example.com/sensors/t123.pdf
+   [2] http://www.example.com/sensors/t123/t123.pdf
+
+   [3] http://www.example.com/sensors/t123
 
 Appendix A.  Web links and the Resource Directory
 
@@ -3268,36 +3270,34 @@ Appendix A.  Web links and the Resource Directory
    defining URIs, [RFC5988] defining link headers, [RFC6690] serializing
    them into a link-format document, and [RFC7252] providing the
    transport).  This appendix summarizes the mechanisms and semantics at
-   play from an entry in ".well-known/core" to a resource lookup.  (This
-   section will not elaborate on the differences between URIs and IRIs
-   and use the former term for simplicity.)
+   play from an entry in ".well-known/core" to a resource lookup.
 
-   Much of this text will be obvious to people accustomed to link
-   mechanisms on the web; it is primarily aimed at people entering the
-   field of Constrained Restful Environments from applications that
-   previously did not use web mechanisms.
+   This text is primarily aimed at people entering the field of
+   Constrained Restful Environments from applications that previously
+   did not use web mechanisms.
 
 A.1.  A simple example
 
    Let's start this example with a very simple host, "2001:db8:f0::1".
-   A client could follow classical CoAP Discovery ([RFC7252] Section 7)
-   and do a multicast request.  The client would send the following
-   multicast request:
+   A client that follows classical CoAP Discovery ([RFC7252] Section 7),
+   sends the following multicast request to learn about neighbours
+   supporting resources with resource-type "temperature".
 
-   Sender: [2001:db8:f0::1234]:65530
-   Recipient: [ff02::fd]:5683 ("All CoAP Nodes in link-local scope")
-   Code: GET
-   Uri-Path: .well-known
-   Uri-Path: core
-   Uri-Query: rt=temperature
+   The client sends a link-local multicast:
 
-   and the simple host would respond
+   GET coap://[ff02::fd]:5683/.well-known/core?rt=temperature
 
-   Sender: [2001:db8:f0::1]:5683
-   Recipient: [2001:db8:f0::1234]:65530
-   Code: 2.05 Content
-   Payload:
-       </temp>;rt=temperature;ct=0
+   RES 2.05 Content
+   </temp>;rt=temperature;ct=0
+
+   where the response is sent by the server, "[2001:db8:f0::1]:5683".
+
+   While the client - on the practical or implementation side - can just
+   go ahead and create a new request to "[2001:db8:f0::1]:5683" with
+   Uri-Path: "temp", the full resolution steps without any shortcuts
+   are:
+
+
 
 
 
@@ -3305,11 +3305,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 59]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   While the client - on the practical or implementation side - can just
-   go ahead and create a new request to "[2001:db8:f0::1]:5683" with
-   Uri-Path: "temp", the full resolution steps without any shortcuts
-   are:
 
 A.1.1.  Resolving the URIs
 
@@ -3319,29 +3314,29 @@ A.1.1.  Resolving the URIs
    of an "anchor" parameter (as per [RFC5988] section 5.2), the URI of
    the requested resource.
 
-   The URI of the requested resource can be composed from following the
+   The URI of the requested resource can be composed by following the
    steps of [RFC7252] section 6.5 (with an addition at the end of 8.2)
    into "coap://[2001:db8:f0::1]/.well-known/core".
 
-   The record's target can thus be resolved by following [RFC3986]
-   section 5.2 by composing the Base URI "coap://[2001:db8:f0::1]/.well-
-   known/core" with the relative URI reference "/temp" into
-   "coap://[2001:db8:f0::1]/temp".
+   The record's target is resolved by replacing the path /.well-known/
+   core from the Base URI (section 5.2 [RFC3986]) with the relative
+   target URI "/temp" into "coap://[2001:db8:f0::1]/temp".
 
 A.1.2.  Interpreting attributes and relations
 
    Some more information but the record's target can be obtained from
-   the line: It says that the resource type of the target is
-   "temperature", and its content type is text/plain (encoded as 0).
-   Furthermore, as this is an [RFC6690] document, there is an implicit
-   default parameter of rel="hosts".
+   the payload: the resource type of the target is "temperature", and
+   its content type is text/plain (ct=0).
 
-   A relation in a web link is a three-part statement that the context
+   A relation in a web link is a three-part statement that the Base
    resource has a named relation to the target resource, like "_This
-   page_ has _its table of contents_ at _/toc.html_".
+   page_ has _its table of contents_ at _/toc.html_".  In [RFC6690]
+   link-format documents, there is an implicit "host relation" specified
+   with default parameter: rel="hosts".
 
-   In our example, the context of the link is the requested document
-   itself.  A full English expression of the complete response is:
+   In our example, the Base URI of the link is the URI of the requested
+   document itself.  A full English expression of the "host relation"
+   is:
 
    '<coap://[2001:db8:f0::1]/.well-known/core> is hosting the resource
    <coap://[2001:db8:f0::1]/temp>, which is of the resource type
@@ -3350,8 +3345,13 @@ A.1.2.  Interpreting attributes and relations
 
 A.2.  A slightly more complex example
 
-   Were the simple host not queried with the "rt=temperature" filter, it
-   would have given some more statements:
+   Omitting the "rt=temperature" filter, the discovery query would have
+   given some more records in the payload:
+
+
+
+
+
 
 
 
@@ -3371,26 +3371,25 @@ Internet-Draft           CoRE Resource Directory              March 2017
        anchor="http://www.example.com/sensors/t123"
 
    Parsing the third record, the client encounters the "anchor"
-   parameter.  It is a URI, and can be relative to the document's Base
-   URI and is thus resolved to "coap://[2001:db8:f0::1]/sensors/temp".
-   That is the context resource of the link (so it only affects a single
-   record), with two effects:
+   parameter.  It is a URI relative to the document's Base URI and is
+   thus resolved to "coap://[2001:db8:f0::1]/sensors/temp".  That is the
+   context resource of the link, so the "rel" statement is not about the
+   target and the document Base URI any more, but about the target and
+   that address.
 
-   o  The "rel" statement is not about the target and the document Base
-      URI any more, but about the target and this URI.
+   Thus, the third record could be read as
+   "<coap://[2001:db8:f0::1]/sensors/temp> has an alternate
+   representation at <coap://[2001:db8:f0::1]/t>".
 
-      Thus, the third record could be read as "<coap://[...]/sensors/
-      temp> has an alternate representation at <coap://[...]/t>".
+   The fourth record can be read as "<coap://[2001:db8:f0::1]/sensors/
+   temp> is described by http://www.example.com/sensors/t123 [1]"
 
-   o  When resolving the target URI, it is resolved relative to the
-      context URI.
-
-      This only makes a difference in the last example, where a
-      "t123.pdf" is resolved relative to
-      "http://www.example.com/sensors/t123", which gives a statement
-      that "http://www.example.com/sensors/t123 [1] has an alternate
-      representation at http://www2.example.com/sensors/t123.pdf [2],
-      whose content type is PDF".
+   In the last example the anchor is absolute, where a "t123.pdf" is
+   resolved relative to "http://www.example.com/sensors/t123", which
+   gives a statement that "http://www.example.com/sensors/t123/t123.pdf
+   [2] is an alternate representation to
+   "http://www.example.com/sensors/t123 [3] of which the content type is
+   PDF".
 
 A.3.  Enter the Resource Directory
 
@@ -3400,15 +3399,16 @@ A.3.  Enter the Resource Directory
 
    For the following queries, we will assume that the simple host has
    used Simple Registration to register at the resource directory that
-   was announced to it:
+   was announced to it, sending this request from its UDP port
+   "[2001:db8:f0::1]:6553":
 
-   Sender: [2001:db8:f0::1]:6553
-   Recipient: [2001:db8:f01::ff]:5683
-   Code: POST
-   Uri-Path: .well-known
-   Uri-Path: core
-   Uri-Query: ep=simple-host1
+   POST coap://[2001:db8:f01::ff]/.well-known/core?ep-simple-host1
 
+   The resource directory would have accepted the registration, and
+   queried the simple host's ".well-known/core" by itself.  As a result,
+   the host is registered as an endpoint in the RD with the name
+   "simple-host1".  The registration is active for 86400 seconds, and
+   the endpoint registration Base URI is "coap://[2001:db8:f0::1]/"
 
 
 
@@ -3418,11 +3418,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 61]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   The resource directory would have accepted the registration, and
-   queried the simple host's ".well-known/core" by itself.  As a result,
-   the host is registered as an endpoint in the RD with the name
-   "simple-host1".  The registration is active for 86400 seconds, and
-   the endpoint registration Context is "coap://[2001:db8:f0::1]/"
    because that is the address the registration was sent from (and no
    explicit "con=" was given).
 
@@ -3461,11 +3456,16 @@ Internet-Draft           CoRE Resource Directory              March 2017
    <t123.pdf>;rel=alternate;ct=65001;
        anchor="http://www.example.com/sensors/t123"
 
-   Note that the last link was not modifed at all because its anchor was
-   already an absolute reference.
+   Note that the last link was not modified at all because its anchor
+   was already an absolute reference.
 
    Had the simple host registered with an explicit context (eg.
    "?ep=simple-host1&con=coap+tcp://simple-host1.example.com"), that
+   context would have been used to resolve the relative anchor values
+   instead, giving
+
+</temp>;rt=temperature;ct=0;anchor="coap+tcp://simple-host1.example.com"
+
 
 
 
@@ -3473,11 +3473,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 62]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   context would have been used to resolve the anchor values instead,
-   giving
-
-</temp>;rt=temperature;ct=0;anchor="coap+tcp://simple-host1.example.com"
 
    and analogous records.
 
@@ -3519,6 +3514,11 @@ Authors' Addresses
    Phone: +31-492474673 (Netherlands), +33-966015248 (France)
    Email: consultancy@vanderstok.org
    URI:   www.vanderstok.org
+
+
+
+
+
 
 
 
