@@ -559,7 +559,7 @@ address {
 <br> In the context of a Resource Directory, a domain is a logical grouping of endpoints.</dd>
 <dt>Group</dt>
 <dd style="margin-left: 8">
-<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain have unique names.</dd>
+<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain are unique.</dd>
 <dt>Endpoint</dt>
 <dd style="margin-left: 8">
 <br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and is unique within the associated domain of the registration.</dd>
@@ -865,6 +865,7 @@ RD Address:             IPv6 address of the RD.
 </h1>
 <p id="rfc.section.5.p.1">This section defines the required set of REST interfaces between a Resource Directory (RD) and endpoints. Although the examples throughout this section assume the use of CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>, these REST interfaces can also be realized using HTTP <a href="#RFC7230" class="xref">[RFC7230]</a>.  In all definitions in this section, both CoAP response codes (with dot notation) and HTTP response codes (without dot notation) are shown. An RD implementing this specification MUST support the discovery, registration, update, lookup, and removal interfaces defined in this section.</p>
 <p id="rfc.section.5.p.2">All operations on the contents of the Resource Directory MUST be atomic and idempotent.</p>
+<p id="rfc.section.5.p.3">A Resource Directory MUST accept query filtering with multiple query parameters in the URI.</p>
 <h1 id="rfc.section.5.1">
 <a href="#rfc.section.5.1">5.1.</a> <a href="#content-formats" id="content-formats">Content Formats</a>
 </h1>
@@ -1028,7 +1029,7 @@ Location: /rd/4521
 <p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
 <p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
-<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
+<p id="rfc.section.5.3.1.p.4">An endpoint can send (a selection of) hosted resources to a directory server for publication as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
 <p id="rfc.section.5.3.1.p.5">The directory server integrates the information it received this way into its resource directory.  It MAY make the information available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
 <h1 id="rfc.section.5.3.2">
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>

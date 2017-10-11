@@ -209,7 +209,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Group
       In the context of a Resource Directory, a group is a logical
       grouping of endpoints for the purpose of group communications.
-      All groups within a domain have unique names.
+      All groups within a domain are unique.
 
    Endpoint
       Endpoint (EP) is a term used to describe a web server or client in
@@ -905,6 +905,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    All operations on the contents of the Resource Directory MUST be
    atomic and idempotent.
 
+   A Resource Directory MUST accept query filtering with multiple query
+   parameters in the URI.
+
 5.1.  Content Formats
 
    Resource Directory implementations using this specification MUST
@@ -944,15 +947,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    hints to select alternate content-formats for interaction with the
    Resource Directory.
 
-   TODO: Suggestion to add a version, ver, parameter.
-
-
 
 
 Shelby, et al.         Expires September 27, 2017              [Page 17]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   TODO: Suggestion to add a version, ver, parameter.
 
    HTTP does not support multicast and consequently only unicast
    discovery can be supported using HTTP.  Links to Resource Directories
@@ -1000,8 +1002,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    HTTP support :  YES (Unicast only)
 
-   The following example shows an endpoint discovering an RD using this
-   interface, thus learning that the RD registration resource is, in
 
 
 
@@ -1010,6 +1010,8 @@ Shelby, et al.         Expires September 27, 2017              [Page 18]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   The following example shows an endpoint discovering an RD using this
+   interface, thus learning that the RD registration resource is, in
    this example, at /rd, and that the content-format delivered by the
    server hosting the resource is application/link-format (ct=40).  Note
    that it is up to the RD to choose its RD resource paths.
@@ -1056,8 +1058,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    [I-D.ietf-core-links-json], along with query parameters indicating
    the name of the endpoint, and optionally its domain and the lifetime
    of the registration.  It is expected that other specifications will
-   define further parameters (see Section 9.3).  The RD then creates a
-   new registration resource in the RD and returns its location.  An
 
 
 
@@ -1066,6 +1066,8 @@ Shelby, et al.         Expires September 27, 2017              [Page 19]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   define further parameters (see Section 9.3).  The RD then creates a
+   new registration resource in the RD and returns its location.  An
    endpoint MUST use that location when refreshing registrations using
    this interface.  Endpoint resources in the RD are kept active for the
    period indicated by the lifetime parameter.  The endpoint is
@@ -1112,8 +1114,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
       con :=  Context (optional).  This parameter sets the Default Base
          URI under which the request's body are be interpreted.  The URI
          scheme provided MUST allow a path component, but the path
-         component of the Context parameter MUST be empty.  The
-         parameter is therefore of the shape "scheme://authority" for
 
 
 
@@ -1122,6 +1122,8 @@ Shelby, et al.         Expires September 27, 2017              [Page 20]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+         component of the Context parameter MUST be empty.  The
+         parameter is therefore of the shape "scheme://authority" for
          HTTP and CoAP URIs.  In the absence of this parameter the
          scheme of the protocol, source address and source port of the
          register request are assumed.  This parameter is mandatory when
@@ -1171,8 +1173,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 
 
-
-
 Shelby, et al.         Expires September 27, 2017              [Page 21]
 
 Internet-Draft           CoRE Resource Directory              March 2017
@@ -1216,8 +1216,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The endpoint then finds one or more addresses of the directory server
    as described in Section 4.
 
-   An endpoint finally asks the directory server to probe it for
-   resources and publish them as described in Section 5.3.2.
+   An endpoint can send (a selection of) hosted resources to a directory
+   server for publication as described in Section 5.3.2.
 
    The directory server integrates the information it received this way
    into its resource directory.  It MAY make the information available
