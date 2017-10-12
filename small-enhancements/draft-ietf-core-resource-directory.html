@@ -2344,8 +2344,8 @@ RES 2.05 Content
 <a href="#rfc.appendix.A.1.2">A.1.2.</a> <a href="#interpreting-attributes-and-relations" id="interpreting-attributes-and-relations">Interpreting attributes and relations</a>
 </h1>
 <p id="rfc.section.A.1.2.p.1">Some more information but the record&#8217;s target can be obtained from the payload: the resource type of the target is &#8220;temperature&#8221;, and its content type is text/plain (ct=0).</p>
-<p id="rfc.section.A.1.2.p.2">A relation in a web link is a three-part statement that the Base resource has a named relation to the target resource, like &#8220;<em>This page</em> has <em>its table of contents</em> at <em>/toc.html</em>&#8221;. In <a href="#RFC6690" class="xref">[RFC6690]</a> link-format documents, there is an implicit &#8220;host relation&#8221; specified with default parameter: rel=&#8221;hosts&#8221;.</p>
-<p id="rfc.section.A.1.2.p.3">In our example, the  Base URI of the link is the URI of the requested document itself. A full English expression of the &#8220;host relation&#8221; is:</p>
+<p id="rfc.section.A.1.2.p.2">A relation in a web link is a three-part statement that the context resource has a named relation to the target resource, like &#8220;<em>This page</em> has <em>its table of contents</em> at <em>/toc.html</em>&#8221;. In <a href="#RFC6690" class="xref">[RFC6690]</a> link-format documents, there is an implicit &#8220;host relation&#8221; specified with default parameter: rel=&#8221;hosts&#8221;.</p>
+<p id="rfc.section.A.1.2.p.3">In our example, the context of the link is the URI of the requested document itself. A full English expression of the &#8220;host relation&#8221; is:</p>
 <p id="rfc.section.A.1.2.p.4">&#8216;&lt;coap://[2001:db8:f0::1]/.well-known/core&gt; is hosting the resource &lt;coap://[2001:db8:f0::1]/temp&gt;, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
 <h1 id="rfc.appendix.A.2">
 <a href="#rfc.appendix.A.2">A.2.</a> <a href="#a-slightly-more-complex-example" id="a-slightly-more-complex-example">A slightly more complex example</a>

@@ -3328,13 +3328,13 @@ A.1.2.  Interpreting attributes and relations
    the payload: the resource type of the target is "temperature", and
    its content type is text/plain (ct=0).
 
-   A relation in a web link is a three-part statement that the Base
+   A relation in a web link is a three-part statement that the context
    resource has a named relation to the target resource, like "_This
    page_ has _its table of contents_ at _/toc.html_".  In [RFC6690]
    link-format documents, there is an implicit "host relation" specified
    with default parameter: rel="hosts".
 
-   In our example, the Base URI of the link is the URI of the requested
+   In our example, the context of the link is the URI of the requested
    document itself.  A full English expression of the "host relation"
    is:
 
