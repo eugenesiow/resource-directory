@@ -325,6 +325,12 @@ address {
 <link href="#rfc.references" rel="Chapter" title="13 References">
 <link href="#rfc.references.1" rel="Chapter" title="13.1 Normative References">
 <link href="#rfc.references.2" rel="Chapter" title="13.2 Informative References">
+<link href="#rfc.appendix.A" rel="Chapter" title="A Web links and the Resource Directory">
+<link href="#rfc.appendix.A.1" rel="Chapter" title="A.1 A simple example">
+<link href="#rfc.appendix.A.1.1" rel="Chapter" title="A.1.1 Resolving the URIs">
+<link href="#rfc.appendix.A.1.2" rel="Chapter" title="A.1.2 Interpreting attributes and relations">
+<link href="#rfc.appendix.A.2" rel="Chapter" title="A.2 A slightly more complex example">
+<link href="#rfc.appendix.A.3" rel="Chapter" title="A.3 Enter the Resource Directory">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -512,6 +518,18 @@ address {
 </li>
 <li>13.2.   <a href="#rfc.references.2">Informative References</a>
 </li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Web links and the Resource Directory</a>
+</li>
+<ul><li>A.1.   <a href="#rfc.appendix.A.1">A simple example</a>
+</li>
+<ul><li>A.1.1.   <a href="#rfc.appendix.A.1.1">Resolving the URIs</a>
+</li>
+<li>A.1.2.   <a href="#rfc.appendix.A.1.2">Interpreting attributes and relations</a>
+</li>
+</ul><li>A.2.   <a href="#rfc.appendix.A.2">A slightly more complex example</a>
+</li>
+<li>A.3.   <a href="#rfc.appendix.A.3">Enter the Resource Directory</a>
+</li>
 </ul><li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
 
@@ -547,7 +565,7 @@ address {
 <br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and is unique within the associated domain of the registration.</dd>
 <dt>Context</dt>
 <dd style="margin-left: 8">
-<br> When registering links to a Resource Directory, the Context refers to the scheme, address, port, and base path for all the links registered on behalf of an endpoint, of the general form scheme://host:port/path/ where the client may explicitly set the scheme and host, and may supply the port and path as optional parameters. When the context of a registration is explicitly set, the URI resolution rules in <a href="#RFC3986" class="xref">[RFC3986]</a> MUST be applied.</dd>
+<br> A Context is a base URL that gives scheme and (typically) authority information about an Endpoint. The Context of an Endpoint is provided at registration time, and is used by the Resource Directory to resolve relative references inside the registration into absolute URIs.</dd>
 <dt>Commissioning Tool</dt>
 <dd style="margin-left: 8">
 <br> Commissioning Tool (CT) is a device that assists during the installation of the network by assigning values to parameters, naming endpoints and groups, or adapting the installation to the needs of the applications.</dd>
@@ -623,7 +641,7 @@ address {
 <div id="fig-ER-WKC"></div>
 <pre>
                     +----------------------+
-                    |   /.well-known/core  | 
+                    |   /.well-known/core  |
                     +----------------------+
                                |
                                | 1
@@ -657,81 +675,81 @@ address {
 <p></p>
 
 <ul><li>a set of links belonging to the host</li></ul>
-<p id="rfc.section.3.3.p.4">The names of the attributes of the links correspond with the link-format attributes that can be set. A link has the following attributes:</p>
+<p id="rfc.section.3.3.p.4">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in [<a href="#RFC6690" class="xref">[RFC6690]</a>] page 14).  The set does not necessarily contain links to all resources served by the host.</p>
+<p id="rfc.section.3.3.p.5">A link has the following attributes:</p>
 <p></p>
 
 <ul>
-<li>Unique rt (resource type)</li>
-<li>Unique href (URI this link points to)</li>
-<li>One or more ct (content-types for transport format)</li>
-<li>Optional anchor (URI this link points from; default is the scheme/authority of the /.well-known/core)</li>
-<li>and associated rel (relation)</li>
-<li>Optional one if (interface description reference)</li>
+<li>One or more link relations (expressed as space-separated values in the &#8220;rel&#8221; attribute, defaulting to &#8220;hosts&#8221;).  They describe a relations between the link context and the link target.</li>
+<li>A link context URI (&#8220;anchor&#8221;).  The link context defines the source of the relation, and serves as the Base URI for resolving the target.  It can be relative, in which case it gets resolved against the Base URI of the <samp>.well-known/core</samp> document it was obtained from . It can be absent, in which the Base URI of the document is used as the context.</li>
+<li>A link target URI (&#8220;href&#8221;, expressed between the angular brackets in link-format).  The link target defines the destination of the relation, and is the topic of all other target attributes.  If it is a relative URI, it gets resolved against the link context URI.</li>
+<li>Other target attributes (eg. resource type (rt), interface (if), cor content-type (ct)).  These provide additional information about the target URI.</li>
 </ul>
 <div id="rfc.figure.4"></div>
 <div id="fig-ER-RD"></div>
 <pre>
-                            +----------------------+ 
-                            |  resource-directory  |  
-                            +----------------------+  
-                                       | 
-                                       |         oooooooooooo  0-1
-                                       |        o MC address o---+
-                                       |         oooooooooooo    |
-                                       |                         |
-                                  //////\\\\             0+  +--------+
-                                 &lt; contains &gt;----------------| group  |
-                                  \\\\\/////                 +--------+
-                                       |                         |
-                                   0-n |                         | 1+
- oooooooooooooooooooooo     1  +---------------+          ///////\\\\\\
-o  scheme://authority: o-------|  registration |---------&lt; composed of &gt;    
- oooooooooooooooooooooo        +---------------+          \\\\\\\//////
-                                   |       |
-                                   |       +--------------+  
-                      oooooooo   1 |                      |
-                     o  loc   o----+                 /////\\\\
-                      oooooooo     |                &lt; contains &gt;
-                                   |                 \\\\\/////
-                      oooooooo   1 |                      |
-                     o   ep   o----+                      | 1+
-                      oooooooo     |             +------------------+
-                                   |             |      link        |
-                      oooooooo 0-1 |             +------------------+
-                     o    d   o----+                      |
-                      oooooooo     |                      |  1   ooooooo
-                                   |                      +-----o href  o
-                      oooooooo 0-1 |                      |      ooooooo
-                     o   et   o----+     ooooooooooo   0+ |
-                      oooooooo     |    o  target   o-----+
-                                   |    o attribute o     | 0+   oooooo
-                      oooooooo 0-1 |     ooooooooooo      +-----o rel  o
-                     o   lt   o----+                      |      oooooo
-                      oooooooo                            |
-                                                          | 0-1 oooooooo
-                                                          +----o anchor o
-                                                                oooooooo
+             +----------------------+
+             |  resource-directory  |
+             +----------------------+
+                        |
+                        |         oooooooooooo  0-1
+                        |        o MC address o---+
+                        |         oooooooooooo    |
+                        |                         |
+                   //////\\\\             0+  +--------+
+                  &lt; contains &gt;----------------| group  |
+                   \\\\\/////                 +--------+
+                        |                         |
+                    0-n |                         | 1+
+ ooooooo     1  +---------------+          ///////\\\\\\
+o  con  o-------|  registration |---------&lt; composed of &gt;
+ ooooooo        +---------------+          \\\\\\\//////
+                    |       |
+                    |       +--------------+
+       oooooooo   1 |                      |
+      o  loc   o----+                 /////\\\\
+       oooooooo     |                &lt; contains &gt;
+                    |                 \\\\\/////
+       oooooooo   1 |                      |
+      o   ep   o----+                      | 1+
+       oooooooo     |             +------------------+
+                    |             |      link        |
+       oooooooo 0-1 |             +------------------+
+      o    d   o----+                      |
+       oooooooo     |                      |  1   ooooooo
+                    |                      +-----o href  o
+       oooooooo 0-1 |                      |      ooooooo
+      o   et   o----+     ooooooooooo   0+ |
+       oooooooo     |    o  target   o-----+
+                    |    o attribute o     | 0+   oooooo
+       oooooooo 0-1 |     ooooooooooo      +-----o rel  o
+      o   lt   o----+                      |      oooooo
+       oooooooo                            |
+                                           | 0-1 oooooooo
+                                           +----o anchor o
+                                                 oooooooo
 </pre>
 <p class="figure">Figure 4: E-R Model of the content of the Resource Directory</p>
-<p id="rfc.section.3.3.p.6">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
+<p id="rfc.section.3.3.p.7">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
 <p></p>
 
 <ul>
 <li>0 to n Registration (entries),</li>
 <li>0 to k Groups</li>
 </ul>
-<p id="rfc.section.3.3.p.8">A Group has one Multicast address attribute and is composed of 0 to n1 endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 to k1 Groups . An endpoint is contained in 1 to m RDs. A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
+<p id="rfc.section.3.3.p.9">A Group has one Multicast address attribute and is composed of 0 to n1 endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 to k1 Groups . An endpoint is contained in 1 to m RDs. A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
 <p></p>
 
 <ul>
 <li>one ep (endpoint with a unique  name)</li>
-<li>string describing the scheme://authority part</li>
+<li>one con (a string describing the scheme://authority part)</li>
 <li>one lt (lifetime),</li>
 <li>optional one et (endpoint type to add semantic information),</li>
 <li>one loc (location in the RD)</li>
 <li>optional one d (domain for query filtering)</li>
 </ul>
-<p id="rfc.section.3.3.p.10">The cardinality of the scheme://authority string is currently 1 (n2 = 1).</p>
+<p id="rfc.section.3.3.p.11">The cardinality of con is currently 1 (n2 = 1). The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
+<p id="rfc.section.3.3.p.12">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.  As they do not have their <samp>.well-known/core</samp> document associated with them any more which would originally provide its Base URI, the &#8220;con&#8221; attribute of the registration fills that gap and is used as a Base URI.</p>
 <h1 id="rfc.section.3.4">
 <a href="#rfc.section.3.4">3.4.</a> <a href="#cellular" id="cellular">Use Case: Cellular M2M</a>
 </h1>
@@ -877,7 +895,7 @@ RD Address:             IPv6 address of the RD.
 <dd style="margin-left: 8">
 <dl>
 <dt>rt :=</dt>
-<dd style="margin-left: 8">Resource Type (optional). MAY contain one of the values &#8220;core.rd&#8221;, &#8220;core.rd-lookup*&#8221;, &#8220;core.rd-lookup-d&#8221;, &#8220;core.rd-lookup-res&#8221;, &#8220;core.rd-lookup-ep&#8221;, &#8220;core.rd-lookup-gp&#8221;, &#8220;core.rd-group&#8221; or &#8220;core.rd*&#8221;</dd>
+<dd style="margin-left: 8">Resource Type (optional). MAY contain one of the values &#8220;core.rd&#8221;, &#8220;core.rd-lookup*&#8221;, &#8220;core.rd-lookup-res&#8221;, &#8220;core.rd-lookup-ep&#8221;, &#8220;core.rd-lookup-gp&#8221;, &#8220;core.rd-group&#8221; or &#8220;core.rd*&#8221;</dd>
 </dl>
 <p> </p>
 </dd>
@@ -914,7 +932,6 @@ Res: 2.05 Content
 &lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct=40,
 &lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct=40,
 &lt;/rd-lookup/gp&gt;;rt="core.rd-lookup-gp";ct=40,
-&lt;/rd-lookup/d&gt;;rt="core.rd-lookup-d";ct=40,
 &lt;/rd-group&gt;;rt="core.rd-group";ct=40
 </pre>
 <p class="figure">Figure 6: Example discovery exchange</p>
@@ -955,9 +972,9 @@ Res: 2.05 Content
 <dt>et :=</dt>
 <dd style="margin-left: 8">Endpoint Type (optional). The semantic type of the endpoint. This parameter SHOULD be less than 63 bytes.</dd>
 <dt>lt :=</dt>
-<dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included in the initial registration, a default value of 86400 (24 hours) SHOULD be assumed. If the lt parameter is not included in a registration refresh  or update operation, the most recently supplied value SHALL be re-used.</dd>
+<dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included in the initial registration, a default value of 86400 (24 hours) SHOULD be assumed.</dd>
 <dt>con :=</dt>
-<dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address, port and path at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.  If the endpoint uses an ephemeral port to register with, it MUST include the con: parameter in the registration to provide a valid network path.  If the endpoint which is located behind a NAT gateway is registering with a Resource Directory which is on the network service side of the NAT gateway, the endpoint MUST use a persistent port for the outgoing registration in order to provide the NAT gateway with a valid network address for replies and incoming requests.</dd>
+<dd style="margin-left: 8">Context (optional). This parameter sets the Default Base URI under which the request&#8217;s body are be interpreted. The URI scheme provided MUST allow a path component, but the path component of the Context parameter MUST be empty. The parameter is therefore of the shape &#8220;scheme://authority&#8221; for HTTP and CoAP URIs.  In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool.  If the endpoint uses an ephemeral port to register with, it MUST include the con parameter in the registration to provide a valid network path.  If the endpoint which is located behind a NAT gateway is registering with a Resource Directory which is on the network service side of the NAT gateway, the endpoint MUST use a persistent port for the outgoing registration in order to provide the NAT gateway with a valid network address for replies and incoming requests.</dd>
 </dl>
 <p> </p>
 </dd>
@@ -1018,12 +1035,12 @@ Location: /rd/4521
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
 </h1>
 <p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of the directory server of choice. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
-<p id="rfc.section.5.3.2.p.2">The endpoint MUST include the endpoint name and MAY include the registration parameters d, lt, and et, in the POST request as per <a href="#registration" class="xref">Section 5.3</a>.</p>
+<p id="rfc.section.5.3.2.p.2">The endpoint MUST include the endpoint name and MAY include the registration parameters d, lt, and et, in the POST request as per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
 <p id="rfc.section.5.3.2.p.3">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
 <p id="rfc.section.5.3.2.p.4">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
 <pre>
 Req:(to RD server from [2001:db8:2::1])
-POST coap://rd.example.com/.well-known/core?lt=6000;ep=node1
+POST coap://rd.example.com/.well-known/core?lt=6000&amp;ep=node1
 
 Content-Format: 40
 
@@ -1092,7 +1109,7 @@ payload:
 <dt>lt :=</dt>
 <dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included, the previous last lifetime set on a previous update or the original registration (falling back to 86400) SHOULD be used.</dd>
 <dt>con :=</dt>
-<dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address and port at which this server is available in the form scheme://host:port/path. In the absence of this parameter the scheme of the protocol, source address and source port of the register request are assumed. This parameter is mandatory when the directory is filled by a third party such as an commissioning tool. When con is used, scheme and host are mandatory and port and path parameters are optional.</dd>
+<dd style="margin-left: 8">Context (optional). This parameter updates the context established in the original registration to a new value.  If the parameter is set in an update, it is stored by the RD as the new Base URI under which to interpret the links of the registration, following the same restrictions as in the registration.  If the parameter is not set and was set explicitly before, the previous context value is kept unmodified.  If the parameter is not set and was not set explicitly before either, the source address and source port of the update request are stored as the context.</dd>
 </dl>
 <p> </p>
 </dd>
@@ -1135,7 +1152,7 @@ Res: 2.04 Changed
 <li>resource= &lt;/sensors/temp&gt;;ct=41;rt=&#8221;foobar&#8221;;if=&#8221;sensor&#8221;</li>
 </ul>
 <pre>
-Req: POST /rd/4521?lt=600&amp;con="coap://local-proxy.example.com:5683"
+Req: POST /rd/4521?lt=600&amp;con=coap://local-proxy.example.com:5683
 Content-Format: 40
 Payload:
 &lt;/sensors/temp&gt;;ct=41;rt="temperature-f";if="sensor",
@@ -1474,9 +1491,9 @@ Res: 2.02 Deleted
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> <a href="#lookup" id="lookup">RD Lookup</a>
 </h1>
-<p id="rfc.section.7.p.1">In order for an RD to be used for discovering resources registered with it, an optional lookup interface may be provided. This lookup interface is defined as a default, and it is assumed that RDs may also support lookups to return resource descriptions in alternative formats (e.g. Atom or HTML Link) or using more advanced interfaces (e.g. supporting context or semantic based lookup).</p>
-<p id="rfc.section.7.p.2">RD Lookup allows lookups for domains, groups, endpoints and resources using attributes defined in this document and for use with the CoRE Link Format. The result of a lookup request is the list of links (if any) corresponding to the type of lookup.  Thus, a domain lookup MUST return a list of domains, a group lookup MUST return a list of groups, an endpoint lookup MUST return a list of endpoints and a resource lookup MUST return a list of links to resources.</p>
-<p id="rfc.section.7.p.3">RD Lookup does not expose registration resources directly, but returns link content from registration resource entries which satisfy RD Lookup queries.</p>
+<p id="rfc.section.7.p.1">In order for an RD to be used for discovering resources registered with it, a lookup interface must be provided. This lookup interface is defined as a default, and it is assumed that RDs may also support lookups to return resource descriptions in alternative formats (e.g. Atom or HTML Link) or using more advanced interfaces (e.g. supporting context or semantic based lookup).</p>
+<p id="rfc.section.7.p.2">RD Lookup allows lookups for groups, endpoints and resources using attributes defined in this document and for use with the CoRE Link Format. The result of a lookup request is the list of links (if any) corresponding to the type of lookup.  Thus, a group lookup MUST return a list of groups, an endpoint lookup MUST return a list of endpoints and a resource lookup MUST return a list of links to resources.</p>
+<p id="rfc.section.7.p.3">While Endpoint Lookup does expose the registration resources, the RD does not need to make them accessible to clients.  Clients SHOULD NOT attempt to dereference or manipulate them.</p>
 <p id="rfc.section.7.p.4">The lookup type is selected by a URI endpoint, which is indicated by a Resource Type as per <a href="#lookup-types" class="xref">Table 1</a> below:</p>
 <div id="rfc.table.1"></div>
 <div id="lookup-types"></div>
@@ -1499,27 +1516,20 @@ Res: 2.02 Deleted
 <td class="left">Mandatory</td>
 </tr>
 <tr>
-<td class="left">Domain</td>
-<td class="left">core.rd-lookup-d</td>
-<td class="left">Optional</td>
-</tr>
-<tr>
 <td class="left">Group</td>
 <td class="left">core.rd-lookup-gp</td>
 <td class="left">Optional</td>
 </tr>
 </tbody>
 </table>
-<p id="rfc.section.7.p.5">Each endpoint and resource lookup result returns respectively the scheme (IP address and port) followed by the path part of the URI of every endpoint and resource inside angle brackets (&#8220;&lt;&gt;&#8221;) and followed by the other parameters.</p>
-<p id="rfc.section.7.p.6">The target of these links SHOULD be the actual location of the domain, endpoint or resource, but MAY be an intermediate proxy e.g. in the case of an HTTP lookup interface for CoAP endpoints.</p>
-<p id="rfc.section.7.p.7">The domain lookup returns every lookup domain with a base RD resource value (e.g. &#8220;/rd&#8221;) encapsulated within angle brackets.</p>
-<p id="rfc.section.7.p.8">In case that a group does not implement any multicast address, the group lookup returns every group lookup with a group base resource value encapsulated within angle brackets (e.g. &#8220;/rd/look-up&#8221;). Otherwise, the group lookup returns the multicast address of the group inside angle brackets.</p>
-<p id="rfc.section.7.p.9">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
-<p id="rfc.section.7.p.10">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
-<p id="rfc.section.7.p.11">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
-<p id="rfc.section.7.p.12">RD Lookup requests MAY use any set of query parameters to match the registered attributes and relations.  In addition, this interface MAY be used with queries that specify domains, endpoints, and groups.  For example, a domain lookup filtering on groups would return a list of domains that contain the specified groups.  An endpoint lookup filtering on groups would return a list of endpoints that are in the specified groups.</p>
-<p id="rfc.section.7.p.13">Clients that are interested in a lookup result repeatedly or continuously can use mechanisms like ETag caching, resource observation (<a href="#RFC7641" class="xref">[RFC7641]</a>), or any future mechanism that might allow more efficient observations of collections.  These are advertised, detected and used according to their own specifications and can be used with the lookup interface as with any other resource.</p>
-<p id="rfc.section.7.p.14">The lookup interface is specified as follows:</p>
+<p id="rfc.section.7.p.5">Resource lookup results in links that are semantically equivalent to the links submitted to the RD if they were accessed on the endpoint itself.  The links and link parameters returned are equal to the submitted ones except for anchor, which gets resolved according to the endpoint&#8217;s context.  That allows the client to interpret the response as links without any further knowledge of what the RD does.  The Resource Directory MAY replace the contexts with a configured intermediate proxy, e.g. in the case of an HTTP lookup interface for CoAP endpoints.</p>
+<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present) and context (con).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
+<p id="rfc.section.7.p.7">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
+<p id="rfc.section.7.p.8">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
+<p id="rfc.section.7.p.9">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
+<p id="rfc.section.7.p.10">RD Lookup requests MAY use any set of query parameters to match the registered attributes and relations.  In addition, this interface MAY be used with queries that specify endpoints and groups.  For example, an endpoint lookup filtering on groups would return a list of endpoints that are in the specified groups.</p>
+<p id="rfc.section.7.p.11">Clients that are interested in a lookup result repeatedly or continuously can use mechanisms like ETag caching, resource observation (<a href="#RFC7641" class="xref">[RFC7641]</a>), or any future mechanism that might allow more efficient observations of collections.  These are advertised, detected and used according to their own specifications and can be used with the lookup interface as with any other resource.</p>
+<p id="rfc.section.7.p.12">The lookup interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -1537,7 +1547,7 @@ Res: 2.02 Deleted
 <dt>ep :=</dt>
 <dd style="margin-left: 8">Endpoint name (optional). Used for endpoint, group and resource lookups.</dd>
 <dt>d :=</dt>
-<dd style="margin-left: 8">Domain (optional). Used for domain, group, endpoint and resource lookups.</dd>
+<dd style="margin-left: 8">Domain (optional). Used for group, endpoint and resource lookups.</dd>
 </dl>
 <p> gp :=  Group name (optional).  Used for endpoint, group and resource lookups.  </p>
 <dl>
@@ -1561,7 +1571,7 @@ Res: 2.02 Deleted
 <p> </p>
 </dd>
 </dl>
-<p id="rfc.section.7.p.16">The following responses codes are defined for this interface:</p>
+<p id="rfc.section.7.p.14">The following responses codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -1578,72 +1588,88 @@ Res: 2.02 Deleted
 <dt>HTTP support:</dt>
 <dd style="margin-left: 8">YES</dd>
 </dl>
-<p id="rfc.section.7.p.18">The examples in this section assume CoAP hosts with a default CoAP port 61616. HTTP hosts are possible and do not change the nature of the examples.</p>
-<p id="rfc.section.7.p.19">The following example shows a client performing a resource lookup with the example resource look-up locations discovered in <a href="#example-discovery" class="xref">Figure 6</a>:</p>
+<p id="rfc.section.7.p.16">The examples in this section assume CoAP hosts with a default CoAP port 61616. HTTP hosts are possible and do not change the nature of the examples.</p>
+<p id="rfc.section.7.p.17">The following example shows a client performing a resource lookup with the example resource look-up locations discovered in <a href="#example-discovery" class="xref">Figure 6</a>:</p>
 <pre>
 Req: GET /rd-lookup/res?rt=temperature
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::123]:61616/temp&gt;;rt="temperature"
+&lt;/temp&gt;;rt="temperature";anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.p.20">The following example shows a client performing an endpoint type lookup:</p>
+<p id="rfc.section.7.p.18">The following example shows a client performing an endpoint type lookup:</p>
 <pre>
 Req: GET /rd-lookup/ep?et=power-node
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::127]:61616&gt;;ep="node5",
-&lt;coap://[2001:db8:3::129]:61616&gt;;ep="node7"
+&lt;/reg/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5",
+&lt;/reg/5678&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7"
 </pre>
-<p id="rfc.section.7.p.21">The following example shows a client performing a domain lookup:</p>
-<pre>
-Req: GET /rd-lookup/d
-
-Res: 2.05 Content
-&lt;&gt;;d="domain1",
-&lt;&gt;;d="domain2"
-</pre>
-<p id="rfc.section.7.p.22">The following example shows a client performing a group lookup for all groups:</p>
+<p id="rfc.section.7.p.19">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
 Req: GET /rd-lookup/gp
 
 Res: 2.05 Content
-&lt;&gt;;gp="lights1";d="example.com"
-&lt;&gt;;gp="lights2";d="example.com"
+&lt;/rd-group/1&gt;;gp="lights1";d="example.com"
+&lt;/rd-group/2&gt;;gp="lights2";d="example.com"
 </pre>
-<p id="rfc.section.7.p.23">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
+<p id="rfc.section.7.p.20">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
 <pre>
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::123]:61616&gt;;ep="node1",
-&lt;coap://[2001:db8:3::124]:61616&gt;;ep="node2"
+&lt;/reg/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1",
+&lt;/reg/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2"
 </pre>
-<p id="rfc.section.7.p.24">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
+<p id="rfc.section.7.p.21">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
-&lt;&gt;;gp="lights1"
+&lt;/rd-group/1&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.p.25">The following example shows a client performing a paginated lookup</p>
+<p id="rfc.section.7.p.22">The following example shows a client performing a paginated lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::123]:61616/res/0&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/1&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/2&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/3&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/4&gt;;rt=sensor;ct=60
+&lt;/res/0&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/1&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/2&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/3&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/4&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 
 Req: GET /rd-lookup/res?page=1&amp;count=5
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:3::123]:61616/res/5&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/6&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/7&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/8&gt;;rt=sensor;ct=60
-&lt;coap://[2001:db8:3::123]:61616/res/9&gt;;rt=sensor;ct=60
+&lt;/res/5&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/6&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/7&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
+&lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
+</pre>
+<p id="rfc.section.7.p.23">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that endpoints with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp> have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.p.24">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
+<pre>
+Req: POST /rd?ep=mynode
+
+&lt;/sensors&gt;;ct=40;title="Sensor Index";
+    anchor="coap://sensor1.example.com",
+&lt;/sensors/temp&gt;;rt="temperature-c";if="sensor";
+    anchor="coap://sensor1.example.com",
+&lt;/sensors/light&gt;;rt="light-lux";if="sensor";
+    anchor="coap://sensor1.example.com",
+&lt;http://www.example.com/sensors/t123&gt;;rel="describedby";
+    anchor="coap://sensor1.example.com/sensors/temp",
+&lt;/t&gt;;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp",
+&lt;/sensors&gt;;ct=40;title="Sensor Index";
+    anchor="coap://sensor2.example.com",
+&lt;/sensors/temp&gt;;rt="temperature-c";if="sensor";
+    anchor="coap://sensor2.example.com",
+&lt;/sensors/light&gt;;rt="light-lux";if="sensor";
+    anchor="coap://sensor2.example.com",
+&lt;http://www.example.com/sensors/t123&gt;;rel="describedby";
+    ;anchor="coap://sensor2.example.com/sensors/temp",
+&lt;/t&gt;;rel="alternate";anchor="coap://sensor2.example.com/sensors/temp"
 </pre>
 <h1 id="rfc.section.8">
 <a href="#rfc.section.8">8.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
@@ -1671,7 +1697,7 @@ Res: 2.05 Content
 <h1 id="rfc.section.9.1">
 <a href="#rfc.section.9.1">9.1.</a> <a href="#iana-rt" id="iana-rt">Resource Types</a>
 </h1>
-<p id="rfc.section.9.1.p.1">&#8220;core.rd&#8221;, &#8220;core.rd-group&#8221;, &#8220;core.rd-lookup-ep&#8221;, &#8220;core.rd-lookup-res&#8221;, &#8220;core.rd-lookup-d&#8221;, and &#8220;core.rd-lookup-gp&#8221; resource types need to be registered with the resource type registry defined by <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.9.1.p.1">&#8220;core.rd&#8221;, &#8220;core.rd-group&#8221;, &#8220;core.rd-lookup-ep&#8221;, &#8220;core.rd-lookup-res&#8221;, and &#8220;core.rd-lookup-gp&#8221; resource types need to be registered with the resource type registry defined by <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <h1 id="rfc.section.9.2">
 <a href="#rfc.section.9.2">9.2.</a> <a href="#ipv6-nd-resource-directory-address-option" id="ipv6-nd-resource-directory-address-option">IPv6 ND Resource Directory Address Option</a>
 </h1>
@@ -1746,7 +1772,7 @@ Res: 2.05 Content
 </tr>
 </tbody>
 </table>
-<p id="rfc.section.9.3.p.4">The IANA policy for future additions to the sub-registry is &#8220;Expert Review&#8221; as described in <a href="#RFC5226" class="xref">[RFC5226]</a>.</p>
+<p id="rfc.section.9.3.p.4">The IANA policy for future additions to the sub-registry is &#8220;Expert Review&#8221; as described in <a href="#RFC8126" class="xref">[RFC8126]</a>.</p>
 <h1 id="rfc.section.10">
 <a href="#rfc.section.10">10.</a> <a href="#examples" id="examples">Examples</a>
 </h1>
@@ -1890,6 +1916,7 @@ Location: /rd/4523
 Req: POST coap://[2001:db8:4::ff]/rd-group
 ?gp=grp_R2-4-015&amp;con=coap://[ff05::1]
 Payload:
+[ request still unclear -- see https://github.com/core-wg/resource-directory/issues/48 ]
 &lt;&gt;;ep=lm_R2-4-015_wndw,
 &lt;&gt;;ep=lm_R2-4-015_door,
 &lt;&gt;;ep=ps_R2-4-015_door
@@ -1904,9 +1931,9 @@ Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
   ?d=R2-4-015;rt=light
 
 Res: 2.05 Content
-&lt;coap://[2001:db8:4::1]&gt;;
+&lt;/rd/4521&gt;;con="coap://[2001:db8:4::1]",
   ep="lm_R2-4-015_wndw",
-&lt;coap://[2001:db8:4::2]&gt;;
+&lt;/rd/4522&gt;;con="coap://[2001:db8:4::2]",
    ep="lm_R2-4-015_door"
 </pre>
 <p id="rfc.section.10.1.2.p.9">Knowing its own IPv6 address, the luminary discovers its endpoint name. With the endpoint name the luminary queries the RD for all groups to which the endpoint belongs.</p>
@@ -1915,7 +1942,7 @@ Req: GET coap://[2001:db8:4::ff]/rd-lookup/gp
   ?ep=lm_R2-4-015_wndw
 
 Res: 2.05 Content
-&lt;coap://[ff05::1]&gt;;gp="grp_R2-4-015"
+&lt;/rd-group/501&gt;;gp="grp_R2-4-015";con="coap://[ff05::1]"
 </pre>
 <p id="rfc.section.10.1.2.p.10">From the context parameter value, the luminary learns the multicast address of the multicast group.</p>
 <p id="rfc.section.10.1.2.p.11">Alternatively, the CT can communicate the multicast address directly to the luminaries by using the &#8220;coap-group&#8221; resource specified in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
@@ -2220,11 +2247,6 @@ link payload - new or modified links
 <a>Berners-Lee, T.</a>, <a>Fielding, R.</a> and <a>L. Masinter</a>, "<a href="https://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005.</td>
 </tr>
 <tr>
-<td class="reference"><b id="RFC5226">[RFC5226]</b></td>
-<td class="top">
-<a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="https://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
-</tr>
-<tr>
 <td class="reference"><b id="RFC5988">[RFC5988]</b></td>
 <td class="top">
 <a>Nottingham, M.</a>, "<a href="https://tools.ietf.org/html/rfc5988">Web Linking</a>", RFC 5988, DOI 10.17487/RFC5988, October 2010.</td>
@@ -2243,6 +2265,11 @@ link payload - new or modified links
 <td class="reference"><b id="RFC7396">[RFC7396]</b></td>
 <td class="top">
 <a>Hoffman, P.</a> and <a>J. Snell</a>, "<a href="https://tools.ietf.org/html/rfc7396">JSON Merge Patch</a>", RFC 7396, DOI 10.17487/RFC7396, October 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8126">[RFC8126]</b></td>
+<td class="top">
+<a>Cotton, M.</a>, <a>Leiba, B.</a> and <a>T. Narten</a>, "<a href="https://tools.ietf.org/html/rfc8126">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 8126, DOI 10.17487/RFC8126, June 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC8132">[RFC8132]</b></td>
@@ -2289,6 +2316,86 @@ link payload - new or modified links
 <a>Hartke, K.</a>, "<a href="https://tools.ietf.org/html/rfc7641">Observing Resources in the Constrained Application Protocol (CoAP)</a>", RFC 7641, DOI 10.17487/RFC7641, September 2015.</td>
 </tr>
 </tbody></table>
+<h1 id="rfc.appendix.A">
+<a href="#rfc.appendix.A">Appendix A.</a> <a href="#web-links-and-the-resource-directory" id="web-links-and-the-resource-directory">Web links and the Resource Directory</a>
+</h1>
+<p id="rfc.section.A.p.1">Understanding the semantics of a link-format document and its URI references is a journey through different documents (<a href="#RFC3986" class="xref">[RFC3986]</a> defining URIs, <a href="#RFC5988" class="xref">[RFC5988]</a> defining link headers, <a href="#RFC6690" class="xref">[RFC6690]</a> serializing them into a link-format document, and <a href="#RFC7252" class="xref">[RFC7252]</a> providing the transport). This appendix summarizes the mechanisms and semantics at play from an entry in <samp>.well-known/core</samp> to a resource lookup.</p>
+<p id="rfc.section.A.p.2">This text is primarily aimed at people entering the field of Constrained Restful Environments from applications that previously did not use web mechanisms.</p>
+<h1 id="rfc.appendix.A.1">
+<a href="#rfc.appendix.A.1">A.1.</a> <a href="#a-simple-example" id="a-simple-example">A simple example</a>
+</h1>
+<p id="rfc.section.A.1.p.1">Let&#8217;s start this example with a very simple host, <samp>2001:db8:f0::1</samp>. A client that follows classical CoAP Discovery (<a href="#RFC7252" class="xref">[RFC7252]</a> Section 7), sends the following multicast request to learn about neighbours supporting resources with resource-type &#8220;temperature&#8221;.</p>
+<p id="rfc.section.A.1.p.2">The client sends a link-local multicast:</p>
+<pre>
+GET coap://[ff02::fd]:5683/.well-known/core?rt=temperature
+
+RES 2.05 Content
+&lt;/temp&gt;;rt=temperature;ct=0
+</pre>
+<p id="rfc.section.A.1.p.3">where the response is sent by the server, <samp>[2001:db8:f0::1]:5683</samp>.</p>
+<p id="rfc.section.A.1.p.4">While the client &#8211; on the practical or implementation side &#8211; can just go ahead and create a new request to <samp>[2001:db8:f0::1]:5683</samp> with Uri-Path: <samp>temp</samp>, the full resolution steps without any shortcuts are:</p>
+<h1 id="rfc.appendix.A.1.1">
+<a href="#rfc.appendix.A.1.1">A.1.1.</a> <a href="#resolving-the-uris" id="resolving-the-uris">Resolving the URIs</a>
+</h1>
+<p id="rfc.section.A.1.1.p.1">The client parses the single returned record. The link&#8217;s target (sometimes called &#8220;href&#8221;) is &#8220;/temp&#8221;, which is a relative URI that needs resolving. The Base URI to resolve that against is, in absence of an &#8220;anchor&#8221; parameter (as per <a href="#RFC5988" class="xref">[RFC5988]</a> section 5.2), the URI of the requested resource.</p>
+<p id="rfc.section.A.1.1.p.2">The URI of the requested resource can be composed by following the steps of <a href="#RFC7252" class="xref">[RFC7252]</a> section 6.5 (with an addition at the end of 8.2) into &#8220;coap://[2001:db8:f0::1]/.well-known/core&#8221;.</p>
+<p id="rfc.section.A.1.1.p.3">The record&#8217;s target is resolved by replacing the path /.well-known/core from the Base URI (section 5.2 <a href="#RFC3986" class="xref">[RFC3986]</a>) with the relative target URI &#8220;/temp&#8221; into &#8220;coap://[2001:db8:f0::1]/temp&#8221;.</p>
+<h1 id="rfc.appendix.A.1.2">
+<a href="#rfc.appendix.A.1.2">A.1.2.</a> <a href="#interpreting-attributes-and-relations" id="interpreting-attributes-and-relations">Interpreting attributes and relations</a>
+</h1>
+<p id="rfc.section.A.1.2.p.1">Some more information but the record&#8217;s target can be obtained from the payload: the resource type of the target is &#8220;temperature&#8221;, and its content type is text/plain (ct=0).</p>
+<p id="rfc.section.A.1.2.p.2">A relation in a web link is a three-part statement that the context resource has a named relation to the target resource, like &#8220;<em>This page</em> has <em>its table of contents</em> at <em>/toc.html</em>&#8221;. In <a href="#RFC6690" class="xref">[RFC6690]</a> link-format documents, there is an implicit &#8220;host relation&#8221; specified with default parameter: rel=&#8221;hosts&#8221;.</p>
+<p id="rfc.section.A.1.2.p.3">In our example, the context of the link is the URI of the requested document itself. A full English expression of the &#8220;host relation&#8221; is:</p>
+<p id="rfc.section.A.1.2.p.4">&#8216;&lt;coap://[2001:db8:f0::1]/.well-known/core&gt; is hosting the resource &lt;coap://[2001:db8:f0::1]/temp&gt;, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
+<h1 id="rfc.appendix.A.2">
+<a href="#rfc.appendix.A.2">A.2.</a> <a href="#a-slightly-more-complex-example" id="a-slightly-more-complex-example">A slightly more complex example</a>
+</h1>
+<p id="rfc.section.A.2.p.1">Omitting the <samp>rt=temperature</samp> filter, the discovery query would have given some more records in the payload:</p>
+<pre>
+&lt;/temp&gt;;rt=temperature;ct=0,
+&lt;/light&gt;;rt=light-lux;ct=0,
+&lt;/t&gt;;anchor="/sensors/temp";rel=alternate,
+&lt;http://www.example.com/sensors/t123&gt;;anchor="/sensors/temp";
+    rel=describedby,
+&lt;t123.pdf&gt;;rel=alternate;ct=65001;
+    anchor="http://www.example.com/sensors/t123"
+</pre>
+<p id="rfc.section.A.2.p.2">Parsing the third record, the client encounters the &#8220;anchor&#8221; parameter. It is a URI relative to the document&#8217;s Base URI and is thus resolved to &#8220;coap://[2001:db8:f0::1]/sensors/temp&#8221;.  That is the context resource of the link, so the &#8220;rel&#8221; statement is not about the target and the document Base URI any more, but about the target and that address.</p>
+<p id="rfc.section.A.2.p.3">Thus, the third record could be read as &#8220;&lt;coap://[2001:db8:f0::1]/sensors/temp&gt; has an alternate representation at &lt;coap://[2001:db8:f0::1]/t&gt;&#8221;.</p>
+<p id="rfc.section.A.2.p.4">The fourth record can be read as &#8220;&lt;coap://[2001:db8:f0::1]/sensors/temp&gt; is described by <a href="http://www.example.com/sensors/t123">http://www.example.com/sensors/t123</a>&#8221;</p>
+<p id="rfc.section.A.2.p.5">In the last example the anchor is absolute, where a &#8220;t123.pdf&#8221; is resolved relative to &#8220;http://www.example.com/sensors/t123&#8221;, which gives a statement that &#8220;<a href="http://www.example.com/sensors/t123/t123.pdf">http://www.example.com/sensors/t123/t123.pdf</a> is an alternate representation to &#8220;<a href="http://www.example.com/sensors/t123">http://www.example.com/sensors/t123</a> of which the content type is PDF&#8221;.</p>
+<h1 id="rfc.appendix.A.3">
+<a href="#rfc.appendix.A.3">A.3.</a> <a href="#enter-the-resource-directory" id="enter-the-resource-directory">Enter the Resource Directory</a>
+</h1>
+<p id="rfc.section.A.3.p.1">The resource directory tries to carry the semantics obtainable by classical CoAP discovery over to the resource lookup interface as faithfully as possible.</p>
+<p id="rfc.section.A.3.p.2">For the following queries, we will assume that the simple host has used Simple Registration to register at the resource directory that was announced to it, sending this request from its UDP port <samp>[2001:db8:f0::1]:6553</samp>:</p>
+<pre>
+POST coap://[2001:db8:f01::ff]/.well-known/core?ep-simple-host1
+</pre>
+<p id="rfc.section.A.3.p.3">The resource directory would have accepted the registration, and queried the simple host&#8217;s <samp>.well-known/core</samp> by itself. As a result, the host is registered as an endpoint in the RD with the name &#8220;simple-host1&#8221;. The registration is active for 86400 seconds, and the endpoint registration Base URI is &#8220;coap://[2001:db8:f0::1]/&#8221; because that is the address the registration was sent from (and no explicit <samp>con=</samp> was given).</p>
+<p id="rfc.section.A.3.p.4">If the client now queries the RD as it would previously have issued a multicast request, it would go through the RD discovery steps by fetching &lt;coap://[2001:db8:f0::ff]/.well-known/core?rt=core.rd-lookup-res&gt;, obtain &lt;coap://[2001:db8:f0::ff]/rd-lookup/res&gt; as the resource lookup endpoint, and issue a request to &lt;coap://[2001:db8:f0::ff]/rd-lookup/res?rt=temperature&gt; to receive the following data:</p>
+<pre>
+    &lt;/temp&gt;;rt=temperature;ct=0;anchor="coap://[2001:db8:f0::1]"
+</pre>
+<p id="rfc.section.A.3.p.5">This is not <em>literally</em> the same response that it would have received from a multicast request, but it would contain the (almost) same statement:</p>
+<p id="rfc.section.A.3.p.6">&#8216;&lt;coap://[2001:db8:f0::1]&gt; is hosting the resource &lt;coap://[2001:db8:f0::1]/temp&gt;, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
+<p id="rfc.section.A.3.p.7">(The difference is whether <samp>/</samp> or <samp>/.well-known/core</samp> hosts the resources, which is subject of ongoing discussion about RFC6690).</p>
+<p id="rfc.section.A.3.p.8">To complete the examples, the client could also query all resources hosted at the endpoint with the known endpoint name &#8220;simple-host1&#8221;. A request to &lt;coap://[2001:db8:f0::ff]/rd-lookup/res?ep=simple-host1&gt; would return</p>
+<pre>
+&lt;/temp&gt;;rt=temperature;ct=0;anchor="coap://[2001:db8:f0::1]",
+&lt;/light&gt;;rt=light-lux;ct=0;anchor="coap://[2001:db8:f0::1]",
+&lt;/t&gt;;anchor="coap://[2001:db8:f0::1]/sensors/temp";rel=alternate,
+&lt;http://www.example.com/sensors/t123&gt;;
+    anchor="coap://[2001:db8:f0::1]/sensors/temp";rel=describedby,
+&lt;t123.pdf&gt;;rel=alternate;ct=65001;
+    anchor="http://www.example.com/sensors/t123"
+</pre>
+<p id="rfc.section.A.3.p.9">Note that the last link was not modified at all because its anchor was already an absolute reference.</p>
+<p id="rfc.section.A.3.p.10">Had the simple host registered with an explicit context (eg.  <samp>?ep=simple-host1&amp;con=coap+tcp://simple-host1.example.com</samp>), that context would have been used to resolve the relative anchor values instead, giving</p>
+<pre>
+&lt;/temp&gt;;rt=temperature;ct=0;anchor="coap+tcp://simple-host1.example.com"
+</pre>
+<p id="rfc.section.A.3.p.11">and analogous records.</p>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
