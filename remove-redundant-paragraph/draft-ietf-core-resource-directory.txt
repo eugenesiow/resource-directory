@@ -210,7 +210,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Group
       In the context of a Resource Directory, a group is a logical
       grouping of endpoints for the purpose of group communications.
-      All groups within a domain have unique names.
+      All groups within a domain are unique.
 
    Endpoint
       Endpoint (EP) is a term used to describe a web server or client in
@@ -226,8 +226,8 @@ Shelby, et al.         Expires September 27, 2017               [Page 4]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      name, which is included during registration, and has a unique name
-      within the associated domain of the registration.
+      name, which is included during registration, and is unique within
+      the associated domain of the registration.
 
    Context
       A Context is a base URL that gives scheme and (typically)
@@ -1216,8 +1216,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The endpoint then finds one or more addresses of the directory server
    as described in Section 4.
 
-   An endpoint finally asks the directory server to probe it for
-   resources and publish them as described in Section 5.3.2.
+   An endpoint can send (a selection of) hosted resources to a directory
+   server for publication as described in Section 5.3.2.
 
    The directory server integrates the information it received this way
    into its resource directory.  It MAY make the information available
