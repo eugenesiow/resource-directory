@@ -296,10 +296,9 @@ address {
 <link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Plurality of link references in a Registration">
 <link href="#rfc.section.5.4" rel="Chapter" title="5.4 Operations on the Registration Resource">
 <link href="#rfc.section.5.4.1" rel="Chapter" title="5.4.1 Registration Update">
-<link href="#rfc.section.5.4.2" rel="Chapter" title="5.4.2 Registration Read">
-<link href="#rfc.section.5.4.3" rel="Chapter" title="5.4.3 Registration Removal">
-<link href="#rfc.section.5.4.4" rel="Chapter" title="5.4.4 Read Endpoint Links">
-<link href="#rfc.section.5.4.5" rel="Chapter" title="5.4.5 Update Endpoint Links">
+<link href="#rfc.section.5.4.2" rel="Chapter" title="5.4.2 Registration Removal">
+<link href="#rfc.section.5.4.3" rel="Chapter" title="5.4.3 Read Endpoint Links">
+<link href="#rfc.section.5.4.4" rel="Chapter" title="5.4.4 Update Endpoint Links">
 <link href="#rfc.section.6" rel="Chapter" title="6 RD Groups">
 <link href="#rfc.section.6.1" rel="Chapter" title="6.1 Register a Group">
 <link href="#rfc.section.6.2" rel="Chapter" title="6.2 Group Removal">
@@ -461,13 +460,11 @@ address {
 </li>
 <ul><li>5.4.1.   <a href="#rfc.section.5.4.1">Registration Update</a>
 </li>
-<li>5.4.2.   <a href="#rfc.section.5.4.2">Registration Read</a>
+<li>5.4.2.   <a href="#rfc.section.5.4.2">Registration Removal</a>
 </li>
-<li>5.4.3.   <a href="#rfc.section.5.4.3">Registration Removal</a>
+<li>5.4.3.   <a href="#rfc.section.5.4.3">Read Endpoint Links</a>
 </li>
-<li>5.4.4.   <a href="#rfc.section.5.4.4">Read Endpoint Links</a>
-</li>
-<li>5.4.5.   <a href="#rfc.section.5.4.5">Update Endpoint Links</a>
+<li>5.4.4.   <a href="#rfc.section.5.4.4">Update Endpoint Links</a>
 </li>
 </ul></ul><li>6.   <a href="#rfc.section.6">RD Groups</a>
 </li>
@@ -1093,7 +1090,7 @@ payload:
 <p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
 <p id="rfc.section.5.4.1.p.4">An update MAY optionally add links for the endpoint by including those links in the payload of the update as a CoRE Link Format document.</p>
 <p id="rfc.section.5.4.1.p.5">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
-<p id="rfc.section.5.4.1.p.6">In addition to the use of POST, as described in this section, in the future links can be individually be changed or replaced by using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.5</a>.</p>
+<p id="rfc.section.5.4.1.p.6">In addition to the use of POST, as described in this section, in the future links can be individually be changed or replaced by using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
 <p id="rfc.section.5.4.1.p.7">The update registration request interface is specified as follows:</p>
 <p></p>
 
@@ -1175,78 +1172,11 @@ Res: 2.04 Changed
 <p id="rfc.section.5.4.1.p.16">The consecutive query returns: ~~~~ Req: GET /rd/4521</p>
 <p id="rfc.section.5.4.1.p.17">Res: 2.01 Content Payload: &lt;/sensors/temp&gt;;ct=41;rt=&#8221;temperature&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221;, &lt;/sensors/light&gt;;ct=41;rt=&#8221;light-lux&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221;, &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://[2001:db8:3::123]:61616&#8221;, &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221; ~~~~</p>
 <h1 id="rfc.section.5.4.2">
-<a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#reg-read" id="reg-read">Registration Read</a>
+<a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#removal" id="removal">Registration Removal</a>
 </h1>
-<p id="rfc.section.5.4.2.p.1">The Registration Read interface is used by an endpoint to read all or a subset of the registrations in an RD. To use the interface the endpoint sends a GET request to the registration resource of the RD.</p>
-<p id="rfc.section.5.4.2.p.2">One or more Registrations arre selectd for read by using query filtering as specified in <a href="#RFC6690" class="xref">[RFC6690]</a> section 4.1. The query filter selects the registrations by matching the query parameter values to the values of the registration attributes.</p>
-<p id="rfc.section.5.4.2.p.3">Upon receiving a Registration read request, an RD returns all selected registration resources with the following attributes:</p>
-<p id="rfc.section.5.4.2.p.4">href: contains the location returned by the Registration POST request</p>
-<p id="rfc.section.5.4.2.p.5">con: contains the context specified by the &#8220;con&#8221; query parameter in the Registration request; or the value of the hosts relation.</p>
-<p id="rfc.section.5.4.2.p.6">ep: contains the specified endpoint name</p>
-<p id="rfc.section.5.4.2.p.7">et: contains the specified endpoint type (may be empty)</p>
-<p id="rfc.section.5.4.2.p.8">rt: contains the &#8220;core.rd-endpoint&#8221;value</p>
-<p id="rfc.section.5.4.2.p.9">ct: contains the content format(s) allowed by the RD</p>
-<p id="rfc.section.5.4.2.p.10">lt: contains the lifetime as specified in the UPDATE or REGISTRATION request</p>
-<p id="rfc.section.5.4.2.p.11">d: contains the domain of the registration (may be empty)</p>
-<p id="rfc.section.5.4.2.p.12">The read registration request interface is specified as follows:</p>
-<p id="rfc.section.5.4.2.p.13">Interaction: EP -&gt; RD</p>
-<p id="rfc.section.5.4.2.p.14">Method: GET</p>
-<p id="rfc.section.5.4.2.p.15">URI Template: {+rd}{?ep,et,d,con}</p>
-<p></p>
-
-<dl>
-<dt>URI Template Variables:</dt>
-<dd style="margin-left: 8">
-<dl>
-<dt>rd :=</dt>
-<dd style="margin-left: 8">RD registration URI (mandatory). This is the ocation of the RD as obtained by discovery.</dd>
-<dt>ep :=</dt>
-<dd style="margin-left: 8">Endpoint name (optional)</dd>
-<dt>et :=</dt>
-<dd style="margin-left: 8">Endpoint type (optional) semantic type of the registration</dd>
-<dt>d :=</dt>
-<dd style="margin-left: 8">domain (optional) to which this registration belongs</dd>
-<dt>con :=</dt>
-<dd style="margin-left: 8">Context (optional). the value contains the scheme, address and port to which the registration belongs in the form scheme://host:port/path.</dd>
-</dl>
-<p> </p>
-</dd>
-<dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/link-format (mandatory)</dd>
-<dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/link-format+json (optional)</dd>
-<dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/link-format+cbor (optional)</dd>
-</dl>
-<p id="rfc.section.5.4.2.p.17">The following response codes are defined for this interface:</p>
-<p></p>
-
-<dl>
-<dt>Success:</dt>
-<dd style="margin-left: 8">2.01 &#8220;Content&#8221; or 200 &#8220;OK&#8221; upon success with an &#8220;application/link-format&#8221;, &#8220;application/link-format+cbor&#8221;, or &#8220;application/link-format+json&#8221; payload.</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration does not exist (e.g. may have expired).</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
-<dt>HTTP support:</dt>
-<dd style="margin-left: 8">YES</dd>
-</dl>
-<p id="rfc.section.5.4.2.p.19">The following example shows a successful read of a singlee registration from the RD  with the example RD location value: /rd.</p>
-<pre>
-Req: GET /rd?ep=my-ep
-
-Res: 2.01 Content
-Payload:
-&lt;rd/4521&gt;;con="coap://[fdfd::12]:17072";ep="my-ep";et="ocf-device";rt="core.ocf.humid";ct="40";lt="600";d="floor-3"
-</pre>
-<h1 id="rfc.section.5.4.3">
-<a href="#rfc.section.5.4.3">5.4.3.</a> <a href="#removal" id="removal">Registration Removal</a>
-</h1>
-<p id="rfc.section.5.4.3.p.1">Although RD entries have soft state and will eventually timeout after their lifetime, an endpoint SHOULD explicitly remove its entry from the RD if it knows it will no longer be available (for example on shut-down). This is accomplished using a removal interface on the RD by performing a DELETE on the endpoint resource.</p>
-<p id="rfc.section.5.4.3.p.2">Removed endpoints are implicitly removed from the groups to which they belong.</p>
-<p id="rfc.section.5.4.3.p.3">The removal request interface is specified as follows:</p>
+<p id="rfc.section.5.4.2.p.1">Although RD entries have soft state and will eventually timeout after their lifetime, an endpoint SHOULD explicitly remove its entry from the RD if it knows it will no longer be available (for example on shut-down). This is accomplished using a removal interface on the RD by performing a DELETE on the endpoint resource.</p>
+<p id="rfc.section.5.4.2.p.2">Removed endpoints are implicitly removed from the groups to which they belong.</p>
+<p id="rfc.section.5.4.2.p.3">The removal request interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -1265,7 +1195,7 @@ Payload:
 <p> </p>
 </dd>
 </dl>
-<p id="rfc.section.5.4.3.p.5">The following responses codes are defined for this interface:</p>
+<p id="rfc.section.5.4.2.p.5">The following responses codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -1278,20 +1208,20 @@ Payload:
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 </dl>
-<p id="rfc.section.5.4.3.p.7">HTTP support: YES</p>
-<p id="rfc.section.5.4.3.p.8">The following examples shows successful removal of the endpoint from the RD with example location value /rd/4521.</p>
+<p id="rfc.section.5.4.2.p.7">HTTP support: YES</p>
+<p id="rfc.section.5.4.2.p.8">The following examples shows successful removal of the endpoint from the RD with example location value /rd/4521.</p>
 <pre>
 Req: DELETE /rd/4521
 
 Res: 2.02 Deleted
 </pre>
-<h1 id="rfc.section.5.4.4">
-<a href="#rfc.section.5.4.4">5.4.4.</a> <a href="#read" id="read">Read Endpoint Links</a>
+<h1 id="rfc.section.5.4.3">
+<a href="#rfc.section.5.4.3">5.4.3.</a> <a href="#read" id="read">Read Endpoint Links</a>
 </h1>
-<p id="rfc.section.5.4.4.p.1">Some endpoints may wish to manage their links as a collection, and may need to read the current set of links stored in the registration resource, in order to determine link maintenance operations.</p>
-<p id="rfc.section.5.4.4.p.2">One or more links MAY be selected by using query filtering as specified in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 4.1</p>
-<p id="rfc.section.5.4.4.p.3">If no links are selected, the Resource Directory SHOULD return an empty payload.</p>
-<p id="rfc.section.5.4.4.p.4">The read request interface is specified as follows:</p>
+<p id="rfc.section.5.4.3.p.1">Some endpoints may wish to manage their links as a collection, and may need to read the current set of links stored in the registration resource, in order to determine link maintenance operations.</p>
+<p id="rfc.section.5.4.3.p.2">One or more links MAY be selected by using query filtering as specified in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 4.1</p>
+<p id="rfc.section.5.4.3.p.3">If no links are selected, the Resource Directory SHOULD return an empty payload.</p>
+<p id="rfc.section.5.4.3.p.4">The read request interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -1312,7 +1242,7 @@ Res: 2.02 Deleted
 <dt></dt>
 <dd style="margin-left: 8">href,rel,rt,if,ct := link relations and attributes specified in the query in order to select particular links based on their relations and attributes. &#8220;href&#8221; denotes the URI target of the link. See <a href="#RFC6690" class="xref">[RFC6690]</a> Sec. 4.1</dd>
 </dl>
-<p id="rfc.section.5.4.4.p.6">The following responses codes are defined for this interface:</p>
+<p id="rfc.section.5.4.3.p.6">The following responses codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -1325,8 +1255,8 @@ Res: 2.02 Deleted
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 </dl>
-<p id="rfc.section.5.4.4.p.8">HTTP support: YES</p>
-<p id="rfc.section.5.4.4.p.9">The following examples show successful read of the endpoint links from the RD, with example location value /rd/4521.</p>
+<p id="rfc.section.5.4.3.p.8">HTTP support: YES</p>
+<p id="rfc.section.5.4.3.p.9">The following examples show successful read of the endpoint links from the RD, with example location value /rd/4521.</p>
 <pre>
 Req: GET /rd/4521
 
@@ -1335,10 +1265,10 @@ Payload:
 &lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
 &lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
 </pre>
-<h1 id="rfc.section.5.4.5">
-<a href="#rfc.section.5.4.5">5.4.5.</a> <a href="#link-up" id="link-up">Update Endpoint Links</a>
+<h1 id="rfc.section.5.4.4">
+<a href="#rfc.section.5.4.4">5.4.4.</a> <a href="#link-up" id="link-up">Update Endpoint Links</a>
 </h1>
-<p id="rfc.section.5.4.5.p.1">A iPATCH (PATCH) update adds, removes or changes links of a registration by including link update information in the payload of the update with a media type that still needs to be defined.</p>
+<p id="rfc.section.5.4.4.p.1">A iPATCH (PATCH) update adds, removes or changes links of a registration by including link update information in the payload of the update with a media type that still needs to be defined.</p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#group" id="group">RD Groups</a>
 </h1>
@@ -1485,7 +1415,7 @@ Res: 2.02 Deleted
 </tbody>
 </table>
 <p id="rfc.section.7.p.5">Resource lookup results in links that are semantically equivalent to the links submitted to the RD if they were accessed on the endpoint itself.  The links and link parameters returned are equal to the submitted ones except for anchor, which gets resolved according to the endpoint&#8217;s context.  That allows the client to interpret the response as links without any further knowledge of what the RD does.  The Resource Directory MAY replace the contexts with a configured intermediate proxy, e.g. in the case of an HTTP lookup interface for CoAP endpoints.</p>
-<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present) and context (con).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
+<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration resource and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present), context (con), resource-type (rt), endpoint type (et, if present) and lifetime (lt, if present).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
 <p id="rfc.section.7.p.7">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
 <p id="rfc.section.7.p.8">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
 <p id="rfc.section.7.p.9">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
@@ -1563,8 +1493,10 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?et=power-node
 
 Res: 2.05 Content
-&lt;/reg/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5",
-&lt;/reg/5678&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7"
+&lt;/rd/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5";
+et="power-node";rt="core.ocf.power";ct="40";lt="600",
+&lt;/rd/4521&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7";
+et="power-node";rt="core.ocf.power";ct="40";lt="600";d="floor-3"
 </pre>
 <p id="rfc.section.7.p.19">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
@@ -1579,17 +1511,17 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-&lt;/reg/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1",
-&lt;/reg/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2"
+&lt;/rd/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1";et="light-node";rt="core.ocf.light";ct="40";lt="600",
+&lt;/rd/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2";et="light-node";rt="core.ocf.light";ct="40";lt="600"
 </pre>
-<p id="rfc.section.7.p.21">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
+<p id="rfc.section.7.p.21">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
 &lt;/rd-group/1&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.p.22">The following example shows a client performing a paginated lookup</p>
+<p id="rfc.section.7.p.22">The following example shows a client performing a paginated resource lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
@@ -1612,26 +1544,17 @@ Res: 2.05 Content
 <p id="rfc.section.7.p.23">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that endpoints with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp> have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.7.p.24">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
-Req: POST /rd?ep=mynode
+Req: GET /rd-lookup/ep?et=sensor-node
 
 &lt;/sensors&gt;;ct=40;title="Sensor Index";
-    anchor="coap://sensor1.example.com",
+    anchor="coap://sensor1.example.com";et="sensor-node",
 &lt;/sensors/temp&gt;;rt="temperature-c";if="sensor";
-    anchor="coap://sensor1.example.com",
+    anchor="coap://sensor1.example.com";et="sensor-node",
 &lt;/sensors/light&gt;;rt="light-lux";if="sensor";
-    anchor="coap://sensor1.example.com",
+    anchor="coap://sensor1.example.com";et="sensor-node",
 &lt;http://www.example.com/sensors/t123&gt;;rel="describedby";
-    anchor="coap://sensor1.example.com/sensors/temp",
-&lt;/t&gt;;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp",
-&lt;/sensors&gt;;ct=40;title="Sensor Index";
-    anchor="coap://sensor2.example.com",
-&lt;/sensors/temp&gt;;rt="temperature-c";if="sensor";
-    anchor="coap://sensor2.example.com",
-&lt;/sensors/light&gt;;rt="light-lux";if="sensor";
-    anchor="coap://sensor2.example.com",
-&lt;http://www.example.com/sensors/t123&gt;;rel="describedby";
-    ;anchor="coap://sensor2.example.com/sensors/temp",
-&lt;/t&gt;;rel="alternate";anchor="coap://sensor2.example.com/sensors/temp"
+    anchor="coap://sensor1.example.com/sensors/temp";et="sensor-node",
+&lt;/t&gt;;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp";et="sensor-node"
 </pre>
 <h1 id="rfc.section.8">
 <a href="#rfc.section.8">8.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
@@ -2030,7 +1953,7 @@ link payload - new or modified links
 <h1 id="rfc.section.10.2.4">
 <a href="#rfc.section.10.2.4">10.2.4.</a> <a href="#lwm2m-dereg" id="lwm2m-dereg">LWM2M De-Register Endpoint</a>
 </h1>
-<p id="rfc.section.10.2.4.p.1">LWM2M allows for de-registration using the delete method on the returned location from the initial registration operation. LWM2M de-registration proceeds as described in <a href="#removal" class="xref">Section 5.4.3</a>.</p>
+<p id="rfc.section.10.2.4.p.1">LWM2M allows for de-registration using the delete method on the returned location from the initial registration operation. LWM2M de-registration proceeds as described in <a href="#removal" class="xref">Section 5.4.2</a>.</p>
 <h1 id="rfc.section.11">
 <a href="#rfc.section.11">11.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
 </h1>
