@@ -210,7 +210,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Group
       In the context of a Resource Directory, a group is a logical
       grouping of endpoints for the purpose of group communications.
-      All groups within a domain are unique.
+      All groups within a domain have unique names.
 
    Endpoint
       Endpoint (EP) is a term used to describe a web server or client in
@@ -226,8 +226,8 @@ Shelby, et al.         Expires September 27, 2017               [Page 4]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      name, which is included during registration, and is unique within
-      the associated domain of the registration.
+      name, which is included during registration, and has a unique name
+      within the associated domain of the registration.
 
    Context
       A Context is a base URL that gives scheme and (typically)
@@ -1216,8 +1216,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The endpoint then finds one or more addresses of the directory server
    as described in Section 4.
 
-   An endpoint can send (a selection of) hosted resources to a directory
-   server for publication as described in Section 5.3.2.
+   An endpoint finally asks the directory server to probe it for
+   resources and publish them as described in Section 5.3.2.
 
    The directory server integrates the information it received this way
    into its resource directory.  It MAY make the information available
@@ -1370,10 +1370,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    selection of a resource.
 
    An update MAY update the lifetime or context registration parameters
-   "lt", "con" as in Section 5.3 ) if the previous settings are to be
-   retained.  Parameters that are not being changed SHOULD NOT be
-   included in an update.  Adding parameters that have not changed
-   increases the size of the message but does not have any other
+   "lt", "con" as in Section 5.3.  Parameters that are not being changed
+   SHOULD NOT be included in an update.  Adding parameters that have not
+   changed increases the size of the message but does not have any other
    implications.  Parameters MUST be included as query parameters in an
    update operation as in Section 5.3.
 
@@ -1394,6 +1393,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    If the link payload is included, it SHOULD be checked for reference
    plurality as described in Section 5.3.4 and rejected with a
    "Conflict" result if there are plural link references detected.
+
 
 
 
@@ -1485,20 +1485,20 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  context (con)=coap://local-proxy-old.example.com:5683
 
-   The Registration Resource, /rd/4521, initial state is:
+   The initial state of the Registration Resource, /rd/4521, is:
 
 Req: GET /rd/4521
 
 Res: 2.01 Content
 Payload:
-</sensors/temp>;ct=41;rt="temperature";anchor=coap://local-proxy-old.example.com:5683,
-</sensors/light>;ct=41;rt="light-lux";if="sensor";anchor=coap://local-proxy-old.example.com:5683
+</sensors/temp>;ct=41;rt="temperature";anchor="coap://local-proxy-old.example.com:5683",
+</sensors/light>;ct=41;rt="light-lux";if="sensor";anchor="coap://local-proxy-old.example.com:5683"
 
    The following example shows an EP adding the links </sensors/
    humid>;ct=41;rt="humid-s";if="sensor" and </sensors/
-   co2>;ct=41;rt="co2-s"; if="sensor" to the collection of links at the
+   co2>;ct=41;rt="co2-s";if="sensor" to the collection of links at the
    location /rd/4521 and changing the context to
-   coaps://new.example.com:5684.  The humid-s respurce type has an
+   coaps://new.example.com:5684.  The humid-s resource type has an
    anchor value coaps://[2001:db8:3::123]:61616 that overwrites the
    value of the con atribute.
 
@@ -1517,7 +1517,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 Req: POST /rd/4521?con=coaps://new.example.com:5684
 Content-Format:40
 Payload:
-</sensors/humid>;ct= 41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616,
+</sensors/humid>;ct= 41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
 </sensors/co2>;ct= 41;rt="co2-s";if="sensor"
 
 Res: 2.04 Changed

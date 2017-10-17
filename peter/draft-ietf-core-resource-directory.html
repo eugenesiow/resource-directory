@@ -562,10 +562,10 @@ address {
 <br> In the context of a Resource Directory, a domain is a logical grouping of endpoints.</dd>
 <dt>Group</dt>
 <dd style="margin-left: 8">
-<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain are unique.</dd>
+<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain have unique names.</dd>
 <dt>Endpoint</dt>
 <dd style="margin-left: 8">
-<br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and is unique within the associated domain of the registration.</dd>
+<br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and has a unique name within the associated domain of the registration.</dd>
 <dt>Context</dt>
 <dd style="margin-left: 8">
 <br> A Context is a base URL that gives scheme and (typically) authority information about an Endpoint. The Context of an Endpoint is provided at registration time, and is used by the Resource Directory to resolve relative references inside the registration into absolute URIs.</dd>
@@ -1032,7 +1032,7 @@ Location: /rd/4521
 <p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
 <p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
-<p id="rfc.section.5.3.1.p.4">An endpoint can send (a selection of) hosted resources to a directory server for publication as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
+<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
 <p id="rfc.section.5.3.1.p.5">The directory server integrates the information it received this way into its resource directory.  It MAY make the information available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
 <h1 id="rfc.section.5.3.2">
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
@@ -1089,7 +1089,7 @@ payload:
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
 <p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
-<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
+<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a>. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
 <p id="rfc.section.5.4.1.p.4">An update MAY optionally add links for the endpoint by including those links in the payload of the update as a CoRE Link Format document.</p>
 <p id="rfc.section.5.4.1.p.5">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
@@ -1153,21 +1153,21 @@ Res: 2.04 Changed
 <li>lifetime (lt)=500</li>
 <li>context (con)=coap://local-proxy-old.example.com:5683</li>
 </ul>
-<p id="rfc.section.5.4.1.p.14">The Registration Resource, /rd/4521, initial state is:</p>
+<p id="rfc.section.5.4.1.p.14">The initial state of the Registration Resource, /rd/4521, is:</p>
 <pre>
 Req: GET /rd/4521
 
 Res: 2.01 Content
 Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor=coap://local-proxy-old.example.com:5683,
-&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor=coap://local-proxy-old.example.com:5683
+&lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor="coap://local-proxy-old.example.com:5683",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor="coap://local-proxy-old.example.com:5683"
 </pre>
-<p id="rfc.section.5.4.1.p.15">The following example shows an EP adding the links &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221; and &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;; if=&#8221;sensor&#8221; to the collection of links at the location /rd/4521 and changing the context to coaps://new.example.com:5684. The humid-s respurce type has an anchor value coaps://[2001:db8:3::123]:61616 that overwrites the value of the con atribute.</p>
+<p id="rfc.section.5.4.1.p.15">The following example shows an EP adding the links &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221; and &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;;if=&#8221;sensor&#8221; to the collection of links at the location /rd/4521 and changing the context to coaps://new.example.com:5684. The humid-s resource type has an anchor value coaps://[2001:db8:3::123]:61616 that overwrites the value of the con atribute.</p>
 <pre>
 Req: POST /rd/4521?con=coaps://new.example.com:5684
 Content-Format:40
 Payload:
-&lt;/sensors/humid&gt;;ct= 41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616,
+&lt;/sensors/humid&gt;;ct= 41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
 &lt;/sensors/co2&gt;;ct= 41;rt="co2-s";if="sensor"
 
 Res: 2.04 Changed
