@@ -103,7 +103,7 @@ Table of Contents
      6.1.  Register a Group  . . . . . . . . . . . . . . . . . . . .  30
      6.2.  Group Removal . . . . . . . . . . . . . . . . . . . . . .  32
    7.  RD Lookup . . . . . . . . . . . . . . . . . . . . . . . . . .  33
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  38
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  39
      8.1.  Endpoint Identification and Authentication  . . . . . . .  39
      8.2.  Access Control  . . . . . . . . . . . . . . . . . . . . .  39
 
@@ -114,14 +114,14 @@ Shelby, et al.         Expires September 27, 2017               [Page 2]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-     8.3.  Denial of Service Attacks . . . . . . . . . . . . . . . .  39
+     8.3.  Denial of Service Attacks . . . . . . . . . . . . . . . .  40
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
      9.1.  Resource Types  . . . . . . . . . . . . . . . . . . . . .  40
      9.2.  IPv6 ND Resource Directory Address Option . . . . . . . .  40
      9.3.  RD Parameter Registry . . . . . . . . . . . . . . . . . .  40
    10. Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .  41
      10.1.  Lighting Installation  . . . . . . . . . . . . . . . . .  41
-       10.1.1.  Installation Characteristics . . . . . . . . . . . .  41
+       10.1.1.  Installation Characteristics . . . . . . . . . . . .  42
        10.1.2.  RD entries . . . . . . . . . . . . . . . . . . . . .  43
      10.2.  OMA Lightweight M2M (LWM2M) Example  . . . . . . . . . .  46
        10.2.1.  The LWM2M Object Model . . . . . . . . . . . . . . .  46
@@ -2094,25 +2094,41 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows a client performing a lookup of all
    resources from endpoints of a given endpoint type.  It assumes that
-   endpoints with endpoint names "sensor1" and "sensor2" have previously
-   registered with their respective addresses
+   two endpoints (with endpoint names "sensor1" and "sensor2") have
+   previously registered with their respective addresses
    "coap://sensor1.example.com" and "coap://sensor2.example.com", and
    posted the very payload of the 6th request of section 5 of [RFC6690].
 
    It demonstrates how the link targets stay unmodified, but the anchors
    get constructed by the resource directory:
 
-Req: GET /rd-lookup/ep?et=sensor-node
+  Req: GET /rd-lookup/res?et=sensor-node
 
-</sensors>;ct=40;title="Sensor Index";
-    anchor="coap://sensor1.example.com";et="sensor-node",
-</sensors/temp>;rt="temperature-c";if="sensor";
-    anchor="coap://sensor1.example.com";et="sensor-node",
-</sensors/light>;rt="light-lux";if="sensor";
-    anchor="coap://sensor1.example.com";et="sensor-node",
-<http://www.example.com/sensors/t123>;rel="describedby";
-    anchor="coap://sensor1.example.com/sensors/temp";et="sensor-node",
-</t>;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp";et="sensor-node"
+  </sensors>;ct=40;title="Sensor Index";
+      anchor="coap://sensor1.example.com",
+  </sensors/temp>;rt="temperature-c";if="sensor";
+      anchor="coap://sensor1.example.com",
+  </sensors/light>;rt="light-lux";if="sensor";
+      anchor="coap://sensor1.example.com",
+  <http://www.example.com/sensors/t123>;rel="describedby";
+      anchor="coap://sensor1.example.com/sensors/temp",
+  </t>;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp",
+  </sensors>;ct=40;title="Sensor Index";
+      anchor="coap://sensor2.example.com",
+  </sensors/temp>;rt="temperature-c";if="sensor";
+      anchor="coap://sensor2.example.com",
+  </sensors/light>;rt="light-lux";if="sensor";
+      anchor="coap://sensor2.example.com",
+  <http://www.example.com/sensors/t123>;rel="describedby";
+      ;anchor="coap://sensor2.example.com/sensors/temp",
+  </t>;rel="alternate";anchor="coap://sensor2.example.com/sensors/temp"
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 38]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
 8.  Security Considerations
 
@@ -2121,14 +2137,6 @@ Req: GET /rd-lookup/ep?et=sensor-node
    may be protected e.g. using DTLS when hosted on a CoAP server as
    described in [RFC7252].  DTLS or TLS based security SHOULD be used on
    all resource directory interfaces defined in this document.
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 38]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
 8.1.  Endpoint Identification and Authentication
 
@@ -2170,14 +2178,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    lookups could be performed either at the domain, endpoint or resource
    level.
 
-8.3.  Denial of Service Attacks
-
-   Services that run over UDP unprotected are vulnerable to unknowingly
-   become part of a DDoS attack as UDP does not require return
-   routability check.  Therefore, an attacker can easily spoof the
-   source IP of the target entity and send requests to such a service
-   which would then respond to the target entity.  This can be used for
-   large-scale DDoS attacks on the target.  Especially, if the service
 
 
 
@@ -2186,6 +2186,14 @@ Shelby, et al.         Expires September 27, 2017              [Page 39]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+8.3.  Denial of Service Attacks
+
+   Services that run over UDP unprotected are vulnerable to unknowingly
+   become part of a DDoS attack as UDP does not require return
+   routability check.  Therefore, an attacker can easily spoof the
+   source IP of the target entity and send requests to such a service
+   which would then respond to the target entity.  This can be used for
+   large-scale DDoS attacks on the target.  Especially, if the service
    returns a response that is order of magnitudes larger than the
    request, the situation becomes even worse as now the attack can be
    amplified.  DNS servers have been widely used for DDoS amplification
@@ -2225,14 +2233,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Each entry in the registry must include the human readable name of
    the parameter, the query parameter, validity requirements if any and
-   a description.  The query parameter MUST be a valid URI query key
-   [RFC3986].
-
-   Initial entries in this sub-registry are as follows:
-
-
-
-
 
 
 
@@ -2241,6 +2241,11 @@ Shelby, et al.         Expires September 27, 2017              [Page 40]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   a description.  The query parameter MUST be a valid URI query key
+   [RFC3986].
+
+   Initial entries in this sub-registry are as follows:
 
    +----------+-------+---------------+--------------------------------+
    | Name     | Query | Validity      | Description                    |
@@ -2284,12 +2289,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the issues that may influence the use of the RD and does not pretend
    to be normative.
 
-10.1.1.  Installation Characteristics
 
-   The example assumes that the installation is managed.  That means
-   that a Commissioning Tool (CT) is used to authorize the addition of
-   nodes, name them, and name their services.  The CT can be connected
-   to the installation in many ways: the CT can be part of the
 
 
 
@@ -2298,6 +2298,12 @@ Shelby, et al.         Expires September 27, 2017              [Page 41]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+10.1.1.  Installation Characteristics
+
+   The example assumes that the installation is managed.  That means
+   that a Commissioning Tool (CT) is used to authorize the addition of
+   nodes, name them, and name their services.  The CT can be connected
+   to the installation in many ways: the CT can be part of the
    installation network, connected by WiFi to the installation network,
    or connected via GPRS link, or other method.
 
@@ -2339,12 +2345,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
                     Table 3: interface SLAAC addresses
 
-   In Section 10.1.2 the use of resource directory during installation
-   is presented.
-
-
-
-
 
 
 
@@ -2353,6 +2353,9 @@ Shelby, et al.         Expires September 27, 2017              [Page 42]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   In Section 10.1.2 the use of resource directory during installation
+   is presented.
 
 10.1.2.  RD entries
 
@@ -2394,9 +2397,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The CT inserts the endpoints of the luminaries and the sensor in the
    RD using the Context parameter (con) to specify the interface
    address:
-
-
-
 
 
 

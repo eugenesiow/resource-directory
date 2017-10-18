@@ -1541,20 +1541,29 @@ Res: 2.05 Content
 &lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
 &lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.p.23">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that endpoints with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp> have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.p.23">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.7.p.24">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
-Req: GET /rd-lookup/ep?et=sensor-node
+Req: GET /rd-lookup/res?et=sensor-node
 
 &lt;/sensors&gt;;ct=40;title="Sensor Index";
-    anchor="coap://sensor1.example.com";et="sensor-node",
+    anchor="coap://sensor1.example.com",
 &lt;/sensors/temp&gt;;rt="temperature-c";if="sensor";
-    anchor="coap://sensor1.example.com";et="sensor-node",
+    anchor="coap://sensor1.example.com",
 &lt;/sensors/light&gt;;rt="light-lux";if="sensor";
-    anchor="coap://sensor1.example.com";et="sensor-node",
+    anchor="coap://sensor1.example.com",
 &lt;http://www.example.com/sensors/t123&gt;;rel="describedby";
-    anchor="coap://sensor1.example.com/sensors/temp";et="sensor-node",
-&lt;/t&gt;;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp";et="sensor-node"
+    anchor="coap://sensor1.example.com/sensors/temp",
+&lt;/t&gt;;rel="alternate";anchor="coap://sensor1.example.com/sensors/temp",
+&lt;/sensors&gt;;ct=40;title="Sensor Index";
+    anchor="coap://sensor2.example.com",
+&lt;/sensors/temp&gt;;rt="temperature-c";if="sensor";
+    anchor="coap://sensor2.example.com",
+&lt;/sensors/light&gt;;rt="light-lux";if="sensor";
+    anchor="coap://sensor2.example.com",
+&lt;http://www.example.com/sensors/t123&gt;;rel="describedby";
+    ;anchor="coap://sensor2.example.com/sensors/temp",
+&lt;/t&gt;;rel="alternate";anchor="coap://sensor2.example.com/sensors/temp"
 </pre>
 <h1 id="rfc.section.8">
 <a href="#rfc.section.8">8.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
