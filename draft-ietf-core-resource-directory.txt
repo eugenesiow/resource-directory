@@ -370,10 +370,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the cardinality of the relations.  The relations between the values
    of the attributes are explained in the interface sections.
 
-
-
-
-
+   Some of the attribute values are URIs.  Those values are always full
+   URIs and never relative references in the data model.  They can,
+   however, be expressed as relative references in serializations, and
+   often are.
 
 
 
@@ -403,13 +403,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
                          <    contains   >
                           \\\\\\\\///////
                                   |
-                                  | 1+
+                                  | 0+
                         +--------------------+
                         |      link          |
                         +--------------------+
                                   |
                                   |  1   oooooooo
-                                  +-----o  href  o
+                                  +-----o target o
                                0+ |      oooooooo
              oooooooooooo         |
             o    target  o--------+
@@ -417,9 +417,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
              oooooooooooo         +-----o rel  o
                                   |      oooooo
                                   |
-                                  | 0-1   oooooooo
-                                  +------o anchor o
-                                          oooooooo
+                                  | 1    ooooooooo
+                                  +-----o context o
+                                         ooooooooo
 
 
 
@@ -450,26 +450,26 @@ Shelby, et al.         Expires September 27, 2017               [Page 8]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   o  One or more link relations (expressed as space-separated values in
-      the "rel" attribute, defaulting to "hosts").  They describe a
+   o  Zero or more link relations (expressed as space-separated values
+      in the "rel" attribute, defaulting to "hosts").  They describe a
       relations between the link context and the link target.
 
    o  A link context URI ("anchor").  The link context defines the
       source of the relation, and serves as the Base URI for resolving
-      the target.  It can be relative, in which case it gets resolved
-      against the Base URI of the ".well-known/core" document it was
-      obtained from . It can be absent, in which the Base URI of the
-      document is used as the context.
+      the target.  In the serialization, it can be relative, in which
+      case it gets resolved against the Base URI of the ".well-known/
+      core" document it was obtained from . It can be absent, in which
+      the Base URI of the document is used as the context.
 
    o  A link target URI ("href", expressed between the angular brackets
       in link-format).  The link target defines the destination of the
-      relation, and is the topic of all other target attributes.  If it
-      is a relative URI, it gets resolved against the link context URI.
+      relation, and is the topic of all other target attributes.  In the
+      serialization, if it is a relative URI, it gets resolved against
+      the link context URI.
 
    o  Other target attributes (eg. resource type (rt), interface (if),
       cor content-type (ct)).  These provide additional information
       about the target URI.
-
 
 
 
@@ -529,23 +529,23 @@ Internet-Draft           CoRE Resource Directory              March 2017
           oooooooo     |                < contains >
                        |                 \\\\\/////
           oooooooo   1 |                      |
-         o   ep   o----+                      | 1+
+         o   ep   o----+                      | 0+
           oooooooo     |             +------------------+
                        |             |      link        |
           oooooooo 0-1 |             +------------------+
          o    d   o----+                      |
-          oooooooo     |                      |  1   ooooooo
-                       |                      +-----o href  o
-          oooooooo 0-1 |                      |      ooooooo
+          oooooooo     |                      |  1   oooooooo
+                       |                      +-----o target o
+          oooooooo 0-1 |                      |      oooooooo
          o   et   o----+     ooooooooooo   0+ |
           oooooooo     |    o  target   o-----+
                        |    o attribute o     | 0+   oooooo
           oooooooo 0-1 |     ooooooooooo      +-----o rel  o
          o   lt   o----+                      |      oooooo
           oooooooo                            |
-                                              | 0-1 oooooooo
-                                              +----o anchor o
-                                                    oooooooo
+                                              | 1   ooooooooo
+                                              +----o context o
+                                                    ooooooooo
 
        Figure 4: E-R Model of the content of the Resource Directory
 
@@ -586,10 +586,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    copied from the value of the "hosts" relation and overwritten by the
    value of the con query parameter.
 
-   Links are modelled as they are in Figure 3.  As they do not have
-   their ".well-known/core" document associated with them any more which
-   would originally provide its Base URI, the "con" attribute of the
-   registration fills that gap and is used as a Base URI.
+   Links are modelled as they are in Figure 3.
 
 3.4.  Use Case: Cellular M2M
 
@@ -610,6 +607,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Imagine a scenario where endpoints installed on vehicles enable
    tracking of the position of these vehicles for fleet management
+   purposes and allow monitoring of environment parameters.  During the
+   boot-up process endpoints register with a Resource Directory, which
+   is hosted by the mobile operator or somewhere in the cloud.
 
 
 
@@ -618,9 +618,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 11]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   purposes and allow monitoring of environment parameters.  During the
-   boot-up process endpoints register with a Resource Directory, which
-   is hosted by the mobile operator or somewhere in the cloud.
    Periodically, these endpoints update their registration and may
    modify resources they offer.
 
@@ -666,6 +663,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    intermediary service.  Mapping of Resource Directories to data
    intermediaries may be many-to-many.
 
+   Metadata in web link formats like [RFC6690] are supplied by Resource
+   Directories, which may be internally stored as triples, or relation/
+   attribute pairs providing metadata about resource links.  External
 
 
 
@@ -674,9 +674,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 12]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   Metadata in web link formats like [RFC6690] are supplied by Resource
-   Directories, which may be internally stored as triples, or relation/
-   attribute pairs providing metadata about resource links.  External
    catalogs that are represented in other formats may be converted to
    common web linking formats for storage and access by Resource
    Directories.  Since it is common practice for these to be URN
@@ -723,6 +720,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
        during neighbour Discovery containing one or more RD addresses,
        as explained in Section 4.1
 
+   5.  The installation manager can decide to preconfigure an ANYCAST
+       address with as destination the interface of the RDs.  Clients
+
 
 
 Shelby, et al.         Expires September 27, 2017              [Page 13]
@@ -730,8 +730,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 13]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   5.  The installation manager can decide to preconfigure an ANYCAST
-       address with as destination the interface of the RDs.  Clients
        send a discovery message to the predefined RD anycast address.
        Each target network environment in which some of these
        preconfigured nodes are to be brought up is then configured with
@@ -778,6 +776,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
    o  Querying mDNS to receive IP address [see 7].
 
    o  6LBR contains RD service [see 2, 3].
+
+
 
 
 

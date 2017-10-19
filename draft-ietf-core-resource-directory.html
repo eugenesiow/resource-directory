@@ -637,6 +637,7 @@ address {
 <a href="#rfc.section.3.3">3.3.</a> <a href="#ER-model" id="ER-model">Content model</a>
 </h1>
 <p id="rfc.section.3.3.p.1">The Entity-Relationship (ER) models shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> and <a href="#fig-ER-RD" class="xref">Figure 4</a> model the contents of /.well-known/core and the resource directory respectively, with entity-relationship diagrams <a href="#ER" class="xref">[ER]</a>. Entities (rectangles) are used for concepts that exist independently. Attributes (ovals) are used for concepts that exist only in connection with a related entity. Relations (diamonds) give a semantic meaning to the relation between entities. Numbers specify the cardinality of the relations. The relations between the values of the attributes are explained in the interface sections.</p>
+<p id="rfc.section.3.3.p.2">Some of the attribute values are URIs. Those values are always full URIs and never relative references in the data model.  They can, however, be expressed as relative references in serializations, and often are.</p>
 <div id="rfc.figure.3"></div>
 <div id="fig-ER-WKC"></div>
 <pre>
@@ -649,13 +650,13 @@ address {
                       &lt;    contains   &gt;
                        \\\\\\\\///////
                                |
-                               | 1+
+                               | 0+
                      +--------------------+
                      |      link          |
                      +--------------------+
                                |
                                |  1   oooooooo
-                               +-----o  href  o
+                               +-----o target o
                             0+ |      oooooooo
           oooooooooooo         |
          o    target  o--------+
@@ -663,26 +664,26 @@ address {
           oooooooooooo         +-----o rel  o
                                |      oooooo
                                |
-                               | 0-1   oooooooo
-                               +------o anchor o
-                                       oooooooo
+                               | 1    ooooooooo
+                               +-----o context o
+                                      ooooooooo
 
 
 
 </pre>
 <p class="figure">Figure 3: E-R Model of the content of /.well-known/core</p>
-<p id="rfc.section.3.3.p.2">The model shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> models the contents of /.well-known/core which contains:</p>
+<p id="rfc.section.3.3.p.3">The model shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> models the contents of /.well-known/core which contains:</p>
 <p></p>
 
 <ul><li>a set of links belonging to the host</li></ul>
-<p id="rfc.section.3.3.p.4">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in [<a href="#RFC6690" class="xref">[RFC6690]</a>] page 14).  The set does not necessarily contain links to all resources served by the host.</p>
-<p id="rfc.section.3.3.p.5">A link has the following attributes:</p>
+<p id="rfc.section.3.3.p.5">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in [<a href="#RFC6690" class="xref">[RFC6690]</a>] page 14).  The set does not necessarily contain links to all resources served by the host.</p>
+<p id="rfc.section.3.3.p.6">A link has the following attributes:</p>
 <p></p>
 
 <ul>
-<li>One or more link relations (expressed as space-separated values in the &#8220;rel&#8221; attribute, defaulting to &#8220;hosts&#8221;).  They describe a relations between the link context and the link target.</li>
-<li>A link context URI (&#8220;anchor&#8221;).  The link context defines the source of the relation, and serves as the Base URI for resolving the target.  It can be relative, in which case it gets resolved against the Base URI of the <samp>.well-known/core</samp> document it was obtained from . It can be absent, in which the Base URI of the document is used as the context.</li>
-<li>A link target URI (&#8220;href&#8221;, expressed between the angular brackets in link-format).  The link target defines the destination of the relation, and is the topic of all other target attributes.  If it is a relative URI, it gets resolved against the link context URI.</li>
+<li>Zero or more link relations (expressed as space-separated values in the &#8220;rel&#8221; attribute, defaulting to &#8220;hosts&#8221;).  They describe a relations between the link context and the link target.</li>
+<li>A link context URI (&#8220;anchor&#8221;).  The link context defines the source of the relation, and serves as the Base URI for resolving the target.  In the serialization, it can be relative, in which case it gets resolved against the Base URI of the <samp>.well-known/core</samp> document it was obtained from . It can be absent, in which the Base URI of the document is used as the context.</li>
+<li>A link target URI (&#8220;href&#8221;, expressed between the angular brackets in link-format).  The link target defines the destination of the relation, and is the topic of all other target attributes.  In the serialization, if it is a relative URI, it gets resolved against the link context URI.</li>
 <li>Other target attributes (eg. resource type (rt), interface (if), cor content-type (ct)).  These provide additional information about the target URI.</li>
 </ul>
 <div id="rfc.figure.4"></div>
@@ -711,33 +712,33 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
        oooooooo     |                &lt; contains &gt;
                     |                 \\\\\/////
        oooooooo   1 |                      |
-      o   ep   o----+                      | 1+
+      o   ep   o----+                      | 0+
        oooooooo     |             +------------------+
                     |             |      link        |
        oooooooo 0-1 |             +------------------+
       o    d   o----+                      |
-       oooooooo     |                      |  1   ooooooo
-                    |                      +-----o href  o
-       oooooooo 0-1 |                      |      ooooooo
+       oooooooo     |                      |  1   oooooooo
+                    |                      +-----o target o
+       oooooooo 0-1 |                      |      oooooooo
       o   et   o----+     ooooooooooo   0+ |
        oooooooo     |    o  target   o-----+
                     |    o attribute o     | 0+   oooooo
        oooooooo 0-1 |     ooooooooooo      +-----o rel  o
       o   lt   o----+                      |      oooooo
        oooooooo                            |
-                                           | 0-1 oooooooo
-                                           +----o anchor o
-                                                 oooooooo
+                                           | 1   ooooooooo
+                                           +----o context o
+                                                 ooooooooo
 </pre>
 <p class="figure">Figure 4: E-R Model of the content of the Resource Directory</p>
-<p id="rfc.section.3.3.p.7">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
+<p id="rfc.section.3.3.p.8">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
 <p></p>
 
 <ul>
 <li>0 to n Registration (entries),</li>
 <li>0 to k Groups</li>
 </ul>
-<p id="rfc.section.3.3.p.9">A Group has one Multicast address attribute and is composed of 0 to n1 endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 to k1 Groups . An endpoint is contained in 1 to m RDs. A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
+<p id="rfc.section.3.3.p.10">A Group has one Multicast address attribute and is composed of 0 to n1 endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 to k1 Groups . An endpoint is contained in 1 to m RDs. A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
 <p></p>
 
 <ul>
@@ -748,8 +749,8 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>one loc (location in the RD)</li>
 <li>optional one d (domain for query filtering)</li>
 </ul>
-<p id="rfc.section.3.3.p.11">The cardinality of con is currently 1 (n2 = 1). The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
-<p id="rfc.section.3.3.p.12">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.  As they do not have their <samp>.well-known/core</samp> document associated with them any more which would originally provide its Base URI, the &#8220;con&#8221; attribute of the registration fills that gap and is used as a Base URI.</p>
+<p id="rfc.section.3.3.p.12">The cardinality of con is currently 1 (n2 = 1). The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
+<p id="rfc.section.3.3.p.13">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.</p>
 <h1 id="rfc.section.3.4">
 <a href="#rfc.section.3.4">3.4.</a> <a href="#cellular" id="cellular">Use Case: Cellular M2M</a>
 </h1>
