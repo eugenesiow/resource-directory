@@ -1376,16 +1376,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    implications.  Parameters MUST be included as query parameters in an
    update operation as in Section 5.3.
 
-   Upon receiving an update request, an RD MUST reset the timeout for
-   that endpoint and update the scheme, IP address and port of the
-   endpoint, using the source address of the update, or the context
-   ("con") parameter if present.  If the lifetime parameter "lt" is
-   included in the received update request, the RD MUST update the
-   lifetime of the registration and set the timeout equal to the new
-   lifetime.  If the lifetime parameter is not included in the
-   registration update, the most recent setting is re-used for the next
-   registration time-out period.
-
    An update MAY optionally add links for the endpoint by including
    those links in the payload of the update as a CoRE Link Format
    document.
@@ -1394,6 +1384,16 @@ Internet-Draft           CoRE Resource Directory              March 2017
    plurality as described in Section 5.3.4 and rejected with a
    "Conflict" result if there are plural link references detected.
 
+   In addition to the use of POST, as described in this section, in the
+   future links can be changed individually or replaced by using iPATCH
+   or PATCH as proposed in Section 5.4.4.
+
+   A registration update resets the timeout of the registration to the
+   (possibly updated) lifetime of the registration, independent of
+   whether a "lt" parameter was given.
+
+   The update registration request interface is specified as follows:
+
 
 
 
@@ -1401,12 +1401,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 25]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   In addition to the use of POST, as described in this section, in the
-   future links can be individually be changed or replaced by using
-   iPATCH or PATCH as proposed in Section 5.4.4.
-
-   The update registration request interface is specified as follows:
 
    Interaction:  EP -> RD
 
@@ -1449,6 +1443,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Failure:  4.00 "Bad Request" or 400 "Bad Request".  Malformed
       request.
 
+   Failure:  4.04 "Not Found" or 404 "Not Found".  Registration does not
+      exist (e.g. may have expired).
+
+   Failure:  4.09 "Conflict" or 409 "Conflict".  Attempt to update the
+      registration content with links resulting in plurality of
+      references; see Section 5.3.4.
 
 
 
@@ -1457,13 +1457,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 26]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   Failure:  4.04 "Not Found" or 404 "Not Found".  Registration does not
-      exist (e.g. may have expired).
-
-   Failure:  4.09 "Conflict" or 409 "Conflict".  Attempt to update the
-      registration content with links resulting in plurality of
-      references; see Section 5.3.4.
 
    Failure:  5.03 "Service Unavailable" or 503 "Service Unavailable".
       Service could not perform the operation.
@@ -1502,18 +1495,6 @@ Payload:
    anchor value coaps://[2001:db8:3::123]:61616 that overwrites the
    value of the con atribute.
 
-
-
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 27]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
 Req: POST /rd/4521?con=coaps://new.example.com:5684
 Content-Format:40
 Payload:
@@ -1523,6 +1504,15 @@ Payload:
 Res: 2.04 Changed
 
    The consecutive query returns: ~~~~ Req: GET /rd/4521
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 27]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Res: 2.01 Content Payload: </sensors/
    temp>;ct=41;rt="temperature";anchor="coaps://new.example.com:5684",
@@ -1561,15 +1551,6 @@ Res: 2.04 Changed
 
    Success:  2.02 "Deleted" or 204 "No Content" upon successful deletion
 
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 28]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    Failure:  4.00 "Bad Request" or 400 "Bad request".  Malformed
       request.
 
@@ -1580,6 +1561,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
       Service could not perform the operation.
 
    HTTP support: YES
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 28]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    The following examples shows successful removal of the endpoint from
    the RD with example location value /rd/4521.
@@ -1618,14 +1607,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
       relations and attributes. "href" denotes the URI target of the
       link.  See [RFC6690] Sec. 4.1
 
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 29]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    The following responses codes are defined for this interface:
 
    Success:  2.05 "Content" or 200 "OK" upon success with an
@@ -1637,6 +1618,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Failure:  4.04 "Not Found" or 404 "Not Found".  Registration does not
       exist (e.g. may have expired).
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 29]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Failure:  5.03 "Service Unavailable" or 503 "Service Unavailable".
       Service could not perform the operation.
@@ -1674,14 +1662,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    In order to create a group, a commissioning tool (CT) used to
    configure groups, makes a request to the RD indicating the name of
    the group to create (or update), optionally the domain the group
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 30]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    belongs to, and optionally the multicast address of the group.  The
    registration message includes the list of endpoints that belong to
    that group.
@@ -1691,6 +1671,16 @@ Internet-Draft           CoRE Resource Directory              March 2017
    before registering the group, the registration message returns an
    error.  The RD sends a blank target URI for every endpoint link when
    registering the group.
+
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 30]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Configuration of the endpoints themselves is out of scope of this
    specification.  Such an interface for managing the group membership
@@ -1731,13 +1721,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Content-Format:  application/link-format+json
 
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 31]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    Content-Format:  application/link-format+cbor
 
    The following response codes are defined for this interface:
@@ -1747,6 +1730,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
       operation.  This Location MUST be a stable identifier generated by
       the RD as it is used for delete operations of the group
       registration resource.
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 31]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Failure:  4.00 "Bad Request" or 400 "Bad Request".  Malformed
       request.
@@ -1786,14 +1776,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  DELETE
 
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 32]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    URI Template:  {+location}
 
    URI Template Variables:
@@ -1804,6 +1786,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The following responses codes are defined for this interface:
 
    Success:  2.02 "Deleted" or 204 "No Content" upon successful deletion
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 32]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Failure:  4.00 "Bad Request" or 400 "Bad Request".  Malformed
       request.
@@ -1843,15 +1832,23 @@ Internet-Draft           CoRE Resource Directory              March 2017
    does not need to make them accessible to clients.  Clients SHOULD NOT
    attempt to dereference or manipulate them.
 
+   The lookup type is selected by a URI endpoint, which is indicated by
+   a Resource Type as per Table 1 below:
+
+
+
+
+
+
+
+
+
 
 
 Shelby, et al.         Expires September 27, 2017              [Page 33]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   The lookup type is selected by a URI endpoint, which is indicated by
-   a Resource Type as per Table 1 below:
 
              +-------------+--------------------+-----------+
              | Lookup Type | Resource Type      | Mandatory |
@@ -1897,6 +1894,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Multiple query parameters MAY be included in a lookup, all included
    parameters MUST match for a resource to be returned.  The
+   character'*' MAY be included at the end of a parameter value as a
+   wildcard operator.
+
 
 
 
@@ -1905,9 +1905,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 34]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   character'*' MAY be included at the end of a parameter value as a
-   wildcard operator.
 
    RD Lookup requests MAY use any set of query parameters to match the
    registered attributes and relations.  In addition, this interface MAY
@@ -1954,6 +1951,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
       count :=  Count (optional).  Number of results is limited to this
          parameter value.  If the page parameter is also present, the
          response MUST only include 'count' links starting with the
+         (page * count) link in the result set from the query.  If the
+         count parameter is not present, then the response MUST return
+
 
 
 
@@ -1962,8 +1962,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 35]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-         (page * count) link in the result set from the query.  If the
-         count parameter is not present, then the response MUST return
          all matching links in the result set.  Link numbering starts
          with zero.
 
@@ -2008,6 +2006,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows a client performing a resource lookup
    with the example resource look-up locations discovered in Figure 6:
+
+
 
 
 
