@@ -727,13 +727,13 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
        oooooooo     |                      |  1   oooooooo
                     |                      +-----o target o
        oooooooo 0-1 |                      |      oooooooo
-      o   et   o----+     ooooooooooo   0+ |
+      o   lt   o----+     ooooooooooo   0+ |
        oooooooo     |    o  target   o-----+
                     |    o attribute o     | 0+   oooooo
-       oooooooo 0-1 |     ooooooooooo      +-----o rel  o
-      o   lt   o----+                      |      oooooo
-       oooooooo                            |
-                                           | 1   ooooooooo
+    ooooooooooo 0+  |     ooooooooooo      +-----o rel  o
+   o  endpoint o----+                      |      oooooo
+   o attribute o                           |
+    ooooooooooo                            | 1   ooooooooo
                                            +----o context o
                                                  ooooooooo
 </pre>
@@ -752,9 +752,9 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>one ep (endpoint with a unique  name)</li>
 <li>one con (a string describing the scheme://authority part)</li>
 <li>one lt (lifetime),</li>
-<li>optional one et (endpoint type to add semantic information),</li>
 <li>one loc (location in the RD)</li>
-<li>optional one d (domain for query filtering)</li>
+<li>optional one d (domain for query filtering),</li>
+<li>optional endpoint attributes (from <a href="#iana-registry" class="xref">Section 9.3</a>)</li>
 </ul>
 <p id="rfc.section.3.3.p.15">The cardinality of con is currently 1 (n2 = 1). The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
 <p id="rfc.section.3.3.p.16">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.</p>

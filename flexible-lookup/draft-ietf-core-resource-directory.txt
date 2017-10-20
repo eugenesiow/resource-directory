@@ -537,13 +537,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
           oooooooo     |                      |  1   oooooooo
                        |                      +-----o target o
           oooooooo 0-1 |                      |      oooooooo
-         o   et   o----+     ooooooooooo   0+ |
+         o   lt   o----+     ooooooooooo   0+ |
           oooooooo     |    o  target   o-----+
                        |    o attribute o     | 0+   oooooo
-          oooooooo 0-1 |     ooooooooooo      +-----o rel  o
-         o   lt   o----+                      |      oooooo
-          oooooooo                            |
-                                              | 1   ooooooooo
+       ooooooooooo 0+  |     ooooooooooo      +-----o rel  o
+      o  endpoint o----+                      |      oooooo
+      o attribute o                           |
+       ooooooooooo                            | 1   ooooooooo
                                               +----o context o
                                                     ooooooooo
 
@@ -576,11 +576,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  one lt (lifetime),
 
-   o  optional one et (endpoint type to add semantic information),
-
    o  one loc (location in the RD)
 
-   o  optional one d (domain for query filtering)
+   o  optional one d (domain for query filtering),
+
+   o  optional endpoint attributes (from Section 9.3)
 
    The cardinality of con is currently 1 (n2 = 1).  The value of con is
    copied from the value of the "hosts" relation and overwritten by the
