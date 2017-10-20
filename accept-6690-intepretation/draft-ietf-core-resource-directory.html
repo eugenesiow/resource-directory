@@ -562,10 +562,10 @@ address {
 <br> In the context of a Resource Directory, a domain is a logical grouping of endpoints.</dd>
 <dt>Group</dt>
 <dd style="margin-left: 8">
-<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain are unique.</dd>
+<br> In the context of a Resource Directory, a group is a logical grouping of endpoints for the purpose of group communications. All groups within a domain have unique names.</dd>
 <dt>Endpoint</dt>
 <dd style="margin-left: 8">
-<br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and is unique within the associated domain of the registration.</dd>
+<br> Endpoint (EP) is a term used to describe a web server or client in <a href="#RFC7252" class="xref">[RFC7252]</a>.  In the context of this specification an endpoint is used to describe a web server that registers resources to the Resource Directory. An endpoint is identified by its endpoint name, which is included during registration, and has a unique name within the associated domain of the registration.</dd>
 <dt>Context</dt>
 <dd style="margin-left: 8">
 <br> A Context is a base URL that gives scheme and (typically) authority information about an Endpoint. The Context of an Endpoint is provided at registration time, and is used by the Resource Directory to resolve relative references inside the registration into absolute URIs.</dd>
@@ -640,6 +640,7 @@ address {
 <a href="#rfc.section.3.3">3.3.</a> <a href="#ER-model" id="ER-model">Content model</a>
 </h1>
 <p id="rfc.section.3.3.p.1">The Entity-Relationship (ER) models shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> and <a href="#fig-ER-RD" class="xref">Figure 4</a> model the contents of /.well-known/core and the resource directory respectively, with entity-relationship diagrams <a href="#ER" class="xref">[ER]</a>. Entities (rectangles) are used for concepts that exist independently. Attributes (ovals) are used for concepts that exist only in connection with a related entity. Relations (diamonds) give a semantic meaning to the relation between entities. Numbers specify the cardinality of the relations. The relations between the values of the attributes are explained in the interface sections.</p>
+<p id="rfc.section.3.3.p.2">Some of the attribute values are URIs. Those values are always full URIs and never relative references in the data model.  They can, however, be expressed as relative references in serializations, and often are.</p>
 <div id="rfc.figure.3"></div>
 <div id="fig-ER-WKC"></div>
 <pre>
@@ -652,13 +653,13 @@ address {
                       &lt;    contains   &gt;
                        \\\\\\\\///////
                                |
-                               | 1+
+                               | 0+
                      +--------------------+
                      |      link          |
                      +--------------------+
                                |
                                |  1   oooooooo
-                               +-----o  href  o
+                               +-----o target o
                             0+ |      oooooooo
           oooooooooooo         |
          o    target  o--------+
@@ -666,26 +667,26 @@ address {
           oooooooooooo         +-----o rel  o
                                |      oooooo
                                |
-                               | 0-1   oooooooo
-                               +------o anchor o
-                                       oooooooo
+                               | 1    ooooooooo
+                               +-----o context o
+                                      ooooooooo
 
 
 
 </pre>
 <p class="figure">Figure 3: E-R Model of the content of /.well-known/core</p>
-<p id="rfc.section.3.3.p.2">The model shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> models the contents of /.well-known/core which contains:</p>
+<p id="rfc.section.3.3.p.3">The model shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> models the contents of /.well-known/core which contains:</p>
 <p></p>
 
 <ul><li>a set of links belonging to the host</li></ul>
-<p id="rfc.section.3.3.p.4">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in [<a href="#RFC6690" class="xref">[RFC6690]</a>] page 14).  The set does not necessarily contain links to all resources served by the host.</p>
-<p id="rfc.section.3.3.p.5">A link has the following attributes:</p>
+<p id="rfc.section.3.3.p.5">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in [<a href="#RFC6690" class="xref">[RFC6690]</a>] page 14).  The set does not necessarily contain links to all resources served by the host.</p>
+<p id="rfc.section.3.3.p.6">A link has the following attributes:</p>
 <p></p>
 
 <ul>
-<li>One or more link relations (expressed as space-separated values in the &#8220;rel&#8221; attribute, defaulting to &#8220;hosts&#8221;).  They describe a relations between the link context and the link target.</li>
-<li>A link context URI (&#8220;anchor&#8221;).  The link context defines the source of the relation, and serves as the Base URI for resolving the target.  It can be relative, in which case it gets resolved against the Base URI of the <samp>.well-known/core</samp> document it was obtained from . It can be absent, in which the Base URI of the document is used as the context.</li>
-<li>A link target URI (&#8220;href&#8221;, expressed between the angular brackets in link-format).  The link target defines the destination of the relation, and is the topic of all other target attributes.  If it is a relative URI, it gets resolved against the link context URI.</li>
+<li>Zero or more link relations (expressed as space-separated values in the &#8220;rel&#8221; attribute, defaulting to &#8220;hosts&#8221;).  They describe a relations between the link context and the link target.</li>
+<li>A link context URI (&#8220;anchor&#8221;).  The link context defines the source of the relation, and serves as the Base URI for resolving the target.  In the serialization, it can be relative, in which case it gets resolved against the Base URI of the <samp>.well-known/core</samp> document it was obtained from . It can be absent, in which the Base URI of the document is used as the context.</li>
+<li>A link target URI (&#8220;href&#8221;, expressed between the angular brackets in link-format).  The link target defines the destination of the relation, and is the topic of all other target attributes.  In the serialization, if it is a relative URI, it gets resolved against the link context URI.</li>
 <li>Other target attributes (eg. resource type (rt), interface (if), cor content-type (ct)).  These provide additional information about the target URI.</li>
 </ul>
 <div id="rfc.figure.4"></div>
@@ -714,33 +715,33 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
        oooooooo     |                &lt; contains &gt;
                     |                 \\\\\/////
        oooooooo   1 |                      |
-      o   ep   o----+                      | 1+
+      o   ep   o----+                      | 0+
        oooooooo     |             +------------------+
                     |             |      link        |
        oooooooo 0-1 |             +------------------+
       o    d   o----+                      |
-       oooooooo     |                      |  1   ooooooo
-                    |                      +-----o href  o
-       oooooooo 0-1 |                      |      ooooooo
+       oooooooo     |                      |  1   oooooooo
+                    |                      +-----o target o
+       oooooooo 0-1 |                      |      oooooooo
       o   et   o----+     ooooooooooo   0+ |
        oooooooo     |    o  target   o-----+
                     |    o attribute o     | 0+   oooooo
        oooooooo 0-1 |     ooooooooooo      +-----o rel  o
       o   lt   o----+                      |      oooooo
        oooooooo                            |
-                                           | 0-1 oooooooo
-                                           +----o anchor o
-                                                 oooooooo
+                                           | 1   ooooooooo
+                                           +----o context o
+                                                 ooooooooo
 </pre>
 <p class="figure">Figure 4: E-R Model of the content of the Resource Directory</p>
-<p id="rfc.section.3.3.p.7">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
+<p id="rfc.section.3.3.p.8">The model shown in <a href="#fig-ER-RD" class="xref">Figure 4</a> models the contents of the resource directory which contains in addition to /.well-known/core:</p>
 <p></p>
 
 <ul>
 <li>0 to n Registration (entries),</li>
 <li>0 to k Groups</li>
 </ul>
-<p id="rfc.section.3.3.p.9">A Group has one Multicast address attribute and is composed of 0 to n1 endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 to k1 Groups . An endpoint is contained in 1 to m RDs. A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
+<p id="rfc.section.3.3.p.10">A Group has one Multicast address attribute and is composed of 0 to n1 endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 to k1 Groups . An endpoint is contained in 1 to m RDs. A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
 <p></p>
 
 <ul>
@@ -751,8 +752,8 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>one loc (location in the RD)</li>
 <li>optional one d (domain for query filtering)</li>
 </ul>
-<p id="rfc.section.3.3.p.11">The cardinality of con is currently 1 (n2 = 1). The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
-<p id="rfc.section.3.3.p.12">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.  As they do not have their <samp>.well-known/core</samp> document associated with them any more which would originally provide its Base URI, the &#8220;con&#8221; attribute of the registration fills that gap and is used as a Base URI.</p>
+<p id="rfc.section.3.3.p.12">The cardinality of con is currently 1 (n2 = 1). The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
+<p id="rfc.section.3.3.p.13">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.</p>
 <h1 id="rfc.section.3.4">
 <a href="#rfc.section.3.4">3.4.</a> <a href="#cellular" id="cellular">Use Case: Cellular M2M</a>
 </h1>
@@ -1032,7 +1033,7 @@ Location: /rd/4521
 <p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
 <p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
-<p id="rfc.section.5.3.1.p.4">An endpoint can send (a selection of) hosted resources to a directory server for publication as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
+<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
 <p id="rfc.section.5.3.1.p.5">The directory server integrates the information it received this way into its resource directory.  It MAY make the information available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
 <h1 id="rfc.section.5.3.2">
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
@@ -1089,11 +1090,11 @@ payload:
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
 <p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
-<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a> ) if the previous settings are to be retained. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
-<p id="rfc.section.5.4.1.p.3">Upon receiving an update request, an RD MUST reset the timeout for that endpoint and update the scheme, IP address and port of the endpoint, using the source address of the update, or the context (&#8220;con&#8221;) parameter if present.  If the lifetime parameter &#8220;lt&#8221; is included in the received update request, the RD MUST update the lifetime of the registration and set the timeout equal to the new lifetime. If the lifetime parameter is not included in the registration update, the most recent setting is re-used for the next registration time-out period.</p>
-<p id="rfc.section.5.4.1.p.4">An update MAY optionally add or replace links for the endpoint by including those links in the payload of the update as a CoRE Link Format document. A link is replaced only if all of the target URI and relation type (if present) and anchor value (if present) match.</p>
-<p id="rfc.section.5.4.1.p.5">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
-<p id="rfc.section.5.4.1.p.6">In addition to the use of POST, as described in this section, there is an alternate way to add, replace, and delete links using iPATCH or PATCH as described in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
+<p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime or context registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a>. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
+<p id="rfc.section.5.4.1.p.3">An update MAY optionally add links for the endpoint by including those links in the payload of the update as a CoRE Link Format document.</p>
+<p id="rfc.section.5.4.1.p.4">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
+<p id="rfc.section.5.4.1.p.5">In addition to the use of POST, as described in this section, in the future links can be changed individually or replaced by using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
+<p id="rfc.section.5.4.1.p.6">A registration update resets the timeout of the registration to the (possibly updated) lifetime of the registration, independent of whether a <samp>lt</samp> parameter was given.</p>
 <p id="rfc.section.5.4.1.p.7">The update registration request interface is specified as follows:</p>
 <p></p>
 
@@ -1146,23 +1147,34 @@ Req: POST /rd/4521
 
 Res: 2.04 Changed
 </pre>
-<p id="rfc.section.5.4.1.p.12">The following example shows an endpoint updating its registration with a new lifetime and context, changing an existing link, and adding a new link using this interface with the example location value /rd/4521.  With the initial registration the client set the following values:</p>
+<p id="rfc.section.5.4.1.p.12">The following example shows an endpoint updating its registration at an RD using this interface with the example location value: /rd/4521. The initial registration by the client set the following values:</p>
 <p></p>
 
 <ul>
 <li>lifetime (lt)=500</li>
 <li>context (con)=coap://local-proxy-old.example.com:5683</li>
-<li>resource= &lt;/sensors/temp&gt;;ct=41;rt=&#8221;foobar&#8221;;if=&#8221;sensor&#8221;</li>
 </ul>
+<p id="rfc.section.5.4.1.p.14">The initial state of the Registration Resource, /rd/4521, is:</p>
 <pre>
-Req: POST /rd/4521?lt=600&amp;con=coap://local-proxy.example.com:5683
-Content-Format: 40
+Req: GET /rd/4521
+
+Res: 2.01 Content
 Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature-f";if="sensor",
-&lt;/sensors/door&gt;;ct=41;rt="door";if="sensor"
+&lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor="coap://local-proxy-old.example.com:5683",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor="coap://local-proxy-old.example.com:5683"
+</pre>
+<p id="rfc.section.5.4.1.p.15">The following example shows an EP adding the links &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221; and &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;;if=&#8221;sensor&#8221; to the collection of links at the location /rd/4521 and changing the context to coaps://new.example.com:5684. The humid-s resource type has an anchor value coaps://[2001:db8:3::123]:61616 that overwrites the value of the con atribute.</p>
+<pre>
+Req: POST /rd/4521?con=coaps://new.example.com:5684
+Content-Format:40
+Payload:
+&lt;/sensors/humid&gt;;ct= 41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
+&lt;/sensors/co2&gt;;ct= 41;rt="co2-s";if="sensor"
 
 Res: 2.04 Changed
 </pre>
+<p id="rfc.section.5.4.1.p.16">The consecutive query returns: ~~~~ Req: GET /rd/4521</p>
+<p id="rfc.section.5.4.1.p.17">Res: 2.01 Content Payload: &lt;/sensors/temp&gt;;ct=41;rt=&#8221;temperature&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221;, &lt;/sensors/light&gt;;ct=41;rt=&#8221;light-lux&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221;, &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://[2001:db8:3::123]:61616&#8221;, &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221; ~~~~</p>
 <h1 id="rfc.section.5.4.2">
 <a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#removal" id="removal">Registration Removal</a>
 </h1>
@@ -1260,126 +1272,7 @@ Payload:
 <h1 id="rfc.section.5.4.4">
 <a href="#rfc.section.5.4.4">5.4.4.</a> <a href="#link-up" id="link-up">Update Endpoint Links</a>
 </h1>
-<p id="rfc.section.5.4.4.p.1">A iPATCH (PATCH) update adds, removes or changes links for the endpoint by including link update information in the payload of the update as a merge-patch+json format <a href="#RFC7396" class="xref">[RFC7396]</a> document.</p>
-<p id="rfc.section.5.4.4.p.2">Other PATCH document formats may be used as appropriate for patching the array of objects format of a Registration Resource. In particular, a select-merge patch document format could combine the function of link selection query and link attribute replacement values.</p>
-<p id="rfc.section.5.4.4.p.3">One or more links are selected for update by using query filtering as specified in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 4.1</p>
-<p id="rfc.section.5.4.4.p.4">The query filter selects the links to be modified or deleted, by matching the query parameter values to the values of the link attributes.</p>
-<p id="rfc.section.5.4.4.p.5">When the query parameters are not present in the request, the payload specifies links to be added to the target document. When the query parameters are present, the attribute names and values in the query parameters select one or more links on which to apply the iPATCH (PATCH) operation.</p>
-<p id="rfc.section.5.4.4.p.6">If no links are selected by the query parameters, the iPATCH (PATCH) operation MUST NOT update the state of any resource, and MUST return a reply of &#8220;Changed&#8221;.</p>
-<p id="rfc.section.5.4.4.p.7">If an attribute name specified in the PATCH document exists in any the set of selected links, all occurrences of the attribute value in the target document MUST be updated using the value from the PATCH payload. If the attribute name is not present in any selected links, the attribute MUST be added to the links.</p>
-<p id="rfc.section.5.4.4.p.8">If the PATCH payload contains plural link references, or processing the PATCH payload would result in plural link references, the request SHOULD be rejected with a &#8220;Conflict&#8221; result.</p>
-<p id="rfc.section.5.4.4.p.9">If the PATCH payload results in the modification of link target, context, or relation values, that is &#8220;href&#8221;, &#8220;rel&#8221;, or &#8220;anchor&#8221;, the request SHOULD be rejected with a &#8220;Conflict&#8221; result code.</p>
-<p id="rfc.section.5.4.4.p.10">The update request interface is specified as follows:</p>
-<p></p>
-
-<dl>
-<dt>Interaction:</dt>
-<dd style="margin-left: 8">EP -&gt; RD</dd>
-<dt>Method:</dt>
-<dd style="margin-left: 8">PATCH, iPATCH</dd>
-<dt>URI Template:</dt>
-<dd style="margin-left: 8">{+location}{?href,rel,rt,if,ct}</dd>
-<dt>URI Template Variables:</dt>
-<dd style="margin-left: 8">
-<dl>
-<dt>location :=</dt>
-<dd style="margin-left: 8">This is the Location returned by the RD as a result of a successful earlier registration.</dd>
-</dl>
-<p> </p>
-</dd>
-<dt></dt>
-<dd style="margin-left: 8">href,rel,rt,if,ct := link relations and attributes specified in the query in order to select particular links based on their relations and attributes. &#8220;href&#8221; denotes the URI target of the link. See <a href="#RFC6690" class="xref">[RFC6690]</a> Sec. 4.1</dd>
-<dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/merge-patch+json (mandatory)</dd>
-</dl>
-<p id="rfc.section.5.4.4.p.12">The following response codes are defined for this interface:</p>
-<p></p>
-
-<dl>
-<dt>Success:</dt>
-<dd style="margin-left: 8">2.04 &#8220;Changed&#8221; 0r 204 &#8220;No Content&#8221; in the update was successfully processed.</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration resource does not exist (e.g. may have expired).</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
-</dl>
-<p id="rfc.section.5.4.4.p.14">HTTP support: YES</p>
-<p id="rfc.section.5.4.4.p.15">The following examples show an endpoint adding &lt;/sensors/humid&gt;, modifying &lt;/sensors/temp&gt;, and removing &lt;/sensors/light&gt; links in RD using the Update Endpoint Links function with the example location value /rd/4521.</p>
-<p id="rfc.section.5.4.4.p.16">The Registration Resource initial state is:</p>
-<pre>
-Req: GET /rd/4521
-
-Res: 2.01 Content
-Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature",
-&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
-</pre>
-<p id="rfc.section.5.4.4.p.17">The following example shows an EP adding the link &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221; to the collection of links at the location /rd/4521.</p>
-<pre>
-Req: PATCH /rd/4521
-
-Payload:
-{"href":"/sensors/humid","ct": 41, "rt": "humid-s", "if": "sensor"}
-
-Content-Format:
-application/merge-patch+json
-
-Res: 2.04 Changed
-</pre>
-<pre>
-Req: GET /rd/4521
-
-Res: 2.01 Content
-Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature",
-&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor",
-&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"
-</pre>
-<p id="rfc.section.5.4.4.p.18">The following example shows an EP modifying all links at the example location /rd/4521 which are  identified by href=&#8221;/sensors/temp&#8221;, from the initial link-value of &lt;/sensors/temp&gt;;rt=&#8221;temperature&#8221; to the new link-value &lt;/sensors/temp&gt;;rt=&#8221;temperature-c&#8221;;if=&#8221;sensor&#8221; by changing the value of the link attribute &#8220;rt&#8221; and adding the link attribute if=&#8221;sensor&#8221; using the PATCH operation with the supplied merge-patch+json document payload.</p>
-<pre>
-Req: PATCH /rd/4521?href=/sensors/temp
-
-Payload:
-{"rt": "temperature-c", "if": "sensor"},
-
-Content-Format:
-application/merge-patch+json
-
-Res: 2.04 Changed
-</pre>
-<pre>
-Req: GET /rd/4521
-
-Res: 2.01 Content
-Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
-&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor",
-&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"
-</pre>
-<p id="rfc.section.5.4.4.p.19">This example shows an EP removing all links at the example location /rd/4521 which are identified by href=&#8221;/sensors/light&#8221;.</p>
-<pre>
-Req: PATCH /rd/4521?href=/sensors/light
-
-Payload:
-{}
-
-Content-Format:
-application/merge-patch+json
-
-Res: 2.04 Changed
-</pre>
-<pre>
-Req: GET /rd/4521
-
-Res: 2.01 Content
-Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
-&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"
-</pre>
+<p id="rfc.section.5.4.4.p.1">A iPATCH (PATCH) update adds, removes or changes links of a registration by including link update information in the payload of the update with a media type that still needs to be defined.</p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#group" id="group">RD Groups</a>
 </h1>
@@ -1526,7 +1419,7 @@ Res: 2.02 Deleted
 </tbody>
 </table>
 <p id="rfc.section.7.p.5">Resource lookup results in links that are semantically equivalent to the links submitted to the RD if they were accessed on the endpoint itself.  The links and link parameters returned are equal to the submitted ones except for anchor, which gets resolved according to the endpoint&#8217;s context.  That allows the client to interpret the response as links without any further knowledge of what the RD does.  The Resource Directory MAY replace the contexts with a configured intermediate proxy, e.g. in the case of an HTTP lookup interface for CoAP endpoints.</p>
-<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present) and context (con).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
+<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration resource and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present), context (con), resource-type (rt), endpoint type (et, if present) and lifetime (lt, if present).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
 <p id="rfc.section.7.p.7">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
 <p id="rfc.section.7.p.8">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
 <p id="rfc.section.7.p.9">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
@@ -1604,8 +1497,10 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?et=power-node
 
 Res: 2.05 Content
-&lt;/reg/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5",
-&lt;/reg/5678&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7"
+&lt;/rd/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5";
+et="power-node";rt="core.ocf.power";ct="40";lt="600",
+&lt;/rd/4521&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7";
+et="power-node";rt="core.ocf.power";ct="40";lt="600";d="floor-3"
 </pre>
 <p id="rfc.section.7.p.19">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
@@ -1620,17 +1515,17 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-&lt;/reg/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1",
-&lt;/reg/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2"
+&lt;/rd/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1";et="light-node";rt="core.ocf.light";ct="40";lt="600",
+&lt;/rd/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2";et="light-node";rt="core.ocf.light";ct="40";lt="600"
 </pre>
-<p id="rfc.section.7.p.21">The following example shows a client performing a lookup for all groups an endpoint belongs to:</p>
+<p id="rfc.section.7.p.21">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
 &lt;/rd-group/1&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.p.22">The following example shows a client performing a paginated lookup</p>
+<p id="rfc.section.7.p.22">The following example shows a client performing a paginated resource lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
@@ -1650,10 +1545,10 @@ Res: 2.05 Content
 &lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
 &lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.p.23">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that endpoints with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp> have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.p.23">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.7.p.24">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
-Req: POST /rd?ep=mynode
+Req: GET /rd-lookup/res?et=sensor-node
 
 &lt;/sensors&gt;;ct=40;title="Sensor Index";
     anchor="coap://sensor1.example.com",
