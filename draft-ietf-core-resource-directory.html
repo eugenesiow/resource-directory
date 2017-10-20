@@ -1404,7 +1404,7 @@ Res: 2.02 Deleted
 </tbody>
 </table>
 <p id="rfc.section.7.p.5">Resource lookup results in links that are semantically equivalent to the links submitted to the RD if they were accessed on the endpoint itself.  The links and link parameters returned are equal to the submitted ones except for anchor, which gets resolved according to the endpoint&#8217;s context.  That allows the client to interpret the response as links without any further knowledge of what the RD does.  The Resource Directory MAY replace the contexts with a configured intermediate proxy, e.g. in the case of an HTTP lookup interface for CoAP endpoints.</p>
-<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration resource and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present), context (con), resource-type (rt), endpoint type (et, if present) and lifetime (lt, if present).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
+<p id="rfc.section.7.p.6">Endpoint and group lookups result in links to the selected registration resource and group resources.  Endpoint registration resources are annotated with their endpoint names (ep), domains (d, if present), context (con), endpoint type (et, if present) and lifetime (lt, if present).  Group resources are annotated with their group names (gp), domain (d, if present) and multicast address (con, if present).</p>
 <p id="rfc.section.7.p.7">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
 <p id="rfc.section.7.p.8">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
 <p id="rfc.section.7.p.9">Multiple query parameters MAY be included in a lookup, all included parameters MUST match for a resource to be returned.  The character&#8217;*&#8217; MAY be included at the end of a parameter value as a wildcard operator.</p>
@@ -1419,7 +1419,7 @@ Res: 2.02 Deleted
 <dt>Method:</dt>
 <dd style="margin-left: 8">GET</dd>
 <dt>URI Template:</dt>
-<dd style="margin-left: 8">{+type-lookup-location}{?d,ep,gp,et,rt,page,count,resource-param}</dd>
+<dd style="margin-left: 8">{+type-lookup-location}{?d,ep,gp,et,page,count,resource-param}</dd>
 <dt>URI Template Variables:</dt>
 <dd style="margin-left: 8">
 <dl>
@@ -1436,12 +1436,10 @@ Res: 2.02 Deleted
 <dd style="margin-left: 8">Page (optional). Parameter can not be used without the count parameter. Results are returned from result set in pages that contain &#8216;count&#8217; links starting from index (page * count). Page numbering starts with zero.</dd>
 <dt>count :=</dt>
 <dd style="margin-left: 8">Count (optional). Number of results is limited to this parameter value. If the page parameter is also present, the response MUST only include &#8216;count&#8217; links starting with the (page * count) link in the result set from the query. If the count parameter is not present, then the response MUST return all matching links in the result set. Link numbering starts with zero.</dd>
-<dt>rt :=</dt>
-<dd style="margin-left: 8">Resource type (optional). Used for group, endpoint and resource lookups.</dd>
 <dt>et :=</dt>
 <dd style="margin-left: 8">Endpoint type (optional). Used for group, endpoint and resource lookups.</dd>
 <dt>resource-param :=</dt>
-<dd style="margin-left: 8">Link attribute parameters (optional). Any link target attribute as defined in Section 4.1 of <a href="#RFC6690" class="xref">[RFC6690]</a>, used for resource lookups.</dd>
+<dd style="margin-left: 8">Link parameters (optional). Any link parameter as defined in Section 4.1 of <a href="#RFC6690" class="xref">[RFC6690]</a>, including href, used for resource lookups.</dd>
 <dt>Content-Format:</dt>
 <dd style="margin-left: 8">application/link-format (optional)</dd>
 <dt>Content-Format:</dt>
@@ -1483,9 +1481,9 @@ Req: GET /rd-lookup/ep?et=power-node
 
 Res: 2.05 Content
 &lt;/rd/1234&gt;;con="coap://[2001:db8:3::127]:61616";ep="node5";
-et="power-node";rt="core.ocf.power";ct="40";lt="600",
+et="power-node";ct="40";lt="600",
 &lt;/rd/4521&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7";
-et="power-node";rt="core.ocf.power";ct="40";lt="600";d="floor-3"
+et="power-node";ct="40";lt="600";d="floor-3"
 </pre>
 <p id="rfc.section.7.p.19">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
@@ -1500,8 +1498,8 @@ Res: 2.05 Content
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-&lt;/rd/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1";et="light-node";rt="core.ocf.light";ct="40";lt="600",
-&lt;/rd/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2";et="light-node";rt="core.ocf.light";ct="40";lt="600"
+&lt;/rd/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1";et="power-node";ct="40";lt="600",
+&lt;/rd/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2";et="power-node";ct="40";lt="600"
 </pre>
 <p id="rfc.section.7.p.21">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
 <pre>

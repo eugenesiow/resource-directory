@@ -1817,10 +1817,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Endpoint and group lookups result in links to the selected
    registration resource and group resources.  Endpoint registration
    resources are annotated with their endpoint names (ep), domains (d,
-   if present), context (con), resource-type (rt), endpoint type (et, if
-   present) and lifetime (lt, if present).  Group resources are
-   annotated with their group names (gp), domain (d, if present) and
-   multicast address (con, if present).
+   if present), context (con), endpoint type (et, if present) and
+   lifetime (lt, if present).  Group resources are annotated with their
+   group names (gp), domain (d, if present) and multicast address (con,
+   if present).
 
    Using the Accept Option, the requester can control whether this list
    is returned in CoRE Link Format ("application/link-format", default)
@@ -1870,7 +1870,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Method:  GET
 
    URI Template:  {+type-lookup-
-      location}{?d,ep,gp,et,rt,page,count,resource-param}
+      location}{?d,ep,gp,et,page,count,resource-param}
 
    URI Template Variables:
 
@@ -1909,14 +1909,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
          all matching links in the result set.  Link numbering starts
          with zero.
 
-      rt :=  Resource type (optional).  Used for group, endpoint and
-         resource lookups.
-
       et :=  Endpoint type (optional).  Used for group, endpoint and
          resource lookups.
 
-      resource-param :=  Link attribute parameters (optional).  Any link
-         target attribute as defined in Section 4.1 of [RFC6690], used
+      resource-param :=  Link parameters (optional).  Any link parameter
+         as defined in Section 4.1 of [RFC6690], including href, used
          for resource lookups.
 
       Content-Format:  application/link-format (optional)
@@ -1951,7 +1948,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The following example shows a client performing a resource lookup
    with the example resource look-up locations discovered in Figure 6:
 
+   Req: GET /rd-lookup/res?rt=temperature
 
+   Res: 2.05 Content
+   </temp>;rt="temperature";anchor="coap://[2001:db8:3::123]:61616"
 
 
 
@@ -1962,11 +1962,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 35]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-   Req: GET /rd-lookup/res?rt=temperature
-
-   Res: 2.05 Content
-   </temp>;rt="temperature";anchor="coap://[2001:db8:3::123]:61616"
-
    The following example shows a client performing an endpoint type
    lookup:
 
@@ -1974,9 +1969,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Res: 2.05 Content
    </rd/1234>;con="coap://[2001:db8:3::127]:61616";ep="node5";
-   et="power-node";rt="core.ocf.power";ct="40";lt="600",
+   et="power-node";ct="40";lt="600",
    </rd/4521>;con="coap://[2001:db8:3::129]:61616";ep="node7";
-   et="power-node";rt="core.ocf.power";ct="40";lt="600";d="floor-3"
+   et="power-node";ct="40";lt="600";d="floor-3"
 
    The following example shows a client performing a group lookup for
    all groups:
@@ -1993,8 +1988,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 Req: GET /rd-lookup/ep?gp=lights1
 
 Res: 2.05 Content
-</rd/abcd>;con="coap://[2001:db8:3::123]:61616";ep="node1";et="light-node";rt="core.ocf.light";ct="40";lt="600",
-</rd/efgh>;con="coap://[2001:db8:3::124]:61616";ep="node2";et="light-node";rt="core.ocf.light";ct="40";lt="600"
+</rd/abcd>;con="coap://[2001:db8:3::123]:61616";ep="node1";et="power-node";ct="40";lt="600",
+</rd/efgh>;con="coap://[2001:db8:3::124]:61616";ep="node2";et="power-node";ct="40";lt="600"
 
    The following example shows a client performing a lookup for all
    groups the endpoint "node1" belongs to:
@@ -2006,6 +2001,11 @@ Res: 2.05 Content
 
    The following example shows a client performing a paginated resource
    lookup
+
+
+
+
+
 
 
 
