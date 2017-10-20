@@ -680,7 +680,7 @@ address {
 <p></p>
 
 <ul><li>a set of links belonging to the host</li></ul>
-<p id="rfc.section.3.3.p.6">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in [<a href="#RFC6690" class="xref">[RFC6690]</a>] page 14).  The set does not necessarily contain links to all resources served by the host.</p>
+<p id="rfc.section.3.3.p.6">The host is free to choose links it deems appropriate to be exposed in its <samp>.well-known/core</samp>.  Typically, the links describe resources that are served by the host, but the set can also contain links to resources on other servers (see examples in <a href="#RFC6690" class="xref">[RFC6690]</a> page 14).  The set does not necessarily contain links to all resources served by the host.</p>
 <p id="rfc.section.3.3.p.7">A link has the following attributes:</p>
 <p></p>
 
@@ -800,7 +800,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <p></p>
 
 <ul>
-<li>In a 6LoWPAN, just assume the Edge Router (6LBR) can act as a resource directory (using the ABRO option to find that <a href="#RFC6775" class="xref">[RFC6775]</a>).  Confirmation can be obtained by sending a Unicast to coap://[6LBR]/.well-known/core?rt=core.rd*`.</li>
+<li>In a 6LoWPAN, just assume the Edge Router (6LBR) can act as a resource directory (using the ABRO option to find that <a href="#RFC6775" class="xref">[RFC6775]</a>).  Confirmation can be obtained by sending a Unicast to <samp>coap://[6LBR]/.well-known/core?rt=core.rd*</samp>.</li>
 <li>In a network that supports multicast well, discovering the RD using a multicast query for /.well-known/core as specified in CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>: Sending a Multicast GET to <samp>coap://[ff02::1]/.well-known/core?rt=core.rd*</samp>.  RDs within the multicast scope will answer the query.</li>
 </ul>
 <p id="rfc.section.4.p.9">As some of the RD addresses obtained by the methods listed here are just (more or less educated) guesses, endpoints MUST make use of any error messages to very strictly rate-limit requests to candidate IP addresses that don&#8217;t work out.  For example, an ICMP Destination Unreachable message (and, in particular, the port unreachable code for this message) may indicate the lack of a CoAP server on the candidate host, or a CoAP error response code such as 4.05 &#8220;Method Not Allowed&#8221; may indicate unwillingness of a CoAP server to act as a directory server.</p>
@@ -1154,7 +1154,7 @@ Payload:
 &lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor="coap://local-proxy-old.example.com:5683",
 &lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor="coap://local-proxy-old.example.com:5683"
 </pre>
-<p id="rfc.section.5.4.1.p.16">The following example shows an EP adding the links &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221; and &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;;if=&#8221;sensor&#8221; to the collection of links at the location /rd/4521 and changing the context to coaps://new.example.com:5684. The humid-s resource type has an anchor value coaps://[2001:db8:3::123]:61616 that overwrites the value of the con atribute.</p>
+<p id="rfc.section.5.4.1.p.16">The following example shows an EP adding the links <samp>&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"</samp> and <samp>&lt;/sensors/co2&gt;;ct=41;rt="co2-s";if="sensor"</samp> to the collection of links at the location /rd/4521 and changing the context to <samp>coaps://new.example.com:5684</samp>. The humid-s resource type has an anchor value <samp>coaps://[2001:db8:3::123]:61616</samp> that overwrites the value of the con atribute.</p>
 <pre>
 Req: POST /rd/4521?con=coaps://new.example.com:5684
 Content-Format:40
@@ -1164,8 +1164,17 @@ Payload:
 
 Res: 2.04 Changed
 </pre>
-<p id="rfc.section.5.4.1.p.17">The consecutive query returns: ~~~~ Req: GET /rd/4521</p>
-<p id="rfc.section.5.4.1.p.18">Res: 2.01 Content Payload: &lt;/sensors/temp&gt;;ct=41;rt=&#8221;temperature&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221;, &lt;/sensors/light&gt;;ct=41;rt=&#8221;light-lux&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221;, &lt;/sensors/humid&gt;;ct=41;rt=&#8221;humid-s&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://[2001:db8:3::123]:61616&#8221;, &lt;/sensors/co2&gt;;ct=41;rt=&#8221;co2-s&#8221;;if=&#8221;sensor&#8221;;anchor=&#8221;coaps://new.example.com:5684&#8221; ~~~~</p>
+<p id="rfc.section.5.4.1.p.17">The consecutive query returns:</p>
+<pre>
+Req: GET /rd/4521
+
+Res: 2.01 Content
+Payload:
+&lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor="coaps://new.example.com:5684",
+&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor="coaps://new.example.com:5684",
+&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
+&lt;/sensors/co2&gt;;ct=41;rt="co2-s";if="sensor";anchor="coaps://new.example.com:5684"
+</pre>
 <h1 id="rfc.section.5.4.2">
 <a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#removal" id="removal">Registration Removal</a>
 </h1>
@@ -2231,16 +2240,16 @@ RES 2.05 Content
 <h1 id="rfc.appendix.A.1.1">
 <a href="#rfc.appendix.A.1.1">A.1.1.</a> <a href="#resolving-the-uris" id="resolving-the-uris">Resolving the URIs</a>
 </h1>
-<p id="rfc.section.A.1.1.p.1">The client parses the single returned record. The link&#8217;s target (sometimes called &#8220;href&#8221;) is &#8220;/temp&#8221;, which is a relative URI that needs resolving. The Base URI to resolve that against is, in absence of an &#8220;anchor&#8221; parameter, the URI of the requested resource as described in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 2.1.</p>
-<p id="rfc.section.A.1.1.p.2">The URI of the requested resource can be composed by following the steps of <a href="#RFC7252" class="xref">[RFC7252]</a> section 6.5 (with an addition at the end of 8.2) into &#8220;coap://[2001:db8:f0::1]/.well-known/core&#8221;.</p>
-<p id="rfc.section.A.1.1.p.3">The record&#8217;s target is resolved by replacing the path /.well-known/core from the Base URI (section 5.2 <a href="#RFC3986" class="xref">[RFC3986]</a>) with the relative target URI &#8220;/temp&#8221; into &#8220;coap://[2001:db8:f0::1]/temp&#8221;.</p>
+<p id="rfc.section.A.1.1.p.1">The client parses the single returned record. The link&#8217;s target (sometimes called &#8220;href&#8221;) is &#8220;<samp>/temp</samp>&#8221;, which is a relative URI that needs resolving. The Base URI to resolve that against is, in absence of an &#8220;anchor&#8221; parameter, the URI of the requested resource as described in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 2.1.</p>
+<p id="rfc.section.A.1.1.p.2">The URI of the requested resource can be composed by following the steps of <a href="#RFC7252" class="xref">[RFC7252]</a> section 6.5 (with an addition at the end of 8.2) into &#8220;<samp>coap://[2001:db8:f0::1]/.well-known/core</samp>&#8221;.</p>
+<p id="rfc.section.A.1.1.p.3">The record&#8217;s target is resolved by replacing the path &#8220;<samp>/.well-known/core</samp>&#8221; from the Base URI (section 5.2 <a href="#RFC3986" class="xref">[RFC3986]</a>) with the relative target URI &#8220;<samp>/temp</samp>&#8221; into &#8220;<samp>coap://[2001:db8:f0::1]/temp</samp>&#8221;.</p>
 <h1 id="rfc.appendix.A.1.2">
 <a href="#rfc.appendix.A.1.2">A.1.2.</a> <a href="#interpreting-attributes-and-relations" id="interpreting-attributes-and-relations">Interpreting attributes and relations</a>
 </h1>
 <p id="rfc.section.A.1.2.p.1">Some more information but the record&#8217;s target can be obtained from the payload: the resource type of the target is &#8220;temperature&#8221;, and its content type is text/plain (ct=0).</p>
 <p id="rfc.section.A.1.2.p.2">A relation in a web link is a three-part statement that the context resource has a named relation to the target resource, like &#8220;<em>This page</em> has <em>its table of contents</em> at <em>/toc.html</em>&#8221;. In <a href="#RFC6690" class="xref">[RFC6690]</a> link-format documents, there is an implicit &#8220;host relation&#8221; specified with default parameter: rel=&#8221;hosts&#8221;.</p>
 <p id="rfc.section.A.1.2.p.3">In our example, the context of the link is the URI of the requested document itself. A full English expression of the &#8220;host relation&#8221; is:</p>
-<p id="rfc.section.A.1.2.p.4">&#8216;&lt;coap://[2001:db8:f0::1]/.well-known/core&gt; is hosting the resource &lt;coap://[2001:db8:f0::1]/temp&gt;, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
+<p id="rfc.section.A.1.2.p.4">&#8216;<samp>coap://[2001:db8:f0::1]/.well-known/core</samp> is hosting the resource <samp>coap://[2001:db8:f0::1]/temp</samp>, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
 <h1 id="rfc.appendix.A.2">
 <a href="#rfc.appendix.A.2">A.2.</a> <a href="#a-slightly-more-complex-example" id="a-slightly-more-complex-example">A slightly more complex example</a>
 </h1>
@@ -2254,10 +2263,10 @@ RES 2.05 Content
 &lt;t123.pdf&gt;;rel=alternate;ct=65001;
     anchor="http://www.example.com/sensors/t123"
 </pre>
-<p id="rfc.section.A.2.p.2">Parsing the third record, the client encounters the &#8220;anchor&#8221; parameter. It is a URI relative to the document&#8217;s Base URI and is thus resolved to &#8220;coap://[2001:db8:f0::1]/sensors/temp&#8221;.  That is the context resource of the link, so the &#8220;rel&#8221; statement is not about the target and the document Base URI any more, but about the target and that address.</p>
-<p id="rfc.section.A.2.p.3">Thus, the third record could be read as &#8220;&lt;coap://[2001:db8:f0::1]/sensors/temp&gt; has an alternate representation at &lt;coap://[2001:db8:f0::1]/t&gt;&#8221;.</p>
-<p id="rfc.section.A.2.p.4">The fourth record can be read as &#8220;&lt;coap://[2001:db8:f0::1]/sensors/temp&gt; is described by <a href="http://www.example.com/sensors/t123">http://www.example.com/sensors/t123</a>&#8221;</p>
-<p id="rfc.section.A.2.p.5">In the last example the anchor is absolute, where a &#8220;t123.pdf&#8221; is resolved relative to &#8220;http://www.example.com/sensors/t123&#8221;, which gives a statement that &#8220;<a href="http://www.example.com/sensors/t123/t123.pdf">http://www.example.com/sensors/t123/t123.pdf</a> is an alternate representation to &#8220;<a href="http://www.example.com/sensors/t123">http://www.example.com/sensors/t123</a> of which the content type is PDF&#8221;.</p>
+<p id="rfc.section.A.2.p.2">Parsing the third record, the client encounters the &#8220;anchor&#8221; parameter. It is a URI relative to the document&#8217;s Base URI and is thus resolved to &#8220;<samp>coap://[2001:db8:f0::1]/sensors/temp</samp>&#8221;.  That is the context resource of the link, so the &#8220;rel&#8221; statement is not about the target and the document Base URI any more, but about the target and that address.</p>
+<p id="rfc.section.A.2.p.3">Thus, the third record could be read as &#8220;<samp>coap://[2001:db8:f0::1]/sensors/temp</samp> has an alternate representation at <samp>coap://[2001:db8:f0::1]/t</samp>&#8221;.</p>
+<p id="rfc.section.A.2.p.4">The fourth record can be read as &#8220;<samp>coap://[2001:db8:f0::1]/sensors/temp</samp> is described by <samp>http://www.example.com/sensors/t123</samp>&#8221;</p>
+<p id="rfc.section.A.2.p.5">In the last example the anchor is absolute, where a &#8220;<samp>t123.pdf</samp>&#8221; is resolved relative to &#8220;<samp>http://www.example.com/sensors/t123</samp>&#8221;, which gives a statement that &#8220;<samp>http://www.example.com/sensors/t123/t123.pdf</samp> is an alternate representation to &#8220;<samp>http://www.example.com/sensors/t123</samp> of which the content type is PDF&#8221;.</p>
 <h1 id="rfc.appendix.A.3">
 <a href="#rfc.appendix.A.3">A.3.</a> <a href="#enter-the-resource-directory" id="enter-the-resource-directory">Enter the Resource Directory</a>
 </h1>
@@ -2266,15 +2275,15 @@ RES 2.05 Content
 <pre>
 POST coap://[2001:db8:f01::ff]/.well-known/core?ep-simple-host1
 </pre>
-<p id="rfc.section.A.3.p.3">The resource directory would have accepted the registration, and queried the simple host&#8217;s <samp>.well-known/core</samp> by itself. As a result, the host is registered as an endpoint in the RD with the name &#8220;simple-host1&#8221;. The registration is active for 86400 seconds, and the endpoint registration Base URI is &#8220;coap://[2001:db8:f0::1]/&#8221; because that is the address the registration was sent from (and no explicit <samp>con=</samp> was given).</p>
-<p id="rfc.section.A.3.p.4">If the client now queries the RD as it would previously have issued a multicast request, it would go through the RD discovery steps by fetching &lt;coap://[2001:db8:f0::ff]/.well-known/core?rt=core.rd-lookup-res&gt;, obtain &lt;coap://[2001:db8:f0::ff]/rd-lookup/res&gt; as the resource lookup endpoint, and issue a request to &lt;coap://[2001:db8:f0::ff]/rd-lookup/res?rt=temperature&gt; to receive the following data:</p>
+<p id="rfc.section.A.3.p.3">The resource directory would have accepted the registration, and queried the simple host&#8217;s <samp>.well-known/core</samp> by itself. As a result, the host is registered as an endpoint in the RD with the name &#8220;simple-host1&#8221;. The registration is active for 86400 seconds, and the endpoint registration Base URI is &#8220;<samp>coap://[2001:db8:f0::1]/</samp>&#8221; because that is the address the registration was sent from (and no explicit <samp>con=</samp> was given).</p>
+<p id="rfc.section.A.3.p.4">If the client now queries the RD as it would previously have issued a multicast request, it would go through the RD discovery steps by fetching <samp>coap://[2001:db8:f0::ff]/.well-known/core?rt=core.rd-lookup-res</samp>, obtain <samp>coap://[2001:db8:f0::ff]/rd-lookup/res</samp> as the resource lookup endpoint, and issue a request to <samp>coap://[2001:db8:f0::ff]/rd-lookup/res?rt=temperature</samp> to receive the following data:</p>
 <pre>
     &lt;/temp&gt;;rt=temperature;ct=0;anchor="coap://[2001:db8:f0::1]"
 </pre>
 <p id="rfc.section.A.3.p.5">This is not <em>literally</em> the same response that it would have received from a multicast request, but it would contain the (almost) same statement:</p>
-<p id="rfc.section.A.3.p.6">&#8216;&lt;coap://[2001:db8:f0::1]&gt; is hosting the resource &lt;coap://[2001:db8:f0::1]/temp&gt;, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
+<p id="rfc.section.A.3.p.6">&#8216;<samp>coap://[2001:db8:f0::1]</samp> is hosting the resource <samp>coap://[2001:db8:f0::1]/temp</samp>, which is of the resource type &#8220;temperature&#8221; and can be accessed using the text/plain content format.&#8217;</p>
 <p id="rfc.section.A.3.p.7">(The difference is whether <samp>/</samp> or <samp>/.well-known/core</samp> hosts the resources, which is subject of ongoing discussion about RFC6690).</p>
-<p id="rfc.section.A.3.p.8">To complete the examples, the client could also query all resources hosted at the endpoint with the known endpoint name &#8220;simple-host1&#8221;. A request to &lt;coap://[2001:db8:f0::ff]/rd-lookup/res?ep=simple-host1&gt; would return</p>
+<p id="rfc.section.A.3.p.8">To complete the examples, the client could also query all resources hosted at the endpoint with the known endpoint name &#8220;simple-host1&#8221;. A request to <samp>coap://[2001:db8:f0::ff]/rd-lookup/res?ep=simple-host1</samp> would return</p>
 <pre>
 &lt;/temp&gt;;rt=temperature;ct=0;anchor="coap://[2001:db8:f0::1]",
 &lt;/light&gt;;rt=light-lux;ct=0;anchor="coap://[2001:db8:f0::1]",
