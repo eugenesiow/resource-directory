@@ -331,6 +331,7 @@ address {
 <link href="#rfc.appendix.A.1.2" rel="Chapter" title="A.1.2 Interpreting attributes and relations">
 <link href="#rfc.appendix.A.2" rel="Chapter" title="A.2 A slightly more complex example">
 <link href="#rfc.appendix.A.3" rel="Chapter" title="A.3 Enter the Resource Directory">
+<link href="#rfc.appendix.A.4" rel="Chapter" title="A.4 A note on differences between link-format and Link headers">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -529,6 +530,8 @@ address {
 </ul><li>A.2.   <a href="#rfc.appendix.A.2">A slightly more complex example</a>
 </li>
 <li>A.3.   <a href="#rfc.appendix.A.3">Enter the Resource Directory</a>
+</li>
+<li>A.4.   <a href="#rfc.appendix.A.4">A note on differences between link-format and Link headers</a>
 </li>
 </ul><li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
@@ -771,47 +774,32 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <h1 id="rfc.section.4">
 <a href="#rfc.section.4">4.</a> <a href="#simple_finding" id="simple_finding">Finding a Resource Directory</a>
 </h1>
-<p id="rfc.section.4.p.1">Several mechanisms can be employed for discovering the RD, including assuming a default location (e.g. on an Edge Router in a LoWPAN), assigning an anycast address to the RD, using DHCP, or discovering the RD using .well-known/core and hyperlinks as specified in CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>.  Endpoints that want to contact a Resource Directory (RD) can obtain candidate IP addresses of RD servers dependent on the operational conditions. It is assumed that the nodes looking for a Resource Directory are connected to a Border Router (6LBR). Given the various existing network installation procedures, the 6LBR is either connected or disconnected from the Internet and its services like DHCP and DNS. Two conditions are separately considered: (1) Internet services present, and (2) no Internet services present.</p>
-<p id="rfc.section.4.p.2">When no Internet services are present, the following techniques are used (in random order):</p>
+<p id="rfc.section.4.p.1">A device coming up may want to find one or more resource directories to make itself known with.</p>
+<p id="rfc.section.4.p.2">The device may be pre-configured to exercise specific mechanisms for finding the resource directory:</p>
 <p></p>
 
-<ol>
-<li>Sending a Multicast to [ff02::1]/.well-known/core with ?rt=core.rd*. The receiving RDs will answer the query.</li>
-<li>The Authoritative Border Router Option (ABRO) present in the Router Advertisements (RA), contains the address of the border router.</li>
-<li>Assuming that an RD is located at the 6LBR. Confirmation can be obtained by sending a Unicast to [6LBR]/.well-known/core with ?rt=core.rd*. Address of 6LBR is obtained from ABRO.</li>
-<li>The 6LBR can send the Resource Directory Address Option (RDAO) during neighbour Discovery containing one or more RD addresses, as explained in <a href="#rdao" class="xref">Section 4.1</a>
+<ul>
+<li>It may be configured with a specific IP address for the RD.  That IP address may also be an anycast address, allowing the network to forward RD requests to an RD that is topologically close; each target network environment in which some of these preconfigured nodes are to be brought up is then configured with a route for this anycast address that leads to an appropriate RD.  (Instead of using an anycast address, a multicast address can also be preconfigured.  The RD directory servers then need to configure one of their interfaces with this multicast address.)</li>
+<li>It may be configured with a DNS name for the RD and a resource-record type to look up under this name; it can find a DNS server to perform the lookup using the usual mechanisms for finding DNS servers.</li>
+<li>It may be configured to use a service discovery mechanism such as DNS-SD <a href="#RFC6763" class="xref">[RFC6763]</a>.  The present specification suggests configuring the service with name rd._sub._coap._udp, preferably within the domain of the querying nodes.  <a id="_1" class="info">[_1]<span class="info">cabo: What is _sub here?</span></a>
 </li>
-<li>The installation manager can decide to preconfigure an ANYCAST address with as destination the interface of the RDs. Clients send a discovery message to the predefined RD anycast address. Each target network environment in which some of these preconfigured nodes are to be brought up is then configured with a route for this anycast address that leads to an appropriate RD.</li>
-<li>Instead of using an ANYCAST address, a multicast address can be preconfigured. All RD directory servers need to configure one of their interfaces with this multicast address.</li>
-<li>After installation of mDNS on all nodes, mDNS can be queried for the IP-address of RD.</li>
-</ol>
-<p id="rfc.section.4.p.4">When Internet services are present, the techniques cited above are still valid. Using standard techniques to obtain the addresses of DNS or DHCP servers, the RD can be discovered in the following way:</p>
-<p></p>
-
-<ol>
-<li>Using a DNSSD query to return the Resource Records (RR) describing the service with name rd._sub._coap._udp, preferably within the domain of the querying nodes.</li>
-<li>Using DHCPv6 with options to be defined.</li>
-</ol>
-<p id="rfc.section.4.p.6">Assisting the 9 techniques above, requires manual intervention or may be done automatically.</p>
-<p id="rfc.section.4.p.7">Manual management:</p>
+</ul>
+<p id="rfc.section.4.p.4">For cases where the device is not specifically configured with a way to find a resource directory, the network may want to provide a suitable default.</p>
 <p></p>
 
 <ul>
-<li>IP address of RD is present in each node.</li>
-<li>ANYCAST address or Multicast address of RD is present in each node [see 5,6].</li>
-<li>6LBR receives IP address of RD for distribution via RDAO [see 4].</li>
-<li>RD address is configured in DHCP [see 9].</li>
-<li>DNS is configured with Resource Record specifying address of RD service [see 8].</li>
+<li>If the address configuration of the network is performed via SLAAC, this is provided by the RDAO option <a href="#rdao" class="xref">Section 4.1</a>.</li>
+<li>If the address configuration of the network is performed via DHCP, this could be provided via a DHCP option (no such option is defined at the time of writing).</li>
 </ul>
-<p id="rfc.section.4.p.9">Automatic management</p>
+<p id="rfc.section.4.p.6">Finally, if neither the device nor the network offer any specific configuration, the device may want to employ heuristics to find a suitable resource directory.</p>
+<p id="rfc.section.4.p.7">The present specification does not fully define these heuristics, but suggests a number of candidates:</p>
 <p></p>
 
 <ul>
-<li>Multicasting to all nodes to return IP address [see 1].</li>
-<li>Querying mDNS to receive IP address [see 7].</li>
-<li>6LBR contains RD service [see 2, 3].</li>
+<li>In a 6LoWPAN, just assume the Edge Router (6LBR) can act as a resource directory (using the ABRO option to find that <a href="#RFC6775" class="xref">[RFC6775]</a>).  Confirmation can be obtained by sending a Unicast to coap://[6LBR]/.well-known/core?rt=core.rd*`.</li>
+<li>In a network that supports multicast well, discovering the RD using a multicast query for /.well-known/core as specified in CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>: Sending a Multicast GET to <samp>coap://[ff02::1]/.well-known/core?rt=core.rd*</samp>.  RDs within the multicast scope will answer the query.</li>
 </ul>
-<p id="rfc.section.4.p.11">As some of these RD addresses are just (more or less educated) guesses, endpoints MUST make use of any error messages to very strictly rate-limit requests to candidate IP addresses that don&#8217;t work out.  For example, an ICMP Destination Unreachable message (and, in particular, the port unreachable code for this message) may indicate the lack of a CoAP server on the candidate host, or a CoAP error response code such as 4.05 &#8220;Method Not Allowed&#8221; may indicate unwillingness of a CoAP server to act as a directory server.</p>
+<p id="rfc.section.4.p.9">As some of the RD addresses obtained by the methods listed here are just (more or less educated) guesses, endpoints MUST make use of any error messages to very strictly rate-limit requests to candidate IP addresses that don&#8217;t work out.  For example, an ICMP Destination Unreachable message (and, in particular, the port unreachable code for this message) may indicate the lack of a CoAP server on the candidate host, or a CoAP error response code such as 4.05 &#8220;Method Not Allowed&#8221; may indicate unwillingness of a CoAP server to act as a directory server.</p>
 <h1 id="rfc.section.4.1">
 <a href="#rfc.section.4.1">4.1.</a> <a href="#rdao" id="rdao">Resource Directory Address Option (RDAO)</a>
 </h1>
@@ -2157,9 +2145,9 @@ link payload - new or modified links
 <a>Shelby, Z.</a>, "<a href="https://tools.ietf.org/html/rfc6690">Constrained RESTful Environments (CoRE) Link Format</a>", RFC 6690, DOI 10.17487/RFC6690, August 2012.</td>
 </tr>
 <tr>
-<td class="reference"><b id="RFC7396">[RFC7396]</b></td>
+<td class="reference"><b id="RFC6763">[RFC6763]</b></td>
 <td class="top">
-<a>Hoffman, P.</a> and <a>J. Snell</a>, "<a href="https://tools.ietf.org/html/rfc7396">JSON Merge Patch</a>", RFC 7396, DOI 10.17487/RFC7396, October 2014.</td>
+<a>Cheshire, S.</a> and <a>M. Krochmal</a>, "<a href="https://tools.ietf.org/html/rfc6763">DNS-Based Service Discovery</a>", RFC 6763, DOI 10.17487/RFC6763, February 2013.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC8126">[RFC8126]</b></td>
@@ -2179,6 +2167,11 @@ link payload - new or modified links
 <td class="reference"><b id="ER">[ER]</b></td>
 <td class="top">
 <a>Chen, P.</a>, "<a>The entity-relationship model---toward a unified view of data</a>", ACM Transactions on Database Systems Vol. 1, pp. 9-36, DOI 10.1145/320434.320440, March 1976.</td>
+</tr>
+<tr>
+<td class="reference"><b id="I-D.nottingham-rfc5988bis">[I-D.nottingham-rfc5988bis]</b></td>
+<td class="top">
+<a>Nottingham, M.</a>, "<a href="https://tools.ietf.org/html/draft-nottingham-rfc5988bis-08">Web Linking</a>", Internet-Draft draft-nottingham-rfc5988bis-08, August 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC2616">[RFC2616]</b></td>
@@ -2214,7 +2207,7 @@ link payload - new or modified links
 <h1 id="rfc.appendix.A">
 <a href="#rfc.appendix.A">Appendix A.</a> <a href="#web-links-and-the-resource-directory" id="web-links-and-the-resource-directory">Web links and the Resource Directory</a>
 </h1>
-<p id="rfc.section.A.p.1">Understanding the semantics of a link-format document and its URI references is a journey through different documents (<a href="#RFC3986" class="xref">[RFC3986]</a> defining URIs, <a href="#RFC5988" class="xref">[RFC5988]</a> defining link headers, <a href="#RFC6690" class="xref">[RFC6690]</a> serializing them into a link-format document, and <a href="#RFC7252" class="xref">[RFC7252]</a> providing the transport). This appendix summarizes the mechanisms and semantics at play from an entry in <samp>.well-known/core</samp> to a resource lookup.</p>
+<p id="rfc.section.A.p.1">Understanding the semantics of a link-format document and its URI references is a journey through different documents (<a href="#RFC3986" class="xref">[RFC3986]</a> defining URIs, <a href="#RFC6690" class="xref">[RFC6690]</a> defining link-format documents based on <a href="#RFC5988" class="xref">[RFC5988]</a> which defines link headers, and <a href="#RFC7252" class="xref">[RFC7252]</a> providing the transport). This appendix summarizes the mechanisms and semantics at play from an entry in <samp>.well-known/core</samp> to a resource lookup.</p>
 <p id="rfc.section.A.p.2">This text is primarily aimed at people entering the field of Constrained Restful Environments from applications that previously did not use web mechanisms.</p>
 <h1 id="rfc.appendix.A.1">
 <a href="#rfc.appendix.A.1">A.1.</a> <a href="#a-simple-example" id="a-simple-example">A simple example</a>
@@ -2232,7 +2225,7 @@ RES 2.05 Content
 <h1 id="rfc.appendix.A.1.1">
 <a href="#rfc.appendix.A.1.1">A.1.1.</a> <a href="#resolving-the-uris" id="resolving-the-uris">Resolving the URIs</a>
 </h1>
-<p id="rfc.section.A.1.1.p.1">The client parses the single returned record. The link&#8217;s target (sometimes called &#8220;href&#8221;) is &#8220;/temp&#8221;, which is a relative URI that needs resolving. The Base URI to resolve that against is, in absence of an &#8220;anchor&#8221; parameter (as per <a href="#RFC5988" class="xref">[RFC5988]</a> section 5.2), the URI of the requested resource.</p>
+<p id="rfc.section.A.1.1.p.1">The client parses the single returned record. The link&#8217;s target (sometimes called &#8220;href&#8221;) is &#8220;/temp&#8221;, which is a relative URI that needs resolving. The Base URI to resolve that against is, in absence of an &#8220;anchor&#8221; parameter, the URI of the requested resource as described in <a href="#RFC6690" class="xref">[RFC6690]</a> Section 2.1.</p>
 <p id="rfc.section.A.1.1.p.2">The URI of the requested resource can be composed by following the steps of <a href="#RFC7252" class="xref">[RFC7252]</a> section 6.5 (with an addition at the end of 8.2) into &#8220;coap://[2001:db8:f0::1]/.well-known/core&#8221;.</p>
 <p id="rfc.section.A.1.1.p.3">The record&#8217;s target is resolved by replacing the path /.well-known/core from the Base URI (section 5.2 <a href="#RFC3986" class="xref">[RFC3986]</a>) with the relative target URI &#8220;/temp&#8221; into &#8220;coap://[2001:db8:f0::1]/temp&#8221;.</p>
 <h1 id="rfc.appendix.A.1.2">
@@ -2291,6 +2284,22 @@ POST coap://[2001:db8:f01::ff]/.well-known/core?ep-simple-host1
 &lt;/temp&gt;;rt=temperature;ct=0;anchor="coap+tcp://simple-host1.example.com"
 </pre>
 <p id="rfc.section.A.3.p.11">and analogous records.</p>
+<h1 id="rfc.appendix.A.4">
+<a href="#rfc.appendix.A.4">A.4.</a> <a href="#a-note-on-differences-between-link-format-and-link-headers" id="a-note-on-differences-between-link-format-and-link-headers">A note on differences between link-format and Link headers</a>
+</h1>
+<p id="rfc.section.A.4.p.1">While link-format and Link headers look very similar and are based on the same model of typed links, there are some differences between <a href="#RFC6690" class="xref">[RFC6690]</a> and <a href="#RFC5988" class="xref">[RFC5988]</a> that should be kept in mind when using or implementing a Resource Directory:</p>
+<pre>
+Link: &lt;/temperature/Malm%C3%B6&gt;;rel="live-environment-data"
+</pre>
+<pre>
+&lt;/temperature/Malm&#246;&gt;;rel="live-environment-data"
+</pre>
+<p></p>
+
+<ul>
+<li>There is no percent encoding in link-format documents.  <br><br> A link-format document is a UTF-8 encoded string of Unicode characters and does not have percent encoding, while Link headers are practically ASCII strings that use percent encoding for non-ASCII characters, stating the encoding explictly when required.  <br><br> For example, while a Link header in a page about a Swedish city might read  <br><br> <br><br> a link-format document from the same source might describe the link as  <br><br> <br><br> </li>
+<li>In a link-format document, if the anchor attribute is present, the link target reference is resolved by using the the (resolved) anchor value as Base URI for that link, while in Link headers, it is resolved against the URI of the requested document.  <br><br> This is explicit in <a href="#RFC6690" class="xref">[RFC6690]</a> section 2.1 for link-format, and spelled out in section B.2 of <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a> , which obsoletes the older <a href="#RFC5988" class="xref">[RFC5988]</a>.  <a href="#RFC6690" class="xref">[RFC6690]</a> is based on <a href="#RFC5988" class="xref">[RFC5988]</a> and has not been updated with clarifications from <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a>.</li>
+</ul>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
