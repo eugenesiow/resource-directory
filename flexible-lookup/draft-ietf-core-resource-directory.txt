@@ -90,22 +90,22 @@ Table of Contents
      5.1.  Content Formats . . . . . . . . . . . . . . . . . . . . .  16
      5.2.  URI Discovery . . . . . . . . . . . . . . . . . . . . . .  16
      5.3.  Registration  . . . . . . . . . . . . . . . . . . . . . .  18
-       5.3.1.  Simple Registration . . . . . . . . . . . . . . . . .  21
+       5.3.1.  Simple Registration . . . . . . . . . . . . . . . . .  22
        5.3.2.  Simple publishing to Resource Directory Server  . . .  22
        5.3.3.  Third-party registration  . . . . . . . . . . . . . .  23
        5.3.4.  Plurality of link references in a Registration  . . .  23
      5.4.  Operations on the Registration Resource . . . . . . . . .  24
        5.4.1.  Registration Update . . . . . . . . . . . . . . . . .  24
-       5.4.2.  Registration Removal  . . . . . . . . . . . . . . . .  27
-       5.4.3.  Read Endpoint Links . . . . . . . . . . . . . . . . .  28
-       5.4.4.  Update Endpoint Links . . . . . . . . . . . . . . . .  29
+       5.4.2.  Registration Removal  . . . . . . . . . . . . . . . .  28
+       5.4.3.  Read Endpoint Links . . . . . . . . . . . . . . . . .  29
+       5.4.4.  Update Endpoint Links . . . . . . . . . . . . . . . .  30
    6.  RD Groups . . . . . . . . . . . . . . . . . . . . . . . . . .  30
      6.1.  Register a Group  . . . . . . . . . . . . . . . . . . . .  30
      6.2.  Group Removal . . . . . . . . . . . . . . . . . . . . . .  32
    7.  RD Lookup . . . . . . . . . . . . . . . . . . . . . . . . . .  33
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  38
-     8.1.  Endpoint Identification and Authentication  . . . . . . .  38
-     8.2.  Access Control  . . . . . . . . . . . . . . . . . . . . .  39
+     7.1.  Resource lookup . . . . . . . . . . . . . . . . . . . . .  33
+     7.2.  Endpoint and group lookup . . . . . . . . . . . . . . . .  34
+     7.3.  Lookup filtering  . . . . . . . . . . . . . . . . . . . .  34
 
 
 
@@ -114,7 +114,11 @@ Shelby, et al.         Expires September 27, 2017               [Page 2]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-     8.3.  Denial of Service Attacks . . . . . . . . . . . . . . . .  39
+     7.4.  Lookup examples . . . . . . . . . . . . . . . . . . . . .  36
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  39
+     8.1.  Endpoint Identification and Authentication  . . . . . . .  39
+     8.2.  Access Control  . . . . . . . . . . . . . . . . . . . . .  39
+     8.3.  Denial of Service Attacks . . . . . . . . . . . . . . . .  40
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
      9.1.  Resource Types  . . . . . . . . . . . . . . . . . . . . .  40
      9.2.  IPv6 ND Resource Directory Address Option . . . . . . . .  40
@@ -130,7 +134,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
        10.2.4.  LWM2M De-Register Endpoint . . . . . . . . . . . . .  50
    11. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  50
    12. Changelog . . . . . . . . . . . . . . . . . . . . . . . . . .  50
-   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  54
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  55
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  55
      13.2.  Informative References . . . . . . . . . . . . . . . . .  56
    Appendix A.  Web links and the Resource Directory . . . . . . . .  56
@@ -158,10 +162,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    called Web Linking [RFC5988].  The use of Web Linking for the
    description and discovery of resources hosted by constrained web
    servers is specified by the CoRE Link Format [RFC6690].  However,
-   [RFC6690] only describes how to discover resources from the web
-   server that hosts them by querying "/.well-known/core".  In many M2M
-   scenarios, direct discovery of resources is not practical due to
-   sleeping nodes, disperse networks, or networks where multicast
 
 
 
@@ -170,6 +170,10 @@ Shelby, et al.         Expires September 27, 2017               [Page 3]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   [RFC6690] only describes how to discover resources from the web
+   server that hosts them by querying "/.well-known/core".  In many M2M
+   scenarios, direct discovery of resources is not practical due to
+   sleeping nodes, disperse networks, or networks where multicast
    traffic is inefficient.  These problems can be solved by employing an
    entity called a Resource Directory (RD), which hosts descriptions of
    resources held on other servers, allowing lookups to be performed for
@@ -214,10 +218,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
       All groups within a domain have unique names.
 
    Endpoint
-      Endpoint (EP) is a term used to describe a web server or client in
-      [RFC7252].  In the context of this specification an endpoint is
-      used to describe a web server that registers resources to the
-      Resource Directory.  An endpoint is identified by its endpoint
 
 
 
@@ -226,6 +226,10 @@ Shelby, et al.         Expires September 27, 2017               [Page 4]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+      Endpoint (EP) is a term used to describe a web server or client in
+      [RFC7252].  In the context of this specification an endpoint is
+      used to describe a web server that registers resources to the
+      Resource Directory.  An endpoint is identified by its endpoint
       name, which is included during registration, and has a unique name
       within the associated domain of the registration.
 
@@ -270,10 +274,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    information themselves.  No other client can modify data in the
    resource directory or even expect those changes to propagate back to
    its source.
-
-
-
-
 
 
 
@@ -580,7 +580,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  optional one d (domain for query filtering),
 
-   o  optional endpoint attributes (from Section 9.3)
+   o  optional additional endpoint attributes (from Section 9.3)
 
    The cardinality of con is currently 1 (n2 = 1).  The value of con is
    copied from the value of the "hosts" relation and overwritten by the
@@ -1045,7 +1045,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  POST
 
-   URI Template:  {+rd}{?ep,d,et,lt,con}
+   URI Template:  {+rd}{?ep,d,et,lt,con,extra-attrs*}
 
    URI Template Variables:
 
@@ -1095,6 +1095,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
          outgoing registration in order to provide the NAT gateway with
          a valid network address for replies and incoming requests.
 
+      extra-attrs :=  Additional registration attributes (optional).
+         The endpoint can pass any parameter registered at Section 9.3
+         to the directory.  If the RD is aware of the parameter's
+         specified semantics, it processes it accordingly.  Otherwise,
+         it MUST store the unknown key and its value(s) as an endpoint
+         attribute for further lookup.
+
    Content-Format:  application/link-format
 
    Content-Format:  application/link-format+json
@@ -1107,13 +1114,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
       option MUST be included in the response when a new registration
       resource is created.  This Location MUST be a stable identifier
       generated by the RD as it is used for all subsequent operations on
-      this registration resource.  The registration resource location
-      thus returned is for the purpose of updating the lifetime of the
-      registration and for maintaining the content of the registered
-      links, including updating and deleting links.
-
-   Failure:  4.00 "Bad Request" or 400 "Bad Request".  Malformed
-      request.
 
 
 
@@ -1121,6 +1121,14 @@ Shelby, et al.         Expires September 27, 2017              [Page 20]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+      this registration resource.  The registration resource location
+      thus returned is for the purpose of updating the lifetime of the
+      registration and for maintaining the content of the registered
+      links, including updating and deleting links.
+
+   Failure:  4.00 "Bad Request" or 400 "Bad Request".  Malformed
+      request.
 
    Failure:  4.09 "Conflict" or 409 "Conflict".  Attempt to update the
       registration content with links resulting in plurality of
@@ -1158,6 +1166,18 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Res: 201 Created
    Location: /rd/4521
 
+
+
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 21]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
 5.3.1.  Simple Registration
 
    Not all endpoints hosting resources are expected to know how to
@@ -1170,13 +1190,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    This approach requires that the endpoint makes available the hosted
    resources that it wants to be discovered, as links on its "/.well-
    known/core" interface as specified in [RFC6690].
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 21]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    The endpoint then finds one or more addresses of the directory server
    as described in Section 4.
@@ -1200,9 +1213,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the link-format payload to register.
 
    The endpoint MUST include the endpoint name and MAY include the
-   registration parameters d, lt, and et, in the POST request as per
-   Section 5.3.  The context of the registration is taken from the
-   requesting server's URI.
+   registration parameters d, lt, et and extra-attrs, in the POST
+   request as per Section 5.3.  The context of the registration is taken
+   from the requesting server's URI.
 
    The endpoints MUST be deleted after the expiration of their lifetime.
    Additional operations cannot be executed because no registration
@@ -1210,19 +1223,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows an endpoint using simple publishing, by
    simply sending an empty POST to a resource directory.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1378,7 +1378,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Method:  POST
 
-   URI Template:  {+location}{?lt,con}
+   URI Template:  {+location}{?lt,con,extra-attrs*}
 
    URI Template Variables:
 
@@ -1408,6 +1408,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
          unmodified.  If the parameter is not set and was not set
          explicitly before either, the source address and source port of
          the update request are stored as the context.
+
+      extra-attrs :=  Additional registration attributes (optional).  As
+         with the registration, the RD processes them if it knows their
+         semantics.  Otherwise, unknown attributes are stored as
+         endpoint attributes, overriding any previously stored endpoint
+         attributes of the same key.
 
    Content-Format:  application/link-format (mandatory)
 
@@ -1442,13 +1448,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Res: 2.04 Changed
 
-   The following example shows an endpoint updating its registration at
-   an RD using this interface with the example location value: /rd/4521.
-   The initial registration by the client set the following values:
 
-   o  lifetime (lt)=500
-
-   o  context (con)=coap://local-proxy-old.example.com:5683
 
 
 
@@ -1457,6 +1457,14 @@ Shelby, et al.         Expires September 27, 2017              [Page 26]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   The following example shows an endpoint updating its registration at
+   an RD using this interface with the example location value: /rd/4521.
+   The initial registration by the client set the following values:
+
+   o  lifetime (lt)=500
+
+   o  context (con)=coap://local-proxy-old.example.com:5683
 
    The initial state of the Registration Resource, /rd/4521, is:
 
@@ -1494,6 +1502,18 @@ Payload:
 </sensors/humid>;ct=41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
 </sensors/co2>;ct=41;rt="co2-s";if="sensor";anchor="coaps://new.example.com:5684"
 
+
+
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 27]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
 5.4.2.  Registration Removal
 
    Although RD entries have soft state and will eventually timeout after
@@ -1506,13 +1526,6 @@ Payload:
    they belong.
 
    The removal request interface is specified as follows:
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 27]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    Interaction:  EP -> RD
 
@@ -1547,6 +1560,16 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Res: 2.02 Deleted
 
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 28]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
 5.4.3.  Read Endpoint Links
 
    Some endpoints may wish to manage their links as a collection, and
@@ -1562,13 +1585,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    The read request interface is specified as follows:
 
    Interaction:  EP -> RD
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 28]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    Method:  GET
 
@@ -1601,6 +1617,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    HTTP support: YES
 
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 29]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    The following examples show successful read of the endpoint links
    from the RD, with example location value /rd/4521.
 
@@ -1616,15 +1641,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    A iPATCH (PATCH) update adds, removes or changes links of a
    registration by including link update information in the payload of
    the update with a media type that still needs to be defined.
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 29]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
 6.  RD Groups
 
@@ -1659,6 +1675,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Interaction:  CT -> RD
 
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 30]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    Method:  POST
 
    URI Template:  {+rd-group}{?gp,d,con}
@@ -1674,14 +1697,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
       d :=  Domain (optional).  The domain to which this group belongs.
          The maximum length of this parameter is 63 bytes.  Optional.
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 30]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
          When this parameter is elided, the RD MAY associate the
          endpoint with a configured default domain.
 
@@ -1714,6 +1729,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Failure:  4.04 "Not Found" or 404 "Not Found".  An Endpoint is not
       registered in the RD (e.g. may have expired).
 
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 31]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    Failure:  5.03 "Service Unavailable" or 503 "Service Unavailable".
       Service could not perform the operation.
 
@@ -1723,20 +1747,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    "lights" which has two endpoints to an RD using this interface.  The
    RD group path /rd-group is an example RD location discovered in a
    request similar to Figure 6.
-
-
-
-
-
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 31]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    Req: POST coap://rd.example.com/rd-group?gp=lights
    Content-Format: 40
@@ -1776,16 +1786,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Failure:  4.04 "Not Found" or 404 "Not Found".  Group does not exist.
 
-   Failure:  5.03 "Service Unavailable" or 503 "Service Unavailable".
-      Service could not perform the operation.
-
-   HTTP support:  YES
-
-   The following examples shows successful removal of the group from the
-   RD with the example location value /rd-group/12.
-
-
-
 
 
 
@@ -1793,6 +1793,14 @@ Shelby, et al.         Expires September 27, 2017              [Page 32]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   Failure:  5.03 "Service Unavailable" or 503 "Service Unavailable".
+      Service could not perform the operation.
+
+   HTTP support:  YES
+
+   The following examples shows successful removal of the group from the
+   RD with the example location value /rd-group/12.
 
    Req: DELETE /rd-group/12
 
@@ -1815,10 +1823,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    endpoints and a resource lookup MUST return a list of links to
    resources.
 
-   While Endpoint Lookup does expose the registration resources, the RD
-   does not need to make them accessible to clients.  Clients SHOULD NOT
-   attempt to dereference or manipulate them.
-
    The lookup type is selected by a URI endpoint, which is indicated by
    a Resource Type as per Table 1 below:
 
@@ -1832,16 +1836,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
                            Table 1: Lookup Types
 
+7.1.  Resource lookup
+
    Resource lookup results in links that are semantically equivalent to
    the links submitted to the RD if they were accessed on the endpoint
    itself.  The links and link parameters returned are equal to the
-   submitted ones except for anchor, which was resolved by the server
-   against the endpoint's context.
 
-   Links that did not have an anchor attribute are therefore returned
-   with the (explicitly or implicitly set) context URI of the
-   registration as the anchor.  Links whose anchor was submitted as an
-   absolute URI are returned as they were registered.  The hrefs of
 
 
 
@@ -1850,6 +1850,13 @@ Shelby, et al.         Expires September 27, 2017              [Page 33]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   submitted ones except for anchor, which was resolved by the server
+   against the endpoint's context.
+
+   Links that did not have an anchor attribute are therefore returned
+   with the (explicitly or implicitly set) context URI of the
+   registration as the anchor.  Links whose anchor was submitted as an
+   absolute URI are returned as they were registered.  The hrefs of
    links can always be served as they were submitted; the server MAY
    return relative references in absolute form in to resource lookups,
    but that results in needlessly verbose responses.
@@ -1859,13 +1866,22 @@ Internet-Draft           CoRE Resource Directory              March 2017
    replace the contexts with a configured intermediate proxy, e.g. in
    the case of an HTTP lookup interface for CoAP endpoints.
 
+7.2.  Endpoint and group lookup
+
    Endpoint and group lookups result in links to the selected
    registration resource and group resources.  Endpoint registration
    resources are annotated with their endpoint names (ep), domains (d,
    if present), context (con), endpoint type (et, if present) and
-   lifetime (lt, if present).  Group resources are annotated with their
-   group names (gp), domain (d, if present) and multicast address (con,
-   if present).
+   lifetime (lt, if present).  Additional endpoint attributes are added
+   as link attributes to their endpoint link unless their specification
+   says otherwise.  Group resources are annotated with their group names
+   (gp), domain (d, if present) and multicast address (con, if present).
+
+   While Endpoint Lookup does expose the registration resources, the RD
+   does not need to make them accessible to clients.  Clients SHOULD NOT
+   attempt to dereference or manipulate them.
+
+7.3.  Lookup filtering
 
    Using the Accept Option, the requester can control whether this list
    is returned in CoRE Link Format ("application/link-format", default)
@@ -1881,23 +1897,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    and page = 1 will return the next 'page' containing links 10-19, and
    so on.
 
-   Multiple query parameters MAY be included in a lookup, all included
-   parameters MUST match for a resource to be returned.  The
-   character'*' MAY be included at the end of a parameter value as a
-   wildcard operator.
 
-   RD Lookup requests MAY use any set of query parameters to match the
-   registered attributes and relations.  In addition, this interface MAY
-   be used with queries that specify endpoints and groups.  For example,
-   an endpoint lookup filtering on groups would return a list of
-   endpoints that are in the specified groups.
-
-   Clients that are interested in a lookup result repeatedly or
-   continuously can use mechanisms like ETag caching, resource
-   observation ([RFC7641]), or any future mechanism that might allow
-   more efficient observations of collections.  These are advertised,
-   detected and used according to their own specifications and can be
-   used with the lookup interface as with any other resource.
 
 
 
@@ -1906,14 +1906,41 @@ Shelby, et al.         Expires September 27, 2017              [Page 34]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
+   Multiple search criteria MAY be included in a lookup.  All included
+   criteria MUST match for a link to be returned.
+
+   A link matches a search criterion if it has an attribute of the same
+   name and the same value, allowing for a trailing "*" wildcard
+   operator as in Section 4.1 of [RFC6690].  Attributes that are defined
+   as "link-type" match if the search value matches any of their values
+   (see Section 4.1 of [RFC6690]; eg. "?if=core.s" matches ";if="abc
+   core.s";").  A link also matches a search criterion if the link that
+   would be produced for any of its containing entities would match the
+   criterion: A search criterion matches an endpoint if it matches the
+   endpoint itself or any of the groups it is contained in, and one on a
+   resource if it matches the resource, the resource's endpoint, or any
+   of the endpoint's groups.
+
+   Note that "href" is also a valid search criterion and matches target
+   references.  Like all search criteria, on a resource lookup it can
+   match the target reference of the resource link itself, but also the
+   registration resource of the endpoint that registered it, or any
+   group resource that endpoint is contained in.
+
+   Clients that are interested in a lookup result repeatedly or
+   continuously can use mechanisms like ETag caching, resource
+   observation ([RFC7641]), or any future mechanism that might allow
+   more efficient observations of collections.  These are advertised,
+   detected and used according to their own specifications and can be
+   used with the lookup interface as with any other resource.
+
    The lookup interface is specified as follows:
 
    Interaction:  Client -> RD
 
    Method:  GET
 
-   URI Template:  {+type-lookup-
-      location}{?d,ep,gp,et,page,count,resource-param}
+   URI Template:  {+type-lookup-location}{?page,count,search*}
 
    URI Template Variables:
 
@@ -1921,17 +1948,20 @@ Internet-Draft           CoRE Resource Directory              March 2017
          (mandatory).  The address is discovered as described in
          Section 5.2.
 
-      ep :=  Endpoint name (optional).  Used for endpoint, group and
-         resource lookups.
-
-      d :=  Domain (optional).  Used for group, endpoint and resource
-         lookups.
-
-      gp := Group name (optional).  Used for endpoint, group and
-      resource lookups.
+      search :=  Search criteria for limiting the number of results
+         (optional).
 
       page :=  Page (optional).  Parameter can not be used without the
          count parameter.  Results are returned from result set in pages
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 35]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
          that contain 'count' links starting from index (page * count).
          Page numbering starts with zero.
 
@@ -1943,24 +1973,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
          all matching links in the result set.  Link numbering starts
          with zero.
 
-      et :=  Endpoint type (optional).  Used for group, endpoint and
-         resource lookups.
-
-      resource-param :=  Link parameters (optional).  Any link parameter
-         as defined in Section 4.1 of [RFC6690], including href, used
-         for resource lookups.
-
       Content-Format:  application/link-format (optional)
 
       Content-Format:  application/link-format+json (optional)
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 35]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
       Content-Format:  application/link-format+cbor (optional)
 
@@ -1983,12 +1998,25 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    HTTP support:  YES
 
+7.4.  Lookup examples
+
    The examples in this section assume CoAP hosts with a default CoAP
    port 61616.  HTTP hosts are possible and do not change the nature of
    the examples.
 
    The following example shows a client performing a resource lookup
    with the example resource look-up locations discovered in Figure 6:
+
+
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 36]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    Req: GET /rd-lookup/res?rt=temperature
 
@@ -2008,15 +2036,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The following example shows a client performing a group lookup for
    all groups:
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 36]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    Req: GET /rd-lookup/gp
 
@@ -2044,6 +2063,17 @@ Res: 2.05 Content
    The following example shows a client performing a paginated resource
    lookup
 
+
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 37]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    Req: GET /rd-lookup/res?page=0&count=5
 
    Res: 2.05 Content
@@ -2066,14 +2096,6 @@ Res: 2.05 Content
    resources from endpoints of a given endpoint type.  It assumes that
    two endpoints (with endpoint names "sensor1" and "sensor2") have
    previously registered with their respective addresses
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 37]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    "coap://sensor1.example.com" and "coap://sensor2.example.com", and
    posted the very payload of the 6th request of section 5 of [RFC6690].
 
@@ -2101,6 +2123,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
       ;anchor="coap://sensor2.example.com/sensors/temp",
   </t>;rel="alternate";anchor="coap://sensor2.example.com/sensors/temp"
 
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 38]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
 8.  Security Considerations
 
    The security considerations as described in Section 7 of [RFC5988]
@@ -2120,15 +2149,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Every operation performed by an Endpoint or Client on a resource
    directory SHOULD be mutually authenticated using Pre-Shared Key, Raw
    Public Key or Certificate based security.
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 38]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    Consider te following threat: two devices A and B are managed by a
    single server.  Both devices have unique, per-device credentials for
@@ -2158,6 +2178,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    lookups could be performed either at the domain, endpoint or resource
    level.
 
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 39]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
 8.3.  Denial of Service Attacks
 
    Services that run over UDP unprotected are vulnerable to unknowingly
@@ -2177,15 +2205,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Directory (RD) which responds to wild-card lookups is potentially
    vulnerable if run with CoAP over UDP.  Since there is no return
    routability check and the responses can be significantly larger than
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 39]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    requests, RDs can unknowingly become part of a DDoS amplification
    attack.
 
@@ -2215,6 +2234,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Each entry in the registry must include * the human readable name of
    the parameter, * the short name as used in query parameters or link
    attributes, * indication of whether it can be passed as a query
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 40]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    parameter at registration of endpoints or groups, as a query
    parameter in lookups, or be expressed as a link attribute, * validity
    requirements if any, and * a description.
@@ -2233,14 +2260,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    registration were to be confidential, the registering endpoint should
    be instructed to only set that parameter if the RD advertises support
    for keeping it confidential at the discovery step.)
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 40]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    Initial entries in this sub-registry are as follows:
 
@@ -2271,6 +2290,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    R = used at registration, L = used at lookup, A = expressed in link
    attribute
 
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 41]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    The descriptions for the options defined in this document are only
    summarized here.  To which registrations they apply and when they are
    to be shown is described in the respective sections of this document.
@@ -2290,13 +2317,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    endpoint property or the [RFC6690] link attribute).  It is expected
    that the registry will receive between 5 and 50 registrations in
    total over the next years.
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 41]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
 10.  Examples
 
@@ -2326,6 +2346,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    It is assumed that there are two naming authorities for the
    installation: (1) the network manager that is responsible for the
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 42]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    correct operation of the network and the connected interfaces, and
    (2) the lighting manager that is responsible for the correct
    functioning of networked lights and sensors.  The result is the
@@ -2345,14 +2373,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Before commissioning by the lighting manager, the network is
    installed and access to the interfaces is proven to work by the
    network manager.
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 42]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    At the moment of installation, the network under installation is not
    necessarily connected to the DNS infra structure.  Therefore, SLAAC
@@ -2382,6 +2402,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    For discovery, the resource types (rt) of the devices are important.
    The lamps in the luminaries have rt: light, and the presence sensor
    has rt: p-sensor.  The endpoints have names which are relevant to the
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 43]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    light installation manager.  In this case luminary1, luminary2, and
    the presence sensor are located in room 2-4-015, where luminary1 is
    located at the window and luminary2 and the presence sensor are
@@ -2390,25 +2418,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    /light/middle, /light/left, and /light/right respectively.  The
    identifiers relevant to the Resource Directory are shown in Table 4
    below:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 43]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    +----------------+------------------+---------------+---------------+
    | Name           | endpoint         | resource path | resource type |
@@ -2443,15 +2452,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Res: 2.01 Created
    Location: /rd/4521
 
-   Req: POST coap://[2001:db8:4::ff]/rd
-     ?ep=lm_R2-4-015_door&con=coap://[2001:db8:4::2]&d=R2-4-015
-   Payload:
-   </light/left>;rt="light",
-   </light/middle>;rt="light",
-   </light/right>;rt="light"
-
-   Res: 2.01 Created
-   Location: /rd/4522
 
 
 
@@ -2465,6 +2465,16 @@ Shelby, et al.         Expires September 27, 2017              [Page 44]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   Req: POST coap://[2001:db8:4::ff]/rd
+     ?ep=lm_R2-4-015_door&con=coap://[2001:db8:4::2]&d=R2-4-015
+   Payload:
+   </light/left>;rt="light",
+   </light/middle>;rt="light",
+   </light/right>;rt="light"
+
+   Res: 2.01 Created
+   Location: /rd/4522
 
    Req: POST coap://[2001:db8:4::ff]/rd
      ?ep=ps_R2-4-015_door&con=coap://[2001:db8:4::3]d&d=R2-4-015
@@ -2503,16 +2513,6 @@ Location: /rd-group/501
    with rt=light and d=R2-4-015.  The RD returns all endpoints in the
    domain.
 
-   Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
-     ?d=R2-4-015;rt=light
-
-   Res: 2.05 Content
-   </rd/4521>;con="coap://[2001:db8:4::1]",
-     ep="lm_R2-4-015_wndw",
-   </rd/4522>;con="coap://[2001:db8:4::2]",
-      ep="lm_R2-4-015_door"
-
-
 
 
 
@@ -2521,6 +2521,15 @@ Shelby, et al.         Expires September 27, 2017              [Page 45]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   Req: GET coap://[2001:db8:4::ff]/rd-lookup/ep
+     ?d=R2-4-015;rt=light
+
+   Res: 2.05 Content
+   </rd/4521>;con="coap://[2001:db8:4::1]",
+     ep="lm_R2-4-015_wndw",
+   </rd/4522>;con="coap://[2001:db8:4::2]",
+      ep="lm_R2-4-015_door"
 
    Knowing its own IPv6 address, the luminary discovers its endpoint
    name.  With the endpoint name the luminary queries the RD for all
@@ -2560,6 +2569,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
    abstract interfaces and operations for device management and device
    service enablement.
 
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 46]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    An LWM2M server is an instance of an LWM2M middleware service layer,
    containing a Resource Directory along with other LWM2M interfaces
    defined by the LWM2M specification.
@@ -2569,14 +2587,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    LWM2M does not provide for registration domains and does not
    currently use the rd-group or rd-lookup interfaces.
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 46]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    The LWM2M specification describes a set of interfaces and a resource
    model used between a LWM2M device and an LWM2M server.  Other
@@ -2616,6 +2626,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    The five variables given here are strings.  base-uri can also have
    the special value "undefined" (sometimes called "null" in RFC 6570).
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 47]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    Each of the variables object-instance, resource-id, and resource-
    instance can be the special value "undefined" only if the values
    behind it in this sequence also are "undefined".  As a special case,
@@ -2626,13 +2644,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    (empty) base URI
 
    object-id := OMNA (OMA Name Authority) registered object ID (0-65535)
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 47]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    object-instance := Object instance identifier (0-65535) or
    "undefined"/"empty" (see above)) to refer to all instances of an
@@ -2671,6 +2682,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the RD, but may be discovered by reading the resource links from the
    object instance using GET with a CoAP Content-Format of application/
    link-format.  Resources may also be read as a structured object by
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 48]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    performing a GET to the object instance with a Content-Format of
    senml+json.
 
@@ -2680,15 +2699,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    LWM2M endpoints may use the following RD registration parameters as
    defined in Table 2 :
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 48]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    ep - Endpoint Name
    lt - registration lifetime
@@ -2728,16 +2738,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    </1>,</1/0>,</3/0>,</5>
 
-   This link format payload indicates that object ID 1 (LWM2M Server
-   Object) is supported, with a single instance 0 existing, object ID 3
-   (LWM2M Device object) is supported, with a single instance 0
-   existing, and object 5 (LWM2M Firmware Object) is supported, with no
-   existing instances.
-
-
-
-
-
 
 
 
@@ -2745,6 +2745,12 @@ Shelby, et al.         Expires September 27, 2017              [Page 49]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   This link format payload indicates that object ID 1 (LWM2M Server
+   Object) is supported, with a single instance 0 existing, object ID 3
+   (LWM2M Device object) is supported, with a single instance 0
+   existing, and object 5 (LWM2M Firmware Object) is supported, with no
+   existing instances.
 
 10.2.3.  LWM2M Update Endpoint Registration
 
@@ -2787,12 +2793,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  updated discovery text
 
-   o  improved text on: atomicity, idempotency, multiple query, ep
-      removal, simple registration
-
-   o  section 5.3.4 extended uniqueness from single registration to RD
-
-   o  updated LWM2M description
 
 
 
@@ -2801,6 +2801,13 @@ Shelby, et al.         Expires September 27, 2017              [Page 50]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   o  improved text on: atomicity, idempotency, multiple query, ep
+      removal, simple registration
+
+   o  section 5.3.4 extended uniqueness from single registration to RD
+
+   o  updated LWM2M description
 
    changes from -09 to -10
 
@@ -2844,19 +2851,18 @@ Internet-Draft           CoRE Resource Directory              March 2017
    o  clarify group configuration section 6.1 that endpoints must be
       registered before including them in a group
 
-   o  removed all superfluous client-server diagrams
-
-   o  simplified lighting example
-
-   o  introduced Commissioning Tool
-
-
 
 
 Shelby, et al.         Expires September 27, 2017              [Page 51]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   o  removed all superfluous client-server diagrams
+
+   o  simplified lighting example
+
+   o  introduced Commissioning Tool
 
    o  RD-Look-up text is extended.
 
@@ -2900,12 +2906,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  Added Read Links operation for link inspection by endpoints
 
-   o  Expanded DNS-SD section
-
-   o  Added draft authors Peter van der Stok and Michael Koster
-
-   Changes from -01 to -02:
-
 
 
 
@@ -2913,6 +2913,12 @@ Shelby, et al.         Expires September 27, 2017              [Page 52]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   o  Expanded DNS-SD section
+
+   o  Added draft authors Peter van der Stok and Michael Koster
+
+   Changes from -01 to -02:
 
    o  Added a catalogue use case.
 
@@ -2956,12 +2962,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  Minor editing, bug fixes and reference updates.
 
-   o  Added group support.
-
-   o  Changed rt to et for the registration and update interface.
-
-   Changes from -03 to -04:
-
 
 
 
@@ -2969,6 +2969,12 @@ Shelby, et al.         Expires September 27, 2017              [Page 53]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   o  Added group support.
+
+   o  Changed rt to et for the registration and update interface.
+
+   Changes from -03 to -04:
 
    o  Added the ins= parameter back for the DNS-SD mapping.
 
@@ -3012,12 +3018,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    o  Changed the lookup interface to accept endpoint and Domain as
       query string parameters to control the scope of a lookup.
 
-13.  References
-
-
-
-
-
 
 
 
@@ -3025,6 +3025,8 @@ Shelby, et al.         Expires September 27, 2017              [Page 54]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+13.  References
 
 13.1.  Normative References
 
@@ -3070,8 +3072,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
               FETCH Methods for the Constrained Application Protocol
               (CoAP)", RFC 8132, DOI 10.17487/RFC8132, April 2017,
               <https://www.rfc-editor.org/info/rfc8132>.
-
-
 
 
 
