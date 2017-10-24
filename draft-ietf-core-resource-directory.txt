@@ -564,11 +564,11 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  0 or more Groups
 
-   A Group has one Multicast address attribute and is composed of 0 or
-   more endpoints.  A registration is associated with one endpoint (ep).
-   An endpoint can be part of 0 or more Groups . A registration defines
-   a set of links as defined for /.well-known/core.  A Registration has
-   six attributes:
+   A Group has no or one Multicast address attribute and is composed of
+   0 or more endpoints.  A registration is associated with one endpoint
+   (ep).  An endpoint can be part of 0 or more Groups . A registration
+   defines a set of links as defined for /.well-known/core.  A
+   Registration has six attributes:
 
    o  one ep (endpoint with a unique name)
 
@@ -582,9 +582,8 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    o  optional additional endpoint attributes (from Section 9.3)
 
-   The cardinality of con is currently 1.  The value of con is copied
-   from the value of the "hosts" relation and overwritten by the value
-   of the con query parameter.
+   The cardinality of con is currently 1.  Its value is used as a Base
+   URI when resolving URIs in the links contained in the endpoint.
 
    Links are modelled as they are in Figure 3.
 
@@ -610,6 +609,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
    purposes and allow monitoring of environment parameters.  During the
    boot-up process endpoints register with a Resource Directory, which
    is hosted by the mobile operator or somewhere in the cloud.
+
 
 
 

@@ -769,7 +769,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>0 to n Registration (entries),</li>
 <li>0 or more Groups</li>
 </ul>
-<p id="rfc.section.3.3.p.13">A Group has one Multicast address attribute and is composed of 0 or more endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 or more Groups . A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
+<p id="rfc.section.3.3.p.13">A Group has no or one Multicast address attribute and is composed of 0 or more endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 or more Groups . A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
 <p></p>
 
 <ul>
@@ -780,7 +780,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>optional one d (domain for query filtering),</li>
 <li>optional additional endpoint attributes (from <a href="#iana-registry" class="xref">Section 9.3</a>)</li>
 </ul>
-<p id="rfc.section.3.3.p.15">The cardinality of con is currently 1. The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
+<p id="rfc.section.3.3.p.15">The cardinality of con is currently 1.  Its value is used as a Base URI when resolving URIs in the links contained in the endpoint.</p>
 <p id="rfc.section.3.3.p.16">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.</p>
 <h1 id="rfc.section.3.4">
 <a href="#rfc.section.3.4">3.4.</a> <a href="#cellular" id="cellular">Use Case: Cellular M2M</a>
