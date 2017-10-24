@@ -1305,8 +1305,8 @@ Payload:
 <h1 id="rfc.section.6.1">
 <a href="#rfc.section.6.1">6.1.</a> <a href="#group-register" id="group-register">Register a Group</a>
 </h1>
-<p id="rfc.section.6.1.p.1">In order to create a group, a commissioning tool (CT) used to configure groups, makes a request to the RD indicating the name of the group to create (or update), optionally the domain the group belongs to, and optionally the multicast address of the group. The registration message includes the list of endpoints that belong to that group.</p>
-<p id="rfc.section.6.1.p.2">All the endpoints in the group MUST be registered with the RD before registering a group. If an endpoint is not yet registered to the RD before registering the group, the registration message returns an error. The RD sends a blank target URI for every endpoint link when registering the group.</p>
+<p id="rfc.section.6.1.p.1">In order to create a group, a commissioning tool (CT) used to configure groups, makes a request to the RD indicating the name of the group to create (or update), optionally the domain the group belongs to, and optionally the multicast address of the group. The registration message is a list of links to registration resources of the endpoints that belong to that group.</p>
+<p id="rfc.section.6.1.p.2">The commissioning tool SHOULD not send any target attributes with the links to the registration resources, and the resource directory SHOULD ignore any attributes that are set.</p>
 <p id="rfc.section.6.1.p.3">Configuration of the endpoints themselves is out of scope of this specification. Such an interface for managing the group membership of an endpoint has been defined in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
 <p id="rfc.section.6.1.p.4">The registration request interface is specified as follows:</p>
 <p></p>
@@ -1360,8 +1360,8 @@ Req: POST coap://rd.example.com/rd-group?gp=lights
                                   &amp;con=coap://[ff35:30:2001:db8::1]
 Content-Format: 40
 Payload:
-&lt;/rd/4521&gt;;ep="node1",
-&lt;/rd/4522&gt;;ep="node2"
+&lt;/rd/4521&gt;,
+&lt;/rd/4522&gt;
 
 Res: 2.01 Created
 Location: /rd-group/12
@@ -1866,9 +1866,9 @@ Location: /rd/4523
 Req: POST coap://[2001:db8:4::ff]/rd-group
 ?gp=grp_R2-4-015&amp;con=coap://[ff05::1]
 Payload:
-&lt;/rd/4521&gt;;ep=lm_R2-4-015_wndw,
-&lt;/rd/4522&gt;;ep=lm_R2-4-015_door,
-&lt;/rd/4523&gt;;ep=ps_R2-4-015_door
+&lt;/rd/4521&gt;,
+&lt;/rd/4522&gt;,
+&lt;/rd/4523&gt;
 
 Res: 2.01 Created
 Location: /rd-group/501
