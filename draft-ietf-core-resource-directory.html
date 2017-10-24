@@ -987,7 +987,7 @@ Res: 2.05 Content
 <dt>rd :=</dt>
 <dd style="margin-left: 8">RD registration URI (mandatory). This is the location of the RD, as obtained from discovery.</dd>
 <dt>ep :=</dt>
-<dd style="margin-left: 8">Endpoint name (mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.</dd>
+<dd style="margin-left: 8">Endpoint name (mostly mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.  If the RD is configured to recognize the endpoint (eg. based on its security context), the endpoint can elide the endpoint name, and assign one based on the configuration.</dd>
 <dt>d :=</dt>
 <dd style="margin-left: 8">Domain (optional). The domain to which this endpoint belongs. The maximum length of this parameter is 63 bytes. When this parameter is elided, the RD MAY associate the endpoint with a configured default domain.</dd>
 <dt>lt :=</dt>
@@ -1056,7 +1056,7 @@ Location: /rd/4521
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
 </h1>
 <p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of the directory server of choice. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
-<p id="rfc.section.5.3.2.p.2">The endpoint MUST include the endpoint name and MAY include the registration parameters d, lt and extra-attrs, in the POST request as per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
+<p id="rfc.section.5.3.2.p.2">The endpoint includes the same registration parameters in the POST request as it would per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
 <p id="rfc.section.5.3.2.p.3">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
 <p id="rfc.section.5.3.2.p.4">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
 <pre>
