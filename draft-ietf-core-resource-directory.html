@@ -803,7 +803,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <p id="rfc.section.3.6.p.3">Metadata in web link formats like <a href="#RFC6690" class="xref">[RFC6690]</a> are supplied by Resource Directories, which may be internally stored as  triples, or relation/attribute pairs providing metadata about resource links. External catalogs that are represented in other formats may be converted to common web linking formats for storage and access by Resource Directories. Since it is common practice for these to be URN encoded, simple and lossless structural transforms should generally be sufficient to store external metadata in Resource Directories.</p>
 <p id="rfc.section.3.6.p.4">The additional features of Resource Directory allow domains to be defined to enable access to a particular set of resources from particular applications.  This provides isolation and protection of sensitive data when needed. Resource groups may defined to allow batched reads from multiple resources.</p>
 <h1 id="rfc.section.4">
-<a href="#rfc.section.4">4.</a> <a href="#simple_finding" id="simple_finding">Finding a Resource Directory</a>
+<a href="#rfc.section.4">4.</a> <a href="#finding_an_rd" id="finding_an_rd">Finding a Resource Directory</a>
 </h1>
 <p id="rfc.section.4.p.1">A device coming up may want to find one or more resource directories to make itself known with.</p>
 <p id="rfc.section.4.p.2">The device may be pre-configured to exercise specific mechanisms for finding the resource directory:</p>
@@ -894,7 +894,7 @@ RD Address:             IPv6 address of the RD.
 <h1 id="rfc.section.5.2">
 <a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">URI Discovery</a>
 </h1>
-<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. A complete set of RD discovery methods is described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
+<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. A complete set of RD discovery methods is described in <a href="#finding_an_rd" class="xref">Section 4</a>.</p>
 <p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690" class="xref">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.rd-group&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
 <p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
 <p id="rfc.section.5.2.p.4">TODO: Suggestion to add a version, ver, parameter.</p>
@@ -1049,7 +1049,7 @@ Location: /rd/4521
 </h1>
 <p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
 <p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
-<p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
+<p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#finding_an_rd" class="xref">Section 4</a>.</p>
 <p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
 <h1 id="rfc.section.5.3.2">
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
