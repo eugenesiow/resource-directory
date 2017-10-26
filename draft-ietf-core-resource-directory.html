@@ -291,9 +291,8 @@ address {
 <link href="#rfc.section.5.2" rel="Chapter" title="5.2 URI Discovery">
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Registration">
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Simple Registration">
-<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Simple publishing to Resource Directory Server">
-<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Third-party registration">
-<link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Plurality of link references in a Registration">
+<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Third-party registration">
+<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Plurality of link references in a Registration">
 <link href="#rfc.section.5.4" rel="Chapter" title="5.4 Operations on the Registration Resource">
 <link href="#rfc.section.5.4.1" rel="Chapter" title="5.4.1 Registration Update">
 <link href="#rfc.section.5.4.2" rel="Chapter" title="5.4.2 Registration Removal">
@@ -457,11 +456,9 @@ address {
 </li>
 <ul><li>5.3.1.   <a href="#rfc.section.5.3.1">Simple Registration</a>
 </li>
-<li>5.3.2.   <a href="#rfc.section.5.3.2">Simple publishing to Resource Directory Server</a>
+<li>5.3.2.   <a href="#rfc.section.5.3.2">Third-party registration</a>
 </li>
-<li>5.3.3.   <a href="#rfc.section.5.3.3">Third-party registration</a>
-</li>
-<li>5.3.4.   <a href="#rfc.section.5.3.4">Plurality of link references in a Registration</a>
+<li>5.3.3.   <a href="#rfc.section.5.3.3">Plurality of link references in a Registration</a>
 </li>
 </ul><li>5.4.   <a href="#rfc.section.5.4">Operations on the Registration Resource</a>
 </li>
@@ -1015,7 +1012,7 @@ Res: 2.05 Content
 <dt>Failure:</dt>
 <dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
 <dt>Failure:</dt>
-<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.3</a>.</dd>
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 <dt>HTTP support:</dt>
@@ -1050,64 +1047,54 @@ Location: /rd/4521
 <p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
 <p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#finding_an_rd" class="xref">Section 4</a>.</p>
-<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
-<h1 id="rfc.section.5.3.2">
-<a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
-</h1>
-<p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of the directory server of choice. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
-<p id="rfc.section.5.3.2.p.2">The endpoint includes the same registration parameters in the POST request as it would per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
-<p id="rfc.section.5.3.2.p.3">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
-<p id="rfc.section.5.3.2.p.4">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
+<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as follows:</p>
+<p id="rfc.section.5.3.1.p.5">It sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of the directory server of choice. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
+<p id="rfc.section.5.3.1.p.6">The endpoint includes the same registration parameters in the POST request as it would per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
+<p id="rfc.section.5.3.1.p.7">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
+<p id="rfc.section.5.3.1.p.8">The following example shows an endpoint using Simple Registration, by simply sending an empty POST to a resource directory.</p>
 <pre>
 Req:(to RD server from [2001:db8:2::1])
-POST coap://rd.example.com/.well-known/core?lt=6000&amp;ep=node1
-
+POST /.well-known/core?lt=6000&amp;ep=node1
 Content-Format: 40
-
-payload:
-
-(empty payload)
+No payload
 
 Res: 2.04 Changed
 
 (later)
 
 Req: (from RD server to [2001:db8:2::1])
-GET coap://[2001:db8:2::1]/.well-known/core
-
+GET /.well-known/core
 Accept: 40
 
 Res: 2.05 Content
-
-payload:
-
+Payload:
 &lt;/sen/temp&gt;
 </pre>
+<h1 id="rfc.section.5.3.2">
+<a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a>
+</h1>
+<p id="rfc.section.5.3.2.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
+<p id="rfc.section.5.3.2.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <h1 id="rfc.section.5.3.3">
-<a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a>
+<a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#link-plurality" id="link-plurality">Plurality of link references in a Registration</a>
 </h1>
-<p id="rfc.section.5.3.3.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
-<p id="rfc.section.5.3.3.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration" class="xref">Section 5.3</a>.</p>
-<h1 id="rfc.section.5.3.4">
-<a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#link-plurality" id="link-plurality">Plurality of link references in a Registration</a>
-</h1>
-<p id="rfc.section.5.3.4.p.1">Plurality of link references within a Resource Directory is an indication of some error condition and should not be allowed.</p>
-<p id="rfc.section.5.3.4.p.2">Plurality of link references exists if, and only if, two or more links in a Resource Directory contain identical context, target, and relation values. This condition would be likely to arise if there were multiple co-ordinators or configuration tools, each with a different set of configuration values for the same resource.</p>
-<p id="rfc.section.5.3.4.p.3">A Resource Directory SHOULD reject a registration, or an operation on a registration resource, which would result in a plurality of link references within the directory resource. There is no requirement in this document for a resource directory to check for plurality of reference. Resource Directory operations which are rejected due to reference plurality SHOULD return the &#8220;Conflict&#8221; code, indicating that there is someting wrong with the request.</p>
+<p id="rfc.section.5.3.3.p.1">Plurality of link references within a Resource Directory is an indication of some error condition and should not be allowed.</p>
+<p id="rfc.section.5.3.3.p.2">Plurality of link references exists if, and only if, two or more links in a Resource Directory contain identical context, target, and relation values. This condition would be likely to arise if there were multiple co-ordinators or configuration tools, each with a different set of configuration values for the same resource.</p>
+<p id="rfc.section.5.3.3.p.3">A Resource Directory SHOULD reject a registration, or an operation on a registration resource, which would result in a plurality of link references within the directory resource. There is no requirement in this document for a resource directory to check for plurality of reference. Resource Directory operations which are rejected due to reference plurality SHOULD return the &#8220;Conflict&#8221; code, indicating that there is someting wrong with the request.</p>
 <h1 id="rfc.section.5.4">
 <a href="#rfc.section.5.4">5.4.</a> <a href="#operations-on-the-registration-resource" id="operations-on-the-registration-resource">Operations on the Registration Resource</a>
 </h1>
 <p id="rfc.section.5.4.p.1">After the initial registration, an endpoint should retain the returned location of the Registration Resource for further operations, including refreshing the registration in order to extend the lifetime and &#8220;keep-alive&#8221; the registration. When the lifetime of the registration has expired, the RD SHOULD NOT respond to discovery queries concerning this endpoint. The RD SHOULD continue to provide access to the Registration Resource after a registration time-out occurs in order to enable the registering endpoint to eventually refresh the registration. The RD MAY eventually remove the registration resource for the purpose of resource recovery and garbage collection. If the Registration Resource is removed, the endpoint will need to re-register.</p>
 <p id="rfc.section.5.4.p.2">The Registration Resource may also be used to inspect the registration resource using GET, update the registration link contents, or cancel the registration using DELETE.</p>
 <p id="rfc.section.5.4.p.3">These operations are described in this section.</p>
-<p id="rfc.section.5.4.p.4">In accordance with <a href="#link-plurality" class="xref">Section 5.3.4</a>, operations which would result in plural link references within the context of a registration resource SHOULD be rejected using the &#8220;Conflict&#8221; result code.</p>
+<p id="rfc.section.5.4.p.4">In accordance with <a href="#link-plurality" class="xref">Section 5.3.3</a>, operations which would result in plural link references within the context of a registration resource SHOULD be rejected using the &#8220;Conflict&#8221; result code.</p>
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
 <p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime- or the context- registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a>. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">An update MAY optionally add links for the endpoint by including those links in the payload of the update as a CoRE Link Format document.</p>
-<p id="rfc.section.5.4.1.p.4">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
+<p id="rfc.section.5.4.1.p.4">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.3</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
 <p id="rfc.section.5.4.1.p.5">In addition to the use of POST, as described in this section, in the future links can be changed individually or replaced by using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
 <p id="rfc.section.5.4.1.p.6">A registration update resets the timeout of the registration to the (possibly updated) lifetime of the registration, independent of whether a <samp>lt</samp> parameter was given.</p>
 <p id="rfc.section.5.4.1.p.7">If the context of the registration is changed in an update explicitly or implicitly, relative references submitted in the original registration or later updates are resolved anew against the new context (like in the original registration).</p>
@@ -1153,7 +1140,7 @@ payload:
 <dt>Failure:</dt>
 <dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration does not exist (e.g. may have expired).</dd>
 <dt>Failure:</dt>
-<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.3</a>.</dd>
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 <dt>HTTP support:</dt>
