@@ -1611,9 +1611,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
 5.4.4.  Update Endpoint Links
 
-   A iPATCH (PATCH) update adds, removes or changes links of a
-   registration by including link update information in the payload of
-   the update with a media type that still needs to be defined.
+   An iPATCH (or PATCH) update [RFC8132] adds, removes or changes links
+   of a registration by including link update information in the payload
+   of the update with a media type that still needs to be defined.
 
 
 
