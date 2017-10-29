@@ -291,9 +291,8 @@ address {
 <link href="#rfc.section.5.2" rel="Chapter" title="5.2 URI Discovery">
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Registration">
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Simple Registration">
-<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Simple publishing to Resource Directory Server">
-<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Third-party registration">
-<link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Plurality of link references in a Registration">
+<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Third-party registration">
+<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Plurality of link references in a Registration">
 <link href="#rfc.section.5.4" rel="Chapter" title="5.4 Operations on the Registration Resource">
 <link href="#rfc.section.5.4.1" rel="Chapter" title="5.4.1 Registration Update">
 <link href="#rfc.section.5.4.2" rel="Chapter" title="5.4.2 Registration Removal">
@@ -337,6 +336,7 @@ address {
 <link href="#rfc.appendix.A.2" rel="Chapter" title="A.2 A slightly more complex example">
 <link href="#rfc.appendix.A.3" rel="Chapter" title="A.3 Enter the Resource Directory">
 <link href="#rfc.appendix.A.4" rel="Chapter" title="A.4 A note on differences between link-format and Link headers">
+<link href="#rfc.appendix.B" rel="Chapter" title="B Outlook for Protocol Negotiation">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -456,11 +456,9 @@ address {
 </li>
 <ul><li>5.3.1.   <a href="#rfc.section.5.3.1">Simple Registration</a>
 </li>
-<li>5.3.2.   <a href="#rfc.section.5.3.2">Simple publishing to Resource Directory Server</a>
+<li>5.3.2.   <a href="#rfc.section.5.3.2">Third-party registration</a>
 </li>
-<li>5.3.3.   <a href="#rfc.section.5.3.3">Third-party registration</a>
-</li>
-<li>5.3.4.   <a href="#rfc.section.5.3.4">Plurality of link references in a Registration</a>
+<li>5.3.3.   <a href="#rfc.section.5.3.3">Plurality of link references in a Registration</a>
 </li>
 </ul><li>5.4.   <a href="#rfc.section.5.4">Operations on the Registration Resource</a>
 </li>
@@ -548,7 +546,9 @@ address {
 </li>
 <li>A.4.   <a href="#rfc.appendix.A.4">A note on differences between link-format and Link headers</a>
 </li>
-</ul><li><a href="#rfc.authors">Authors' Addresses</a>
+</ul><li>Appendix B.   <a href="#rfc.appendix.B">Outlook for Protocol Negotiation</a>
+</li>
+<li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
 
 
@@ -589,7 +589,7 @@ address {
 <br> A resource in the Resource Directory (RD) containing registration resources.</dd>
 <dt>Group Resource</dt>
 <dd style="margin-left: 8">
-<br> A resource in the RD containing registration repources of the Endpoints that form a group.</dd>
+<br> A resource in the RD containing registration resources of the Endpoints that form a group.</dd>
 <dt>Registration Resource</dt>
 <dd style="margin-left: 8">
 <br> A resource in the RD that contains information about an Endpoint and its links.</dd>
@@ -617,7 +617,7 @@ address {
 <p id="rfc.section.3.2.p.2">A mechanism to discover an RD using CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a> is defined.</p>
 <p id="rfc.section.3.2.p.3">Endpoints proactively register and maintain resource directory registration entries on the RD, which are soft state and need to be periodically refreshed.</p>
 <p id="rfc.section.3.2.p.4">An endpoint is provided with interfaces to register, update and remove a resource directory registration entry. It is also possible for an RD to fetch Web Links from endpoints and add them as resource directory registration entries.</p>
-<p id="rfc.section.3.2.p.5">At the first registration of a set of entries, a &#8220;directory resource&#8221; is created, the location of which is returned to the registering endpoint. The registering endpoint uses this registration resource to manage the contents of the registration entry.</p>
+<p id="rfc.section.3.2.p.5">At the first registration of a set of entries, a &#8220;registration resource&#8221; is created, the location of which is returned to the registering endpoint. The registering endpoint uses this registration resource to manage the contents of the registration entry.</p>
 <p id="rfc.section.3.2.p.6">A lookup interface for discovering any of the Web Links held in the RD is provided using the CoRE Link Format.</p>
 <div id="rfc.figure.1"></div>
 <div id="fig-arch"></div>
@@ -769,7 +769,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>0 to n Registration (entries),</li>
 <li>0 or more Groups</li>
 </ul>
-<p id="rfc.section.3.3.p.13">A Group has one Multicast address attribute and is composed of 0 or more endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 or more Groups . A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
+<p id="rfc.section.3.3.p.13">A Group has no or one Multicast address attribute and is composed of 0 or more endpoints. A registration is associated with one endpoint (ep). An endpoint can be part of 0 or more Groups . A registration defines a set of links as defined for /.well-known/core. A Registration has six attributes:</p>
 <p></p>
 
 <ul>
@@ -780,7 +780,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <li>optional one d (domain for query filtering),</li>
 <li>optional additional endpoint attributes (from <a href="#iana-registry" class="xref">Section 9.3</a>)</li>
 </ul>
-<p id="rfc.section.3.3.p.15">The cardinality of con is currently 1. The value of con is copied from the value of the &#8220;hosts&#8221; relation and overwritten by the value of the con query parameter.</p>
+<p id="rfc.section.3.3.p.15">The cardinality of con is currently 1.  Its value is used as a Base URI when resolving URIs in the links contained in the endpoint.</p>
 <p id="rfc.section.3.3.p.16">Links are modelled as they are in <a href="#fig-ER-WKC" class="xref">Figure 3</a>.</p>
 <h1 id="rfc.section.3.4">
 <a href="#rfc.section.3.4">3.4.</a> <a href="#cellular" id="cellular">Use Case: Cellular M2M</a>
@@ -800,7 +800,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <p id="rfc.section.3.6.p.3">Metadata in web link formats like <a href="#RFC6690" class="xref">[RFC6690]</a> are supplied by Resource Directories, which may be internally stored as  triples, or relation/attribute pairs providing metadata about resource links. External catalogs that are represented in other formats may be converted to common web linking formats for storage and access by Resource Directories. Since it is common practice for these to be URN encoded, simple and lossless structural transforms should generally be sufficient to store external metadata in Resource Directories.</p>
 <p id="rfc.section.3.6.p.4">The additional features of Resource Directory allow domains to be defined to enable access to a particular set of resources from particular applications.  This provides isolation and protection of sensitive data when needed. Resource groups may defined to allow batched reads from multiple resources.</p>
 <h1 id="rfc.section.4">
-<a href="#rfc.section.4">4.</a> <a href="#simple_finding" id="simple_finding">Finding a Resource Directory</a>
+<a href="#rfc.section.4">4.</a> <a href="#finding_an_rd" id="finding_an_rd">Finding a Resource Directory</a>
 </h1>
 <p id="rfc.section.4.p.1">A device coming up may want to find one or more resource directories to make itself known with.</p>
 <p id="rfc.section.4.p.2">The device may be pre-configured to exercise specific mechanisms for finding the resource directory:</p>
@@ -881,7 +881,7 @@ RD Address:             IPv6 address of the RD.
 </h1>
 <p id="rfc.section.5.p.1">This section defines the required set of REST interfaces between a Resource Directory (RD) and endpoints. Although the examples throughout this section assume the use of CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>, these REST interfaces can also be realized using HTTP <a href="#RFC7230" class="xref">[RFC7230]</a>.  In all definitions in this section, both CoAP response codes (with dot notation) and HTTP response codes (without dot notation) are shown. An RD implementing this specification MUST support the discovery, registration, update, lookup, and removal interfaces defined in this section.</p>
 <p id="rfc.section.5.p.2">All operations on the contents of the Resource Directory MUST be atomic and idempotent.</p>
-<p id="rfc.section.5.p.3">A Resource Directory MUST accept query filtering with multiple query parameters in the URI.</p>
+<p id="rfc.section.5.p.3">A resource directory MAY make the information submitted to it available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
 <h1 id="rfc.section.5.1">
 <a href="#rfc.section.5.1">5.1.</a> <a href="#content-formats" id="content-formats">Content Formats</a>
 </h1>
@@ -891,7 +891,7 @@ RD Address:             IPv6 address of the RD.
 <h1 id="rfc.section.5.2">
 <a href="#rfc.section.5.2">5.2.</a> <a href="#discovery" id="discovery">URI Discovery</a>
 </h1>
-<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. A complete set of RD discovery methods is described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
+<p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. A complete set of RD discovery methods is described in <a href="#finding_an_rd" class="xref">Section 4</a>.</p>
 <p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690" class="xref">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.rd-group&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
 <p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
 <p id="rfc.section.5.2.p.4">TODO: Suggestion to add a version, ver, parameter.</p>
@@ -984,7 +984,7 @@ Res: 2.05 Content
 <dt>rd :=</dt>
 <dd style="margin-left: 8">RD registration URI (mandatory). This is the location of the RD, as obtained from discovery.</dd>
 <dt>ep :=</dt>
-<dd style="margin-left: 8">Endpoint name (mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.</dd>
+<dd style="margin-left: 8">Endpoint name (mostly mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.  If the RD is configured to recognize the endpoint (eg. based on its security context), the endpoint can elide the endpoint name, and assign one based on the configuration.</dd>
 <dt>d :=</dt>
 <dd style="margin-left: 8">Domain (optional). The domain to which this endpoint belongs. The maximum length of this parameter is 63 bytes. When this parameter is elided, the RD MAY associate the endpoint with a configured default domain.</dd>
 <dt>lt :=</dt>
@@ -1012,7 +1012,7 @@ Res: 2.05 Content
 <dt>Failure:</dt>
 <dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221;. Malformed request.</dd>
 <dt>Failure:</dt>
-<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.3</a>.</dd>
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 <dt>HTTP support:</dt>
@@ -1046,66 +1046,55 @@ Location: /rd/4521
 </h1>
 <p id="rfc.section.5.3.1.p.1">Not all endpoints hosting resources are expected to know how to upload links to a RD as described in <a href="#registration" class="xref">Section 5.3</a>. Instead, simple endpoints can implement the Simple Registration approach described in this section. An RD implementing this specification MUST implement Simple Registration. However, there may be security reasons why this form of directory discovery would be disabled.</p>
 <p id="rfc.section.5.3.1.p.2">This approach requires that the endpoint makes available the hosted resources that it wants to be discovered, as links on its <samp>/.well-known/core</samp> interface as specified in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
-<p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#simple_finding" class="xref">Section 4</a>.</p>
-<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as described in <a href="#simple_publishing" class="xref">Section 5.3.2</a>.</p>
-<p id="rfc.section.5.3.1.p.5">The directory server integrates the information it received this way into its resource directory.  It MAY make the information available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
-<h1 id="rfc.section.5.3.2">
-<a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#simple_publishing" id="simple_publishing">Simple publishing to Resource Directory Server</a>
-</h1>
-<p id="rfc.section.5.3.2.p.1">An endpoint that wants to make itself discoverable sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of the directory server of choice. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
-<p id="rfc.section.5.3.2.p.2">The endpoint MUST include the endpoint name and MAY include the registration parameters d, lt and extra-attrs, in the POST request as per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
-<p id="rfc.section.5.3.2.p.3">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
-<p id="rfc.section.5.3.2.p.4">The following example shows an endpoint using simple publishing, by simply sending an empty POST to a resource directory.</p>
+<p id="rfc.section.5.3.1.p.3">The endpoint then finds one or more addresses of the directory server as described in <a href="#finding_an_rd" class="xref">Section 4</a>.</p>
+<p id="rfc.section.5.3.1.p.4">An endpoint finally asks the directory server to probe it for resources and publish them as follows:</p>
+<p id="rfc.section.5.3.1.p.5">It sends (and regularly refreshes with) a POST request to the <samp>/.well-known/core</samp> URI of the directory server of choice. The body of the POST request is empty, which triggers the resource directory server to perform GET requests at the requesting server&#8217;s default discovery URI to obtain the link-format payload to register.</p>
+<p id="rfc.section.5.3.1.p.6">The endpoint includes the same registration parameters in the POST request as it would per <a href="#registration" class="xref">Section 5.3</a>. The context of the registration is taken from the requesting server&#8217;s URI.</p>
+<p id="rfc.section.5.3.1.p.7">The endpoints MUST be deleted after the expiration of their lifetime. Additional operations cannot be executed because no registration location is returned.</p>
+<p id="rfc.section.5.3.1.p.8">The following example shows an endpoint using Simple Registration, by simply sending an empty POST to a resource directory.</p>
 <pre>
 Req:(to RD server from [2001:db8:2::1])
-POST coap://rd.example.com/.well-known/core?lt=6000&amp;ep=node1
-
+POST /.well-known/core?lt=6000&amp;ep=node1
 Content-Format: 40
-
-payload:
-
-(empty payload)
+No payload
 
 Res: 2.04 Changed
 
 (later)
 
 Req: (from RD server to [2001:db8:2::1])
-GET coap://[2001:db8:2::1]/.well-known/core
-
+GET /.well-known/core
 Accept: 40
 
 Res: 2.05 Content
-
-payload:
-
+Payload:
 &lt;/sen/temp&gt;
 </pre>
+<h1 id="rfc.section.5.3.2">
+<a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a>
+</h1>
+<p id="rfc.section.5.3.2.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
+<p id="rfc.section.5.3.2.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <h1 id="rfc.section.5.3.3">
-<a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a>
+<a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#link-plurality" id="link-plurality">Plurality of link references in a Registration</a>
 </h1>
-<p id="rfc.section.5.3.3.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
-<p id="rfc.section.5.3.3.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration" class="xref">Section 5.3</a>.</p>
-<h1 id="rfc.section.5.3.4">
-<a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#link-plurality" id="link-plurality">Plurality of link references in a Registration</a>
-</h1>
-<p id="rfc.section.5.3.4.p.1">Plurality of link references within a Resource Directory is an indication of some error condition and should not be allowed.</p>
-<p id="rfc.section.5.3.4.p.2">Plurality of link references exists if, and only if, two or more links in a Resource Directory contain identical context, target, and relation values. This condition would be likely to arise if there were multiple co-ordinators or configuration tools, each with a different set of configuration values for the same resource.</p>
-<p id="rfc.section.5.3.4.p.3">A Resource Directory SHOULD reject a registration, or an operation on a registration resource, which would result in a plurality of link references within the directory resource. There is no requirement in this document for a resource directory to check for plurality of reference. Resource Directory operations which are rejected due to reference plurality SHOULD return the &#8220;Conflict&#8221; code, indicating that there is someting wrong with the request.</p>
+<p id="rfc.section.5.3.3.p.1">Plurality of link references within a Resource Directory is an indication of some error condition and should not be allowed.</p>
+<p id="rfc.section.5.3.3.p.2">Plurality of link references exists if, and only if, two or more links in a Resource Directory contain identical context, target, and relation values. This condition would be likely to arise if there were multiple co-ordinators or configuration tools, each with a different set of configuration values for the same resource.</p>
+<p id="rfc.section.5.3.3.p.3">A Resource Directory SHOULD reject a registration, or an operation on a registration resource, which would result in a plurality of link references within the directory resource. There is no requirement in this document for a resource directory to check for plurality of reference. Resource Directory operations which are rejected due to reference plurality SHOULD return the &#8220;Conflict&#8221; code, indicating that there is someting wrong with the request.</p>
 <h1 id="rfc.section.5.4">
 <a href="#rfc.section.5.4">5.4.</a> <a href="#operations-on-the-registration-resource" id="operations-on-the-registration-resource">Operations on the Registration Resource</a>
 </h1>
 <p id="rfc.section.5.4.p.1">After the initial registration, an endpoint should retain the returned location of the Registration Resource for further operations, including refreshing the registration in order to extend the lifetime and &#8220;keep-alive&#8221; the registration. When the lifetime of the registration has expired, the RD SHOULD NOT respond to discovery queries concerning this endpoint. The RD SHOULD continue to provide access to the Registration Resource after a registration time-out occurs in order to enable the registering endpoint to eventually refresh the registration. The RD MAY eventually remove the registration resource for the purpose of resource recovery and garbage collection. If the Registration Resource is removed, the endpoint will need to re-register.</p>
 <p id="rfc.section.5.4.p.2">The Registration Resource may also be used to inspect the registration resource using GET, update the registration link contents, or cancel the registration using DELETE.</p>
 <p id="rfc.section.5.4.p.3">These operations are described in this section.</p>
-<p id="rfc.section.5.4.p.4">In accordance with <a href="#link-plurality" class="xref">Section 5.3.4</a>, operations which would result in plural link references within the context of a registration resource SHOULD be rejected using the &#8220;Conflict&#8221; result code.</p>
+<p id="rfc.section.5.4.p.4">In accordance with <a href="#link-plurality" class="xref">Section 5.3.3</a>, operations which would result in plural link references within the context of a registration resource SHOULD be rejected using the &#8220;Conflict&#8221; result code.</p>
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
 <p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime- or the context- registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a>. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">An update MAY optionally add links for the endpoint by including those links in the payload of the update as a CoRE Link Format document.</p>
-<p id="rfc.section.5.4.1.p.4">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.4</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
+<p id="rfc.section.5.4.1.p.4">If the link payload is included, it SHOULD be checked for reference plurality as described in <a href="#link-plurality" class="xref">Section 5.3.3</a> and rejected with a &#8220;Conflict&#8221; result if there are plural link references detected.</p>
 <p id="rfc.section.5.4.1.p.5">In addition to the use of POST, as described in this section, in the future links can be changed individually or replaced by using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
 <p id="rfc.section.5.4.1.p.6">A registration update resets the timeout of the registration to the (possibly updated) lifetime of the registration, independent of whether a <samp>lt</samp> parameter was given.</p>
 <p id="rfc.section.5.4.1.p.7">If the context of the registration is changed in an update explicitly or implicitly, relative references submitted in the original registration or later updates are resolved anew against the new context (like in the original registration).</p>
@@ -1151,7 +1140,7 @@ payload:
 <dt>Failure:</dt>
 <dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221;. Registration does not exist (e.g. may have expired).</dd>
 <dt>Failure:</dt>
-<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.4</a>.</dd>
+<dd style="margin-left: 8">4.09 &#8220;Conflict&#8221; or 409 &#8220;Conflict&#8221;. Attempt to update the registration content with links resulting in plurality of references; see <a href="#link-plurality" class="xref">Section 5.3.3</a>.</dd>
 <dt>Failure:</dt>
 <dd style="margin-left: 8">5.03 &#8220;Service Unavailable&#8221; or 503 &#8220;Service Unavailable&#8221;. Service could not perform the operation.</dd>
 <dt>HTTP support:</dt>
@@ -1297,7 +1286,7 @@ Payload:
 <h1 id="rfc.section.5.4.4">
 <a href="#rfc.section.5.4.4">5.4.4.</a> <a href="#link-up" id="link-up">Update Endpoint Links</a>
 </h1>
-<p id="rfc.section.5.4.4.p.1">A iPATCH (PATCH) update adds, removes or changes links of a registration by including link update information in the payload of the update with a media type that still needs to be defined.</p>
+<p id="rfc.section.5.4.4.p.1">An iPATCH (or PATCH) update <a href="#RFC8132" class="xref">[RFC8132]</a> adds, removes or changes links of a registration by including link update information in the payload of the update with a media type that still needs to be defined.</p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#group" id="group">RD Groups</a>
 </h1>
@@ -1305,8 +1294,8 @@ Payload:
 <h1 id="rfc.section.6.1">
 <a href="#rfc.section.6.1">6.1.</a> <a href="#group-register" id="group-register">Register a Group</a>
 </h1>
-<p id="rfc.section.6.1.p.1">In order to create a group, a commissioning tool (CT) used to configure groups, makes a request to the RD indicating the name of the group to create (or update), optionally the domain the group belongs to, and optionally the multicast address of the group. The registration message includes the list of endpoints that belong to that group.</p>
-<p id="rfc.section.6.1.p.2">All the endpoints in the group MUST be registered with the RD before registering a group. If an endpoint is not yet registered to the RD before registering the group, the registration message returns an error. The RD sends a blank target URI for every endpoint link when registering the group.</p>
+<p id="rfc.section.6.1.p.1">In order to create a group, a commissioning tool (CT) used to configure groups, makes a request to the RD indicating the name of the group to create (or update), optionally the domain the group belongs to, and optionally the multicast address of the group. The registration message is a list of links to registration resources of the endpoints that belong to that group.</p>
+<p id="rfc.section.6.1.p.2">The commissioning tool SHOULD not send any target attributes with the links to the registration resources, and the resource directory SHOULD ignore any attributes that are set.</p>
 <p id="rfc.section.6.1.p.3">Configuration of the endpoints themselves is out of scope of this specification. Such an interface for managing the group membership of an endpoint has been defined in <a href="#RFC7390" class="xref">[RFC7390]</a>.</p>
 <p id="rfc.section.6.1.p.4">The registration request interface is specified as follows:</p>
 <p></p>
@@ -1360,8 +1349,8 @@ Req: POST coap://rd.example.com/rd-group?gp=lights
                                   &amp;con=coap://[ff35:30:2001:db8::1]
 Content-Format: 40
 Payload:
-&lt;/rd/4521&gt;;ep="node1",
-&lt;/rd/4522&gt;;ep="node2"
+&lt;/rd/4521&gt;,
+&lt;/rd/4522&gt;
 
 Res: 2.01 Created
 Location: /rd-group/12
@@ -1866,9 +1855,9 @@ Location: /rd/4523
 Req: POST coap://[2001:db8:4::ff]/rd-group
 ?gp=grp_R2-4-015&amp;con=coap://[ff05::1]
 Payload:
-&lt;/rd/4521&gt;;ep=lm_R2-4-015_wndw,
-&lt;/rd/4522&gt;;ep=lm_R2-4-015_door,
-&lt;/rd/4523&gt;;ep=ps_R2-4-015_door
+&lt;/rd/4521&gt;,
+&lt;/rd/4522&gt;,
+&lt;/rd/4523&gt;
 
 Res: 2.01 Created
 Location: /rd-group/501
@@ -2242,9 +2231,19 @@ link payload - new or modified links
 <a>Chen, P.</a>, "<a>The entity-relationship model---toward a unified view of data</a>", ACM Transactions on Database Systems Vol. 1, pp. 9-36, DOI 10.1145/320434.320440, March 1976.</td>
 </tr>
 <tr>
+<td class="reference"><b id="I-D.arkko-core-dev-urn">[I-D.arkko-core-dev-urn]</b></td>
+<td class="top">
+<a>Arkko, J.</a>, <a>Jennings, C.</a> and <a>Z. Shelby</a>, "<a href="https://tools.ietf.org/html/draft-arkko-core-dev-urn-04">Uniform Resource Names for Device Identifiers</a>", Internet-Draft draft-arkko-core-dev-urn-04, July 2017.</td>
+</tr>
+<tr>
 <td class="reference"><b id="I-D.nottingham-rfc5988bis">[I-D.nottingham-rfc5988bis]</b></td>
 <td class="top">
 <a>Nottingham, M.</a>, "<a href="https://tools.ietf.org/html/draft-nottingham-rfc5988bis-08">Web Linking</a>", Internet-Draft draft-nottingham-rfc5988bis-08, August 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="I-D.silverajan-core-coap-protocol-negotiation">[I-D.silverajan-core-coap-protocol-negotiation]</b></td>
+<td class="top">
+<a>Silverajan, B.</a> and <a>M. Ocak</a>, "<a href="https://tools.ietf.org/html/draft-silverajan-core-coap-protocol-negotiation-06">CoAP Protocol Negotiation</a>", Internet-Draft draft-silverajan-core-coap-protocol-negotiation-06, July 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC2616">[RFC2616]</b></td>
@@ -2373,6 +2372,85 @@ Link: &lt;/temperature/Malm%C3%B6&gt;;rel="live-environment-data"
 <li>There is no percent encoding in link-format documents.  <br><br> A link-format document is a UTF-8 encoded string of Unicode characters and does not have percent encoding, while Link headers are practically ASCII strings that use percent encoding for non-ASCII characters, stating the encoding explictly when required.  <br><br> For example, while a Link header in a page about a Swedish city might read  <br><br> <br><br> a link-format document from the same source might describe the link as  <br><br> <br><br> </li>
 <li>In a link-format document, if the anchor attribute is present, the link target reference is resolved by using the the (resolved) anchor value as Base URI for that link, while in Link headers, it is resolved against the URI of the requested document.  <br><br> This is explicit in <a href="#RFC6690" class="xref">[RFC6690]</a> section 2.1 for link-format, and spelled out in section B.2 of <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a> , which obsoletes the older <a href="#RFC5988" class="xref">[RFC5988]</a>.  <a href="#RFC6690" class="xref">[RFC6690]</a> is based on <a href="#RFC5988" class="xref">[RFC5988]</a> and has not been updated with clarifications from <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a>.</li>
 </ul>
+<h1 id="rfc.appendix.B">
+<a href="#rfc.appendix.B">Appendix B.</a> <a href="#outlook-for-protocol-negotiation" id="outlook-for-protocol-negotiation">Outlook for Protocol Negotiation</a>
+</h1>
+<p id="rfc.section.B.p.1">[ This appendix should not show up in a published version of this document. ]</p>
+<p id="rfc.section.B.p.2">There is a work-in-progress document <a href="#I-D.silverajan-core-coap-protocol-negotiation" class="xref">[I-D.silverajan-core-coap-protocol-negotiation]</a> that will specify how to use a Resource Directory to select one of many protocols for communication with a single endpoint in the sense of the RD.  Until that is updated to reflect the changes to this document since draft version 10, this appendix demonstrates a simplified version of protocol negotiation:</p>
+<p id="rfc.section.B.p.3">Only small updates to the information model are required:</p>
+<p></p>
+
+<ul>
+<li>An endpoint can have more than one context.</li>
+<li>A link simultaneously has one target and one context for each of the contexts of its endpoint iff that URI was constructed from a relative reference.</li>
+</ul>
+<p id="rfc.section.B.p.5">In registration, the registrant can provide multiple con values.  This is regarded as a statement that it is willing to serve all resources referenced in the links it publishes equally from all those base URIs.</p>
+<p id="rfc.section.B.p.6">Lookup is extended to allow querying the transports:</p>
+<p></p>
+
+<ul>
+<li>Endpoint lookups return all con values.</li>
+<li>In resource lookups, the RD picks one of the cons and returns appropriate anchors.  It chooses a suitable protocol based on the incoming request&#8217;s protocol, or based on an additional query parameter (tt) that explains the client&#8217;s protocol preferences.</li>
+<li>When filtering, any href, target of the target or con can of the endpoint can produce a match, not only the one selected for the response.</li>
+</ul>
+<p id="rfc.section.B.p.8">As an example, an endpoint could register as follows:</p>
+<pre>
+Req: POST coap://rd.example.com/rd?ep=node1
+    &amp;con=coap+tcp://[2001:db8:f1::2]
+    &amp;con=coap://[2001:db8:f1::2]
+Content-Format: 40
+Payload:
+&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s"
+
+Res: 2.01 Created
+Location: /rd/1234
+</pre>
+<p id="rfc.section.B.p.9">A UDP client would then query:</p>
+<pre>
+Req: GET /rd-lookup/res?rt=temperature&amp;tt=coap-over-udp
+
+Res: 2.05 Content
+&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s";
+    anchor="coap://[2001:db8:f1::2]"
+</pre>
+<p id="rfc.section.B.p.10">while a TCP client could query the RD with CoAP over TCP, give no explicit tt preference, and receive:</p>
+<pre>
+Req: GET /rd-lookup/res?rt=temperature
+
+Res: 2.05 Content
+&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s";
+    anchor="coap+tcp://[2001:db8:f1::2]"
+</pre>
+<p id="rfc.section.B.p.11">The same mechanism could also be used when endpoints register with non-resolvable &#8220;transports&#8221;.</p>
+<p id="rfc.section.B.p.12">An endpoint can register both a resolvable and a name-only address&#8230;</p>
+<p id="rfc.section.B.p.13">(Note that the example urn:dev space (<a href="#I-D.arkko-core-dev-urn" class="xref">[I-D.arkko-core-dev-urn]</a>) is unsuitable because it can not take path components and thus violates the constraints for con; other to-be-defined schemes can.)</p>
+<pre>
+Req: POST coap://rd.example.com/rd?ep=node2
+    &amp;con=coap://[2001:db8:f1::3]
+    &amp;con=urn:dev:mac:12-34-56-78-9A-BC
+Content-Format: 40
+Payload:
+&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s"
+
+Res: 2.01 Created
+Location: /rd/2345
+</pre>
+<p id="rfc.section.B.p.14">&#8230;and a lookup client can use the RD not only to discover its resources, but also to find routable versions of resources it knows&#8230;</p>
+<pre>
+Req: GET /rd-lookup/res?href=urn:dev:mac:12-34-56-78-9A-BC/temperature
+
+Res: 2.05 Content
+&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s";
+    anchor="coap://[2001:db8:f1::3]"
+</pre>
+<p id="rfc.section.B.p.15">&#8230;or just find devices based on an address they should have registered with:</p>
+<pre>
+Req: GET /rd-lookup/ep?con=urn:dev:mac:12-34-56-78-9A-BC
+
+Res: 2.05 Content
+&lt;/rd/2345&gt;;ep="node2";con="coap://[2001:db8:f1::3]";
+    con="urn:dev:mac:12-34-56-78-9A-BC"
+</pre>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
