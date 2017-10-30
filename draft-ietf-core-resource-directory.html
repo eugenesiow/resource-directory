@@ -926,8 +926,6 @@ RD Address:             IPv6 address of the RD.
 <dt>Success:</dt>
 <dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; with an application/link-format, application/link-format+json, or application/link-format+cbor payload containing one or more matching entries for the RD resource.</dd>
 <dt>Failure:</dt>
-<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221; is returned in case no matching entry is found for a unicast request.</dd>
-<dt>Failure:</dt>
 <dd style="margin-left: 8">4.00 &#8220;Bad Request&#8221; or 400 &#8220;Bad Request&#8221; is returned in case of a malformed request for a unicast request.</dd>
 <dt>Failure:</dt>
 <dd style="margin-left: 8">No error response to a multicast request.</dd>
@@ -1481,9 +1479,7 @@ Res: 2.02 Deleted
 
 <dl>
 <dt>Success:</dt>
-<dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; with an <samp>application/link-format</samp>, <samp>application/link-format+cbor</samp>, or <samp>application/link-format+json</samp> payload containing matching entries for the lookup.</dd>
-<dt>Failure:</dt>
-<dd style="margin-left: 8">4.04 &#8220;Not Found&#8221; or 404 &#8220;Not Found&#8221; in case no matching entry is found for a unicast request.</dd>
+<dd style="margin-left: 8">2.05 &#8220;Content&#8221; or 200 &#8220;OK&#8221; with an <samp>application/link-format</samp>, <samp>application/link-format+cbor</samp>, or <samp>application/link-format+json</samp> payload containing matching entries for the lookup.  The payload can contain zero links (which is an empty payload, <samp>80</samp> (hex) or <samp>[]</samp> in the respective content format), indicating that no entities matched the request.</dd>
 <dt>Failure:</dt>
 <dd style="margin-left: 8">No error response to a multicast request.</dd>
 <dt>Failure:</dt>

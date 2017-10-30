@@ -89,7 +89,7 @@ Table of Contents
    5.  Resource Directory  . . . . . . . . . . . . . . . . . . . . .  15
      5.1.  Content Formats . . . . . . . . . . . . . . . . . . . . .  16
      5.2.  URI Discovery . . . . . . . . . . . . . . . . . . . . . .  16
-     5.3.  Registration  . . . . . . . . . . . . . . . . . . . . . .  19
+     5.3.  Registration  . . . . . . . . . . . . . . . . . . . . . .  18
        5.3.1.  Simple Registration . . . . . . . . . . . . . . . . .  22
        5.3.2.  Third-party registration  . . . . . . . . . . . . . .  23
      5.4.  Operations on the Registration Resource . . . . . . . . .  23
@@ -942,10 +942,10 @@ Internet-Draft           CoRE Resource Directory              March 2017
       payload containing one or more matching entries for the RD
       resource.
 
-   Failure:  4.04 "Not Found" or 404 "Not Found" is returned in case no
-      matching entry is found for a unicast request.
+   Failure:  4.00 "Bad Request" or 400 "Bad Request" is returned in case
+      of a malformed request for a unicast request.
 
-
+   Failure:  No error response to a multicast request.
 
 
 
@@ -953,11 +953,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 17]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   Failure:  4.00 "Bad Request" or 400 "Bad Request" is returned in case
-      of a malformed request for a unicast request.
-
-   Failure:  No error response to a multicast request.
 
    HTTP support :  YES (Unicast only)
 
@@ -1001,7 +996,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
    </rd-lookup/gp>;rt="core.rd-lookup-gp";ct=40 TBD64 TBD504",
    </rd-group>;rt="core.rd-group";ct="40 TBD64 TBD504"
 
+5.3.  Registration
 
+   After discovering the location of an RD, an endpoint MAY register its
+   resources using the registration interface.  This interface accepts a
+   POST from an endpoint containing the list of resources to be added to
+   the directory as the message payload in the CoRE Link Format
 
 
 
@@ -1010,12 +1010,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 18]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-5.3.  Registration
-
-   After discovering the location of an RD, an endpoint MAY register its
-   resources using the registration interface.  This interface accepts a
-   POST from an endpoint containing the list of resources to be added to
-   the directory as the message payload in the CoRE Link Format
    [RFC6690], JSON CoRE Link Format (application/link-format+json), or
    CBOR CoRE Link Format (application/link-format+cbor)
    [I-D.ietf-core-links-json], along with query parameters indicating
@@ -1057,7 +1051,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    URI Template Variables:
 
+      rd :=  RD registration URI (mandatory).  This is the location of
+         the RD, as obtained from discovery.
 
+      ep :=  Endpoint name (mostly mandatory).  The endpoint name is an
+         identifier that MUST be unique within a domain.  The maximum
+         length of this parameter is 63 bytes.  If the RD is configured
+         to recognize the endpoint (eg. based on its security context),
 
 
 
@@ -1066,13 +1066,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 19]
 Internet-Draft           CoRE Resource Directory              March 2017
 
 
-      rd :=  RD registration URI (mandatory).  This is the location of
-         the RD, as obtained from discovery.
-
-      ep :=  Endpoint name (mostly mandatory).  The endpoint name is an
-         identifier that MUST be unique within a domain.  The maximum
-         length of this parameter is 63 bytes.  If the RD is configured
-         to recognize the endpoint (eg. based on its security context),
          the endpoint can elide the endpoint name, and assign one based
          on the configuration.
 
@@ -1114,6 +1107,13 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Content-Format:  application/link-format
 
+   Content-Format:  application/link-format+json
+
+   Content-Format:  application/link-format+cbor
+
+   The following response codes are defined for this interface:
+
+
 
 
 
@@ -1121,12 +1121,6 @@ Shelby, et al.         Expires September 27, 2017              [Page 20]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
-
-   Content-Format:  application/link-format+json
-
-   Content-Format:  application/link-format+cbor
-
-   The following response codes are defined for this interface:
 
    Success:  2.01 "Created" or 201 "Created".  The Location header
       option MUST be included in the response when a new registration
@@ -1166,6 +1160,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
    A Resource Directory may optionally support HTTP.  Here is an example
    of almost the same registration operation above, when done using HTTP
    and the JSON Link Format.
+
+
+
+
+
+
 
 
 
@@ -1928,9 +1928,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    Success:  2.05 "Content" or 200 "OK" with an "application/link-
       format", "application/link-format+cbor", or "application/link-
       format+json" payload containing matching entries for the lookup.
-
-   Failure:  4.04 "Not Found" or 404 "Not Found" in case no matching
-      entry is found for a unicast request.
+      The payload can contain zero links (which is an empty payload,
+      "80" (hex) or "[]" in the respective content format), indicating
+      that no entities matched the request.
 
    Failure:  No error response to a multicast request.
 
