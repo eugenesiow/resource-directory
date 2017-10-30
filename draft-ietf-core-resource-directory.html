@@ -336,7 +336,7 @@ address {
 <link href="#rfc.appendix.A.2" rel="Chapter" title="A.2 A slightly more complex example">
 <link href="#rfc.appendix.A.3" rel="Chapter" title="A.3 Enter the Resource Directory">
 <link href="#rfc.appendix.A.4" rel="Chapter" title="A.4 A note on differences between link-format and Link headers">
-<link href="#rfc.appendix.B" rel="Chapter" title="B Outlook for Protocol Negotiation">
+<link href="#rfc.appendix.B" rel="Chapter" title="B Syntax examples for Protocol Negotiation">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -546,7 +546,7 @@ address {
 </li>
 <li>A.4.   <a href="#rfc.appendix.A.4">A note on differences between link-format and Link headers</a>
 </li>
-</ul><li>Appendix B.   <a href="#rfc.appendix.B">Outlook for Protocol Negotiation</a>
+</ul><li>Appendix B.   <a href="#rfc.appendix.B">Syntax examples for Protocol Negotiation</a>
 </li>
 <li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
@@ -2407,31 +2407,16 @@ Link: &lt;/temperature/Malm%C3%B6&gt;;rel="live-environment-data"
 <li>In a link-format document, if the anchor attribute is present, the link target reference is resolved by using the the (resolved) anchor value as Base URI for that link, while in Link headers, it is resolved against the URI of the requested document.  <br><br> This is explicit in <a href="#RFC6690" class="xref">[RFC6690]</a> section 2.1 for link-format, and spelled out in section B.2 of <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a> , which obsoletes the older <a href="#RFC5988" class="xref">[RFC5988]</a>.  <a href="#RFC6690" class="xref">[RFC6690]</a> is based on <a href="#RFC5988" class="xref">[RFC5988]</a> and has not been updated with clarifications from <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a>.</li>
 </ul>
 <h1 id="rfc.appendix.B">
-<a href="#rfc.appendix.B">Appendix B.</a> <a href="#outlook-for-protocol-negotiation" id="outlook-for-protocol-negotiation">Outlook for Protocol Negotiation</a>
+<a href="#rfc.appendix.B">Appendix B.</a> <a href="#syntax-examples-for-protocol-negotiation" id="syntax-examples-for-protocol-negotiation">Syntax examples for Protocol Negotiation</a>
 </h1>
 <p id="rfc.section.B.p.1">[ This appendix should not show up in a published version of this document. ]</p>
-<p id="rfc.section.B.p.2">There is a work-in-progress document <a href="#I-D.silverajan-core-coap-protocol-negotiation" class="xref">[I-D.silverajan-core-coap-protocol-negotiation]</a> that will specify how to use a Resource Directory to select one of many protocols for communication with a single endpoint in the sense of the RD.  Until that is updated to reflect the changes to this document since draft version 10, this appendix demonstrates a simplified version of protocol negotiation:</p>
-<p id="rfc.section.B.p.3">Only small updates to the information model are required:</p>
-<p></p>
-
-<ul>
-<li>An endpoint can have more than one context.</li>
-<li>A link simultaneously has one target and one context for each of the contexts of its endpoint iff that URI was constructed from a relative reference.</li>
-</ul>
-<p id="rfc.section.B.p.5">In registration, the registrant can provide multiple con values.  This is regarded as a statement that it is willing to serve all resources referenced in the links it publishes equally from all those base URIs.</p>
-<p id="rfc.section.B.p.6">Lookup is extended to allow querying the transports:</p>
-<p></p>
-
-<ul>
-<li>Endpoint lookups return all con values.</li>
-<li>In resource lookups, the RD picks one of the cons and returns appropriate anchors.  It chooses a suitable protocol based on the incoming request&#8217;s protocol, or based on an additional query parameter (tt) that explains the client&#8217;s protocol preferences.</li>
-<li>When filtering, any href, target of the target or con can of the endpoint can produce a match, not only the one selected for the response.</li>
-</ul>
-<p id="rfc.section.B.p.8">As an example, an endpoint could register as follows:</p>
+<p id="rfc.section.B.p.2">The protocol negotiation that is being worked on in <a href="#I-D.silverajan-core-coap-protocol-negotiation" class="xref">[I-D.silverajan-core-coap-protocol-negotiation]</a> makes use of the Resource Directory.</p>
+<p id="rfc.section.B.p.3">Until that document is update to use the latest resource-directory specification, here are some examples of protocol negotiation with the current Resource Directory:</p>
+<p id="rfc.section.B.p.4">An endpoint could register as follows:</p>
 <pre>
 Req: POST coap://rd.example.com/rd?ep=node1
-    &amp;con=coap+tcp://[2001:db8:f1::2]
-    &amp;con=coap://[2001:db8:f1::2]
+    &amp;at=coap+tcp://[2001:db8:f1::2]
+    &amp;at=coap://[2001:db8:f1::2]
 Content-Format: 40
 Payload:
 &lt;/temperature&gt;;ct=0;rt="temperature";if="core.s"
@@ -2439,51 +2424,21 @@ Payload:
 Res: 2.01 Created
 Location: /rd/1234
 </pre>
-<p id="rfc.section.B.p.9">A UDP client would then query:</p>
-<pre>
-Req: GET /rd-lookup/res?rt=temperature&amp;tt=coap-over-udp
-
-Res: 2.05 Content
-&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s";
-    anchor="coap://[2001:db8:f1::2]"
-</pre>
-<p id="rfc.section.B.p.10">while a TCP client could query the RD with CoAP over TCP, give no explicit tt preference, and receive:</p>
+<p id="rfc.section.B.p.5">A UDP client would then query:</p>
 <pre>
 Req: GET /rd-lookup/res?rt=temperature
 
 Res: 2.05 Content
 &lt;/temperature&gt;;ct=0;rt="temperature";if="core.s";
-    anchor="coap+tcp://[2001:db8:f1::2]"
+    anchor="coap://[2001:db8:f1::2]"
 </pre>
-<p id="rfc.section.B.p.11">The same mechanism could also be used when endpoints register with non-resolvable &#8220;transports&#8221;.</p>
-<p id="rfc.section.B.p.12">An endpoint can register both a resolvable and a name-only address&#8230;</p>
-<p id="rfc.section.B.p.13">(Note that the example urn:dev space (<a href="#I-D.arkko-core-dev-urn" class="xref">[I-D.arkko-core-dev-urn]</a>) is unsuitable because it can not take path components and thus violates the constraints for con; other to-be-defined schemes can.)</p>
+<p id="rfc.section.B.p.6">while a TCP capable client could say:</p>
 <pre>
-Req: POST coap://rd.example.com/rd?ep=node2
-    &amp;con=coap://[2001:db8:f1::3]
-    &amp;con=urn:dev:mac:12-34-56-78-9A-BC
-Content-Format: 40
-Payload:
-&lt;/temperature&gt;;ct=0;rt="temperature";if="core.s"
-
-Res: 2.01 Created
-Location: /rd/2345
-</pre>
-<p id="rfc.section.B.p.14">&#8230;and a lookup client can use the RD not only to discover its resources, but also to find routable versions of resources it knows&#8230;</p>
-<pre>
-Req: GET /rd-lookup/res?href=urn:dev:mac:12-34-56-78-9A-BC/temperature
+Req: GET /rd-lookup/res?rt=temperature&amp;tt=tcp
 
 Res: 2.05 Content
 &lt;/temperature&gt;;ct=0;rt="temperature";if="core.s";
-    anchor="coap://[2001:db8:f1::3]"
-</pre>
-<p id="rfc.section.B.p.15">&#8230;or just find devices based on an address they should have registered with:</p>
-<pre>
-Req: GET /rd-lookup/ep?con=urn:dev:mac:12-34-56-78-9A-BC
-
-Res: 2.05 Content
-&lt;/rd/2345&gt;;ep="node2";con="coap://[2001:db8:f1::3]";
-    con="urn:dev:mac:12-34-56-78-9A-BC"
+    anchor="coap+tcp://[2001:db8:f1::2]"
 </pre>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
