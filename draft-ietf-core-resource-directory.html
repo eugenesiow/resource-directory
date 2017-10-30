@@ -1082,18 +1082,15 @@ Payload:
 <p id="rfc.section.5.4.p.1">After the initial registration, an endpoint should retain the returned location of the Registration Resource for further operations, including refreshing the registration in order to extend the lifetime and &#8220;keep-alive&#8221; the registration. When the lifetime of the registration has expired, the RD SHOULD NOT respond to discovery queries concerning this endpoint. The RD SHOULD continue to provide access to the Registration Resource after a registration time-out occurs in order to enable the registering endpoint to eventually refresh the registration. The RD MAY eventually remove the registration resource for the purpose of resource recovery and garbage collection. If the Registration Resource is removed, the endpoint will need to re-register.</p>
 <p id="rfc.section.5.4.p.2">The Registration Resource may also be used to inspect the registration resource using GET, update the registration link contents, or cancel the registration using DELETE.</p>
 <p id="rfc.section.5.4.p.3">These operations are described in this section.</p>
-<p id="rfc.section.5.4.p.4">Operations which would result in multiple occurrences of registration resources with the same ep and d value pair SHOULD be rejected using the &#8220;Conflict&#8221; result code.</p>
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
-<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation. The POST request (in contrast to PUT) allows replacing a selection of a resource.</p>
+<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime- or the context- registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a>. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
-<p id="rfc.section.5.4.1.p.3">An update MAY optionally add links for the endpoint by including those links in the payload of the update as a CoRE Link Format document.</p>
-<p id="rfc.section.5.4.1.p.4">When the link payload contains links which are fully identical to already registered links, these duplicate links are not added to the registration resource of the endpoint.</p>
-<p id="rfc.section.5.4.1.p.5">In addition to the use of POST, as described in this section, in the future links can be changed individually or replaced by using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>.</p>
-<p id="rfc.section.5.4.1.p.6">A registration update resets the timeout of the registration to the (possibly updated) lifetime of the registration, independent of whether a <samp>lt</samp> parameter was given.</p>
-<p id="rfc.section.5.4.1.p.7">If the context of the registration is changed in an update explicitly or implicitly, relative references submitted in the original registration or later updates are resolved anew against the new context (like in the original registration).</p>
-<p id="rfc.section.5.4.1.p.8">The update registration request interface is specified as follows:</p>
+<p id="rfc.section.5.4.1.p.3">A registration update resets the timeout of the registration to the (possibly updated) lifetime of the registration, independent of whether a <samp>lt</samp> parameter was given.</p>
+<p id="rfc.section.5.4.1.p.4">If the context of the registration is changed in an update explicitly or implicitly, relative references submitted in the original registration or later updates are resolved anew against the new context (like in the original registration).</p>
+<p id="rfc.section.5.4.1.p.5">This operation only describes the use of POST with an empty payload.  As with modification of individual using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>, future standards might describe the semantics of using content formats and payloads with the POST method to update the links of a registration.</p>
+<p id="rfc.section.5.4.1.p.6">The update registration request interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -1118,13 +1115,9 @@ Payload:
 <p> </p>
 </dd>
 <dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/link-format (mandatory)</dd>
-<dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/link-format+json (optional)</dd>
-<dt>Content-Format:</dt>
-<dd style="margin-left: 8">application/link-format+cbor (optional)</dd>
+<dd style="margin-left: 8">none (no payload)</dd>
 </dl>
-<p id="rfc.section.5.4.1.p.10">The following response codes are defined for this interface:</p>
+<p id="rfc.section.5.4.1.p.8">The following response codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -1139,48 +1132,43 @@ Payload:
 <dt>HTTP support:</dt>
 <dd style="margin-left: 8">YES</dd>
 </dl>
-<p id="rfc.section.5.4.1.p.12">The following example shows an endpoint updating its registration resource at an RD using this interface with the example location value: /rd/4521.</p>
+<p id="rfc.section.5.4.1.p.10">The following example shows an endpoint updating its registration resource at an RD using this interface with the example location value: /rd/4521.</p>
 <pre>
 Req: POST /rd/4521
 
 Res: 2.04 Changed
 </pre>
-<p id="rfc.section.5.4.1.p.13">The following example shows an endpoint updating its registration resource at an RD using this interface with the example location value: /rd/4521. The initial registration by the client set the following values:</p>
+<p id="rfc.section.5.4.1.p.11">The following example shows an endpoint updating its registration resource at an RD using this interface with the example location value: /rd/4521. The initial registration by the client set the following values:</p>
 <p></p>
 
 <ul>
+<li>endpoint name (ep)=endpoint1</li>
 <li>lifetime (lt)=500</li>
 <li>context (con)=coap://local-proxy-old.example.com:5683</li>
 </ul>
-<p id="rfc.section.5.4.1.p.15">The initial state of the Registration Resource, /rd/4521, is:</p>
+<p id="rfc.section.5.4.1.p.13">The initial state of the Resource Directory is reflected in the following request:</p>
 <pre>
-Req: GET /rd/4521
+Req: GET /rd-lookup/res?ep=endpoint1
 
 Res: 2.01 Content
 Payload:
 &lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor="coap://local-proxy-old.example.com:5683",
 &lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor="coap://local-proxy-old.example.com:5683"
 </pre>
-<p id="rfc.section.5.4.1.p.16">The following example shows an EP adding the links <samp>&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor"</samp> and <samp>&lt;/sensors/co2&gt;;ct=41;rt="co2-s";if="sensor"</samp> to the collection of links at the location /rd/4521 and changing the context to <samp>coaps://new.example.com:5684</samp>. The humid-s resource type has an anchor value <samp>coaps://[2001:db8:3::123]:61616</samp> that overwrites the value of the con atribute.</p>
+<p id="rfc.section.5.4.1.p.14">The following example shows an EP changing the context to <samp>coaps://new.example.com:5684</samp>:</p>
 <pre>
 Req: POST /rd/4521?con=coaps://new.example.com:5684
-Content-Format:40
-Payload:
-&lt;/sensors/humid&gt;;ct= 41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
-&lt;/sensors/co2&gt;;ct= 41;rt="co2-s";if="sensor"
 
 Res: 2.04 Changed
 </pre>
-<p id="rfc.section.5.4.1.p.17">The consecutive query returns:</p>
+<p id="rfc.section.5.4.1.p.15">The consecutive query returns:</p>
 <pre>
-Req: GET /rd/4521
+Req: GET /rd-lookup/res?ep=endpoint1
 
 Res: 2.01 Content
 Payload:
 &lt;/sensors/temp&gt;;ct=41;rt="temperature";anchor="coaps://new.example.com:5684",
 &lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor";anchor="coaps://new.example.com:5684",
-&lt;/sensors/humid&gt;;ct=41;rt="humid-s";if="sensor";anchor="coaps://[2001:db8:3::123]:61616",
-&lt;/sensors/co2&gt;;ct=41;rt="co2-s";if="sensor";anchor="coaps://new.example.com:5684"
 </pre>
 <h1 id="rfc.section.5.4.2">
 <a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#removal" id="removal">Registration Removal</a>
