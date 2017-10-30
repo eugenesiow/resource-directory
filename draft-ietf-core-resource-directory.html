@@ -948,16 +948,17 @@ Res: 2.05 Content
 &lt;/rd-group&gt;;rt="core.rd-group";ct=40
 </pre>
 <p class="figure">Figure 6: Example discovery exchange</p>
-<p id="rfc.section.5.2.p.12">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252" class="xref">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as a more application-specific content format (picked as 65225 in this example; this is in the experimental space, not an assigned value).  The RD resource paths /rd, /rd-lookup, and /rd-group are example values.</p>
+<p id="rfc.section.5.2.p.12">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252" class="xref">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as the the CBOR and JSON representation of link format.  The RD resource paths /rd, /rd-lookup, and /rd-group are example values.</p>
+<p id="rfc.section.5.2.p.13">[ The RFC editor is asked to replace these and later occurrences of TBD64 and TBD504 with the numeric ID values assigned by IANA to application/link-format+cbor and application/link-format+json, respectively, as they are defined in I-D.ietf-core-links-json. ]</p>
 <pre>
 Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 
 Res: 2.05 Content
 &lt;/rd&gt;;rt="core.rd";ct="40 65225",
-&lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct="40 65225",
-&lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct="40 65225",
-&lt;/rd-lookup/gp&gt;;rt="core.rd-lookup-gp";ct=40 65225",
-&lt;/rd-group&gt;;rt="core.rd-group";ct="40 65225"
+&lt;/rd-lookup/res&gt;;rt="core.rd-lookup-res";ct="40 TBD64 TBD504",
+&lt;/rd-lookup/ep&gt;;rt="core.rd-lookup-ep";ct="40 TBD64 TBD504",
+&lt;/rd-lookup/gp&gt;;rt="core.rd-lookup-gp";ct=40 TBD64 TBD504",
+&lt;/rd-group&gt;;rt="core.rd-group";ct="40 TBD64 TBD504"
 </pre>
 <h1 id="rfc.section.5.3">
 <a href="#rfc.section.5.3">5.3.</a> <a href="#registration" id="registration">Registration</a>
@@ -1026,14 +1027,16 @@ Payload:
 Res: 2.01 Created
 Location: /rd/4521
 </pre>
-<p id="rfc.section.5.3.p.9">A Resource Directory may optionally support HTTP. Here is an example of the same registration operation above, when done using HTTP.</p>
+<p id="rfc.section.5.3.p.9">A Resource Directory may optionally support HTTP. Here is an example of almost the same registration operation above, when done using HTTP and the JSON Link Format.</p>
 <pre>
 Req: POST /rd?ep=node1&amp;con=http://[2001:db8:1::1] HTTP/1.1
 Host : example.com
-Content-Type: application/link-format
+Content-Type: application/link-format+json
 Payload:
-&lt;/sensors/temp&gt;;ct=41;rt="temperature-c";if="sensor",
-&lt;/sensors/light&gt;;ct=41;rt="light-lux";if="sensor"
+[
+{"href": "/sensors/temp", "ct": "41", "rt": "temperature-c", "if": "sensor"},
+{"href": "/sensors/light", "ct": "41", "rt": "light-lux", "if": "sensor"}
+]
 
 Res: 201 Created
 Location: /rd/4521
@@ -1501,7 +1504,20 @@ Req: GET /rd-lookup/res?rt=temperature
 Res: 2.05 Content
 &lt;/temp&gt;;rt="temperature";anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.4.p.3">The following example shows a client performing an endpoint type lookup:</p>
+<p id="rfc.section.7.4.p.3">The same lookup using the CBOR Link Format media type:</p>
+<pre>
+Req: GET /rd-lookup/res?rt=temperature
+Accept: TBD64
+
+Res: 2.05 Content
+Content-Format: TBD64
+Payload in Hex notation:
+81A301652F74656D70096B74656D706572617475726503781E636F61703A2F2F5B323030
+313A6462383A333A3A3132335D3A3631363136
+Decoded payload:
+[{1: "/temp", 9: "temperature", 3: "coap://[2001:db8:3::123]:61616"}]
+</pre>
+<p id="rfc.section.7.4.p.4">The following example shows a client performing an endpoint type lookup:</p>
 <pre>
 Req: GET /rd-lookup/ep?et=power-node
 
@@ -1511,7 +1527,7 @@ et="power-node";ct="40";lt="600",
 &lt;/rd/4521&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7";
 et="power-node";ct="40";lt="600";d="floor-3"
 </pre>
-<p id="rfc.section.7.4.p.4">The following example shows a client performing a group lookup for all groups:</p>
+<p id="rfc.section.7.4.p.5">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
 Req: GET /rd-lookup/gp
 
@@ -1519,7 +1535,7 @@ Res: 2.05 Content
 &lt;/rd-group/1&gt;;gp="lights1";d="example.com";con="coap://[ff35:30:2001:db8::1]",
 &lt;/rd-group/2&gt;;gp="lights2";d="example.com";con="coap://[ff35:30:2001:db8::2]"
 </pre>
-<p id="rfc.section.7.4.p.5">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
+<p id="rfc.section.7.4.p.6">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
 <pre>
 Req: GET /rd-lookup/ep?gp=lights1
 
@@ -1527,14 +1543,14 @@ Res: 2.05 Content
 &lt;/rd/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1";et="power-node";ct="40";lt="600",
 &lt;/rd/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2";et="power-node";ct="40";lt="600"
 </pre>
-<p id="rfc.section.7.4.p.6">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
+<p id="rfc.section.7.4.p.7">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
 &lt;/rd-group/1&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.4.p.7">The following example shows a client performing a paginated resource lookup</p>
+<p id="rfc.section.7.4.p.8">The following example shows a client performing a paginated resource lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
@@ -1554,8 +1570,8 @@ Res: 2.05 Content
 &lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
 &lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.4.p.8">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
-<p id="rfc.section.7.4.p.9">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
+<p id="rfc.section.7.4.p.9">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.4.p.10">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
 Req: GET /rd-lookup/res?et=sensor-node
 
