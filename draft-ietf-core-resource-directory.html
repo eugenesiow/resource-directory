@@ -894,10 +894,9 @@ RD Address:             IPv6 address of the RD.
 <p id="rfc.section.5.2.p.1">Before an endpoint can make use of an RD, it must first know the RD&#8217;s address and port, and the URI path information for its REST APIs. This section defines discovery of the RD and its URIs using the well-known interface of the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>. A complete set of RD discovery methods is described in <a href="#finding_an_rd" class="xref">Section 4</a>.</p>
 <p id="rfc.section.5.2.p.2">Discovery of the RD registration URI path is performed by sending either a multicast or unicast GET request to <samp>/.well-known/core</samp> and including a Resource Type (rt) parameter <a href="#RFC6690" class="xref">[RFC6690]</a> with the value &#8220;core.rd&#8221; in the query string. Likewise, a Resource Type parameter value of &#8220;core.rd-lookup*&#8221; is used to discover the URIs for RD Lookup operations, and &#8220;core.rd-group&#8221; is used to discover the URI path for RD Group operations. Upon success, the response will contain a payload with a link format entry for each RD function discovered, indicating the URI path of the RD function returned and the corresponding Resource Type. When performing multicast discovery, the multicast IP address used will depend on the scope required and the multicast capabilities of the network.</p>
 <p id="rfc.section.5.2.p.3">A Resource Directory MAY provide hints about the content-formats it supports in the links it exposes or registers, using the &#8220;ct&#8221; link attribute, as shown in the example below. Clients MAY use these hints to select alternate content-formats for interaction with the Resource Directory.</p>
-<p id="rfc.section.5.2.p.4">TODO: Suggestion to add a version, ver, parameter.</p>
-<p id="rfc.section.5.2.p.5">HTTP does not support multicast and consequently only unicast discovery can be supported using HTTP. Links to Resource Directories MAY be registered in other Resource Directories, and well-known entry points SHOULD be provided to enable the bootstrapping of unicast discovery.</p>
-<p id="rfc.section.5.2.p.6">An RD implementation of this specification MUST support query filtering for the rt parameter as defined in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
-<p id="rfc.section.5.2.p.7">The discovery request interface is specified as follows:</p>
+<p id="rfc.section.5.2.p.4">HTTP does not support multicast and consequently only unicast discovery can be supported using HTTP. Links to Resource Directories MAY be registered in other Resource Directories, and well-known entry points SHOULD be provided to enable the bootstrapping of unicast discovery.</p>
+<p id="rfc.section.5.2.p.5">An RD implementation of this specification MUST support query filtering for the rt parameter as defined in <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.5.2.p.6">The discovery request interface is specified as follows:</p>
 <p></p>
 
 <dl>
@@ -922,7 +921,7 @@ RD Address:             IPv6 address of the RD.
 <dt>Content-Format:</dt>
 <dd style="margin-left: 8">application/link-format+cbor (if any)</dd>
 </dl>
-<p id="rfc.section.5.2.p.9">The following response codes are defined for this interface:</p>
+<p id="rfc.section.5.2.p.8">The following response codes are defined for this interface:</p>
 <p></p>
 
 <dl>
@@ -935,7 +934,7 @@ RD Address:             IPv6 address of the RD.
 <dt>HTTP support :</dt>
 <dd style="margin-left: 8">YES (Unicast only)</dd>
 </dl>
-<p id="rfc.section.5.2.p.11">The following example shows an endpoint discovering an RD using this interface, thus learning that the directory resource is, in this example, at /rd, and that the content-format delivered by the server hosting the resource is application/link-format (ct=40).  Note that it is up to the RD to choose its RD resource paths.</p>
+<p id="rfc.section.5.2.p.10">The following example shows an endpoint discovering an RD using this interface, thus learning that the directory resource is, in this example, at /rd, and that the content-format delivered by the server hosting the resource is application/link-format (ct=40).  Note that it is up to the RD to choose its RD resource paths.</p>
 <div id="rfc.figure.6"></div>
 <div id="example-discovery"></div>
 <pre>
@@ -949,8 +948,8 @@ Res: 2.05 Content
 &lt;/rd-group&gt;;rt="core.rd-group";ct=40
 </pre>
 <p class="figure">Figure 6: Example discovery exchange</p>
-<p id="rfc.section.5.2.p.12">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252" class="xref">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as the the CBOR and JSON representation of link format.  The RD resource paths /rd, /rd-lookup, and /rd-group are example values.</p>
-<p id="rfc.section.5.2.p.13">[ The RFC editor is asked to replace these and later occurrences of TBD64 and TBD504 with the numeric ID values assigned by IANA to application/link-format+cbor and application/link-format+json, respectively, as they are defined in I-D.ietf-core-links-json. ]</p>
+<p id="rfc.section.5.2.p.11">The following example shows the way of indicating that a client may request alternate content-formats. The Content-Format code attribute &#8220;ct&#8221; MAY include a space-separated sequence of Content-Format codes as specified in Section 7.2.1 of <a href="#RFC7252" class="xref">[RFC7252]</a>, indicating that multiple content-formats are available.  The example below shows the required Content-Format 40 (application/link-format) indicated as well as the the CBOR and JSON representation of link format.  The RD resource paths /rd, /rd-lookup, and /rd-group are example values.</p>
+<p id="rfc.section.5.2.p.12">[ The RFC editor is asked to replace these and later occurrences of TBD64 and TBD504 with the numeric ID values assigned by IANA to application/link-format+cbor and application/link-format+json, respectively, as they are defined in I-D.ietf-core-links-json. ]</p>
 <pre>
 Req: GET coap://[ff02::1]/.well-known/core?rt=core.rd*
 
