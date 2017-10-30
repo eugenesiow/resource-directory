@@ -398,9 +398,9 @@ Internet-Draft           CoRE Resource Directory              March 2017
    the cardinality of the relations.
 
    Some of the attribute values are URIs.  Those values are always full
-   URIs and never relative references in the data model.  They can,
-   however, be expressed as relative references in serializations, and
-   often are.
+   URIs and never relative references in the information model.  They
+   can, however, be expressed as relative references in serializations,
+   and often are.
 
    These models provide an abstract view of the information expressed in
    link-format documents and a Resource Directory.  They cover the
@@ -2826,7 +2826,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    changes from -11 to -12
 
-   o  added ER diagram
+   o  added Content Model section, including ER diagram
 
    o  changed domain functionality
 
@@ -3421,16 +3421,12 @@ Internet-Draft           CoRE Resource Directory              March 2017
       For example, while a Link header in a page about a Swedish city
       might read
 
-
-
-   Link: </temperature/Malm%C3%B6>;rel="live-environment-data"
+      "Link: </temperature/Malm%C3%B6>;rel="live-environment-data""
 
       a link-format document from the same source might describe the
       link as
 
-
-
-   </temperature/Malmoe>;rel="live-environment-data"
+      "</temperature/Malmoe>;rel="live-environment-data""
 
 
 
@@ -3460,20 +3456,6 @@ Appendix B.  Syntax examples for Protocol Negotiation
 
    An endpoint could register as follows:
 
-
-
-
-
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 62]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    Req: POST coap://rd.example.com/rd?ep=node1
        &at=coap+tcp://[2001:db8:f1::2]
        &at=coap://[2001:db8:f1::2]
@@ -3483,6 +3465,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Res: 2.01 Created
    Location: /rd/1234
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 62]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    A UDP client would then query:
 
@@ -3522,14 +3512,6 @@ Authors' Addresses
    Email: Michael.Koster@smartthings.com
 
 
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 63]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    Carsten Bormann
    Universitaet Bremen TZI
    Postfach 330440
@@ -3538,6 +3520,14 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
+
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 63]
+
+Internet-Draft           CoRE Resource Directory              March 2017
 
 
    Peter van der Stok
@@ -3556,6 +3546,16 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Phone: +43-664-9790639
    Email: c.amsuess@energyharvesting.at
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -664,7 +664,7 @@ address {
 <a href="#rfc.section.3.3">3.3.</a> <a href="#ER-model" id="ER-model">Content model</a>
 </h1>
 <p id="rfc.section.3.3.p.1">The Entity-Relationship (ER) models shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> and <a href="#fig-ER-RD" class="xref">Figure 4</a> model the contents of /.well-known/core and the resource directory respectively, with entity-relationship diagrams <a href="#ER" class="xref">[ER]</a>. Entities (rectangles) are used for concepts that exist independently. Attributes (ovals) are used for concepts that exist only in connection with a related entity. Relations (diamonds) give a semantic meaning to the relation between entities. Numbers specify the cardinality of the relations.</p>
-<p id="rfc.section.3.3.p.2">Some of the attribute values are URIs. Those values are always full URIs and never relative references in the data model.  They can, however, be expressed as relative references in serializations, and often are.</p>
+<p id="rfc.section.3.3.p.2">Some of the attribute values are URIs. Those values are always full URIs and never relative references in the information model.  They can, however, be expressed as relative references in serializations, and often are.</p>
 <p id="rfc.section.3.3.p.3">These models provide an abstract view of the information expressed in link-format documents and a Resource Directory. They cover the concepts, but not necessarily all details of an RD&#8217;s operation; they are meant to give an overview, and not be a template for implementations.</p>
 <div id="rfc.figure.3"></div>
 <div id="fig-ER-WKC"></div>
@@ -2037,7 +2037,7 @@ link payload - new or modified links
 <p></p>
 
 <ul>
-<li>added ER diagram</li>
+<li>added Content Model section, including ER diagram</li>
 <li>changed domain functionality</li>
 <li>updated discovery text</li>
 <li>improved text on: atomicity, idempotency, multiple query, ep removal, simple registration</li>
@@ -2379,16 +2379,10 @@ POST coap://[2001:db8:f01::ff]/.well-known/core?ep-simple-host1
 <a href="#rfc.appendix.A.4">A.4.</a> <a href="#resolution-rules" id="resolution-rules">A note on differences between link-format and Link headers</a>
 </h1>
 <p id="rfc.section.A.4.p.1">While link-format and Link headers look very similar and are based on the same model of typed links, there are some differences between <a href="#RFC6690" class="xref">[RFC6690]</a> and <a href="#RFC5988" class="xref">[RFC5988]</a> that should be kept in mind when using or implementing a Resource Directory:</p>
-<pre>
-Link: &lt;/temperature/Malm%C3%B6&gt;;rel="live-environment-data"
-</pre>
-<pre>
-&lt;/temperature/Malm&#246;&gt;;rel="live-environment-data"
-</pre>
 <p></p>
 
 <ul>
-<li>There is no percent encoding in link-format documents.  <br><br> A link-format document is a UTF-8 encoded string of Unicode characters and does not have percent encoding, while Link headers are practically ASCII strings that use percent encoding for non-ASCII characters, stating the encoding explictly when required.  <br><br> For example, while a Link header in a page about a Swedish city might read  <br><br> <br><br> a link-format document from the same source might describe the link as  <br><br> <br><br> </li>
+<li>There is no percent encoding in link-format documents.  <br><br> A link-format document is a UTF-8 encoded string of Unicode characters and does not have percent encoding, while Link headers are practically ASCII strings that use percent encoding for non-ASCII characters, stating the encoding explictly when required.  <br><br> For example, while a Link header in a page about a Swedish city might read  <br><br> <samp>Link: &lt;/temperature/Malm%C3%B6&gt;;rel="live-environment-data"</samp>  <br><br> a link-format document from the same source might describe the link as  <br><br> <samp>&lt;/temperature/Malm&#246;&gt;;rel="live-environment-data"</samp>  <br><br> </li>
 <li>In a link-format document, if the anchor attribute is present, the link target reference is resolved by using the the (resolved) anchor value as Base URI for that link, while in Link headers, it is resolved against the URI of the requested document.  <br><br> This is explicit in <a href="#RFC6690" class="xref">[RFC6690]</a> section 2.1 for link-format, and spelled out in section B.2 of <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a> , which obsoletes the older <a href="#RFC5988" class="xref">[RFC5988]</a>.  <a href="#RFC6690" class="xref">[RFC6690]</a> is based on <a href="#RFC5988" class="xref">[RFC5988]</a> and has not been updated with clarifications from <a href="#I-D.nottingham-rfc5988bis" class="xref">[I-D.nottingham-rfc5988bis]</a>.</li>
 </ul>
 <h1 id="rfc.appendix.B">
