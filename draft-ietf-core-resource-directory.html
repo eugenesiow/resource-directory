@@ -313,7 +313,8 @@ address {
 <link href="#rfc.section.9.1" rel="Chapter" title="9.1 Resource Types">
 <link href="#rfc.section.9.2" rel="Chapter" title="9.2 IPv6 ND Resource Directory Address Option">
 <link href="#rfc.section.9.3" rel="Chapter" title="9.3 RD Parameter Registry">
-<link href="#rfc.section.9.4" rel="Chapter" title="9.4 Endpoint Type Parameter Registry">
+<link href="#rfc.section.9.3.1" rel="Chapter" title="9.3.1 Full description of the &#8220;Endpoint Type&#8221; Registration Parameter">
+<link href="#rfc.section.9.4" rel="Chapter" title="9.4 &#8220;Endpoint Type&#8221; (et=) RD Parameter values">
 <link href="#rfc.section.10" rel="Chapter" title="10 Examples">
 <link href="#rfc.section.10.1" rel="Chapter" title="10.1 Lighting Installation">
 <link href="#rfc.section.10.1.1" rel="Chapter" title="10.1.1 Installation Characteristics">
@@ -499,7 +500,9 @@ address {
 </li>
 <li>9.3.   <a href="#rfc.section.9.3">RD Parameter Registry</a>
 </li>
-<li>9.4.   <a href="#rfc.section.9.4">Endpoint Type Parameter Registry</a>
+<ul><li>9.3.1.   <a href="#rfc.section.9.3.1">Full description of the &#8220;Endpoint Type&#8221; Registration Parameter</a>
+</li>
+</ul><li>9.4.   <a href="#rfc.section.9.4">&#8220;Endpoint Type&#8221; (et=) RD Parameter values</a>
 </li>
 </ul><li>10.   <a href="#rfc.section.10">Examples</a>
 </li>
@@ -1724,13 +1727,25 @@ Req: GET /rd-lookup/res?et=sensor-node
 <p id="rfc.section.9.3.p.7">(Short: Short name used in query parameters or link attributes. Use: R = used at registration, L = used at lookup, A = expressed in link attribute</p>
 <p id="rfc.section.9.3.p.8">The descriptions for the options defined in this document are only summarized here.  To which registrations they apply and when they are to be shown is described in the respective sections of this document.</p>
 <p id="rfc.section.9.3.p.9">The IANA policy for future additions to the sub-registry is &#8220;Expert Review&#8221; as described in <a href="#RFC8126" class="xref">[RFC8126]</a>. The evaluation should consider formal criteria, duplication of functionality (Is the new entry redundant with an existing one?), topical suitability (Eg. is the described property actually a property of the endpoint and not a property of a particular resource, in which case it should go into the payload of the registration and need not be registered?), and the potential for conflict with commonly used link attributes (For example, <samp>if</samp> could be used as a parameter for conditional registration if it were not to be used in lookup or attributes, but would make a bad parameter for lookup, because a resource lookup with an <samp>if</samp> query parameter could ambiguously filter by the registered endpoint property or the <a href="#RFC6690" class="xref">[RFC6690]</a> link attribute).  It is expected that the registry will receive between 5 and 50 registrations in total over the next years.</p>
-<h1 id="rfc.section.9.4">
-<a href="#rfc.section.9.4">9.4.</a> <a href="#et-registry" id="et-registry">Endpoint Type Parameter Registry</a>
+<h1 id="rfc.section.9.3.1">
+<a href="#rfc.section.9.3.1">9.3.1.</a> <a href="#et-description" id="et-description">Full description of the &#8220;Endpoint Type&#8221; Registration Parameter</a>
 </h1>
-<p id="rfc.section.9.4.p.1">The Endpoint Type parameter is described as follows:</p>
-<p id="rfc.section.9.4.p.2">An endpoint registering at an RD can describe itself with endpoint types, similar to how resources are described with Resource Types in <a href="#RFC6690" class="xref">[RFC6690]</a>.  An endpoint type is expressed as a string, which can be either a URI or one of the values defined in the Endpoint Type subregistry; it SHOULD be shorter than 63 bytes.  Endpoint types can be passed in the <samp>et</samp> query parameter as part of extra-attrs at the Registration step, are shown on endpoint lookups using the <samp>et</samp> target attribute, and can be filtered for using <samp>et</samp> as a search criterion in resource and endpoint lookup.  Multiple endpoint types are given as separate query parameters or link attributes.</p>
-<p id="rfc.section.9.4.p.3">Note that Endpoint Type differs from Resource Type in that it uses multiple attributes rather than space separated values.  As a result, Resource Directory implementations automatically support correct filtering in the lookup interfaces from the rules for unknown endpoint attributes.</p>
-<p id="rfc.section.9.4.p.4">This specification establishes a new sub-registry under &#8220;CoRE Parameters&#8221; called &#8220;Endpoint Type&#8221;.  The registry properties (required policy, requirements, template) are identical to those of the Resource Type parameters in <a href="#RFC6690" class="xref">[RFC6690]</a>.  The registry is initially empty.</p>
+<p id="rfc.section.9.3.1.p.1">An endpoint registering at an RD can describe itself with endpoint types, similar to how resources are described with Resource Types in <a href="#RFC6690" class="xref">[RFC6690]</a>.  An endpoint type is expressed as a string, which can be either a URI or one of the values defined in the Endpoint Type subregistry.  Endpoint types can be passed in the <samp>et</samp> query parameter as part of extra-attrs at the Registration step, are shown on endpoint lookups using the <samp>et</samp> target attribute, and can be filtered for using <samp>et</samp> as a search criterion in resource and endpoint lookup.  Multiple endpoint types are given as separate query parameters or link attributes.</p>
+<p id="rfc.section.9.3.1.p.2">Note that Endpoint Type differs from Resource Type in that it uses multiple attributes rather than space separated values.  As a result, Resource Directory implementations automatically support correct filtering in the lookup interfaces from the rules for unknown endpoint attributes.</p>
+<h1 id="rfc.section.9.4">
+<a href="#rfc.section.9.4">9.4.</a> <a href="#et-registry" id="et-registry">&#8220;Endpoint Type&#8221; (et=) RD Parameter values</a>
+</h1>
+<p id="rfc.section.9.4.p.1">This specification establishes a new sub-registry under &#8220;CoRE Parameters&#8221; called &#8216;&#8220;Endpoint Type&#8221; (et=) RD Parameter values&#8217;.  The registry properties (required policy, requirements, template) are identical to those of the Resource Type parameters in <a href="#RFC6690" class="xref">[RFC6690]</a>, in short:</p>
+<p id="rfc.section.9.4.p.2">The review policy is IETF Review for values starting with &#8220;core&#8221;, and Specification Required for others.</p>
+<p id="rfc.section.9.4.p.3">The requirements to be enforced are:</p>
+<p></p>
+
+<ul>
+<li>The values MUST be related to the purpose described in <a href="#et-description" class="xref">Section 9.3.1</a>.</li>
+<li>The registered values MUST conform to the ABNF reg-rel-type definition of <a href="#RFC6690" class="xref">[RFC6690]</a> and MUST NOT be a URI.</li>
+<li>It is recommended to use the period &#8220;.&#8221; character for segmentation.</li>
+</ul>
+<p id="rfc.section.9.4.p.5">The registry is initially empty.</p>
 <h1 id="rfc.section.10">
 <a href="#rfc.section.10">10.</a> <a href="#examples" id="examples">Examples</a>
 </h1>
