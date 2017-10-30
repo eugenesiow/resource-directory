@@ -117,7 +117,7 @@ Internet-Draft           CoRE Resource Directory              March 2017
      8.1.  Endpoint Identification and Authentication  . . . . . . .  38
      8.2.  Access Control  . . . . . . . . . . . . . . . . . . . . .  39
      8.3.  Denial of Service Attacks . . . . . . . . . . . . . . . .  39
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  39
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
      9.1.  Resource Types  . . . . . . . . . . . . . . . . . . . . .  40
      9.2.  IPv6 ND Resource Directory Address Option . . . . . . . .  40
      9.3.  RD Parameter Registry . . . . . . . . . . . . . . . . . .  40
@@ -1980,6 +1980,25 @@ Payload in Hex notation:
 Decoded payload:
 [{1: "/temp", 9: "temperature", 3: "coap://[2001:db8:3::123]:61616"}]
 
+   A client that wants to be notified of new resources as they show up
+   can use observation:
+
+   Req: GET /rd-lookup/res?rt=light
+   Observe: 0
+
+   Res: 2.05 Content
+   Observe: 23
+   Payload: empty
+
+   (at a later point in time)
+
+   Res: 2.05 Content
+   Observe: 24
+   Payload:
+   </west>;rt="light";anchor="coap://[2001:db8:3::124]",
+   </south>;rt="light";anchor="coap://[2001:db8:3::124]",
+   </east>;rt="light";anchor="coap://[2001:db8:3::124]"
+
    The following example shows a client performing an endpoint type
    lookup:
 
@@ -1990,6 +2009,14 @@ Decoded payload:
    et="power-node";ct="40";lt="600",
    </rd/4521>;con="coap://[2001:db8:3::129]:61616";ep="node7";
    et="power-node";ct="40";lt="600";d="floor-3"
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 36]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
 
    The following example shows a client performing a group lookup for
    all groups:
@@ -2008,15 +2035,6 @@ Req: GET /rd-lookup/ep?gp=lights1
 Res: 2.05 Content
 </rd/abcd>;con="coap://[2001:db8:3::123]:61616";ep="node1";et="power-node";ct="40";lt="600",
 </rd/efgh>;con="coap://[2001:db8:3::124]:61616";ep="node2";et="power-node";ct="40";lt="600"
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 36]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
    The following example shows a client performing a lookup for all
    groups the endpoint "node1" belongs to:
@@ -2047,6 +2065,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
    </res/8>;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
    </res/9>;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 37]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    The following example shows a client performing a lookup of all
    resources from endpoints of a given endpoint type.  It assumes that
    two endpoints (with endpoint names "sensor1" and "sensor2") have
@@ -2056,23 +2083,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    It demonstrates how the link targets stay unmodified, but the anchors
    get constructed by the resource directory:
-
-
-
-
-
-
-
-
-
-
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 37]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
 
   Req: GET /rd-lookup/res?et=sensor-node
 
@@ -2111,6 +2121,15 @@ Internet-Draft           CoRE Resource Directory              March 2017
    NOT be identified by its protocol, port or IP address as these may
    change over the lifetime of an Endpoint.
 
+
+
+
+
+Shelby, et al.         Expires September 27, 2017              [Page 38]
+
+Internet-Draft           CoRE Resource Directory              March 2017
+
+
    Every operation performed by an Endpoint or Client on a resource
    directory SHOULD be mutually authenticated using Pre-Shared Key, Raw
    Public Key or Certificate based security.
@@ -2122,14 +2141,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
 
    Now, imagine that a malicious device A wants to sabotage the device
    B.  It uses its credentials during the TLS exchange.  Then, it puts
-
-
-
-Shelby, et al.         Expires September 27, 2017              [Page 38]
-
-Internet-Draft           CoRE Resource Directory              March 2017
-
-
    the endpoint name of device B.  If the server does not check whether
    the identifier provided in the DTLS handshake matches the identifier
    used at the CoAP layer then it may be inclined to use the endpoint
@@ -2167,17 +2178,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    unprotected UDP, there is no return routability check, and they can
    have a large amplification factor.  The responses from the NTP server
    were found to be 19 times larger than the request.  A Resource
-   Directory (RD) which responds to wild-card lookups is potentially
-   vulnerable if run with CoAP over UDP.  Since there is no return
-   routability check and the responses can be significantly larger than
-   requests, RDs can unknowingly become part of a DDoS amplification
-   attack.
-
-9.  IANA Considerations
-
-
-
-
 
 
 
@@ -2185,6 +2185,14 @@ Shelby, et al.         Expires September 27, 2017              [Page 39]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   Directory (RD) which responds to wild-card lookups is potentially
+   vulnerable if run with CoAP over UDP.  Since there is no return
+   routability check and the responses can be significantly larger than
+   requests, RDs can unknowingly become part of a DDoS amplification
+   attack.
+
+9.  IANA Considerations
 
 9.1.  Resource Types
 
@@ -2226,14 +2234,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    parameter and expose any parameter passed at registration or updates
    on in endpoint lookups.  (For example, if a parameter used at
    registration were to be confidential, the registering endpoint should
-   be instructed to only set that parameter if the RD advertises support
-   for keeping it confidential at the discovery step.)
-
-   Initial entries in this sub-registry are as follows:
-
-
-
-
 
 
 
@@ -2241,6 +2241,11 @@ Shelby, et al.         Expires September 27, 2017              [Page 40]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   be instructed to only set that parameter if the RD advertises support
+   for keeping it confidential at the discovery step.)
+
+   Initial entries in this sub-registry are as follows:
 
    +----------+-------+---------------+-----+--------------------------+
    | Full     | Short | Validity      | Use | Description              |
@@ -2285,11 +2290,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    example, "if" could be used as a parameter for conditional
    registration if it were not to be used in lookup or attributes, but
    would make a bad parameter for lookup, because a resource lookup with
-   an "if" query parameter could ambiguously filter by the registered
-   endpoint property or the [RFC6690] link attribute).  It is expected
-   that the registry will receive between 5 and 50 registrations in
-   total over the next years.
-
 
 
 
@@ -2297,6 +2297,11 @@ Shelby, et al.         Expires September 27, 2017              [Page 41]
 
 Internet-Draft           CoRE Resource Directory              March 2017
 
+
+   an "if" query parameter could ambiguously filter by the registered
+   endpoint property or the [RFC6690] link attribute).  It is expected
+   that the registry will receive between 5 and 50 registrations in
+   total over the next years.
 
 9.4.  Endpoint Type Parameter Registry
 
@@ -2341,11 +2346,6 @@ Internet-Draft           CoRE Resource Directory              March 2017
    or naming procedures, because the example only "emphasizes" some of
    the issues that may influence the use of the RD and does not pretend
    to be normative.
-
-
-
-
-
 
 
 

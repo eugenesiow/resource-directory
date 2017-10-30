@@ -1513,7 +1513,25 @@ Payload in Hex notation:
 Decoded payload:
 [{1: "/temp", 9: "temperature", 3: "coap://[2001:db8:3::123]:61616"}]
 </pre>
-<p id="rfc.section.7.4.p.4">The following example shows a client performing an endpoint type lookup:</p>
+<p id="rfc.section.7.4.p.4">A client that wants to be notified of new resources as they show up can use observation:</p>
+<pre>
+Req: GET /rd-lookup/res?rt=light
+Observe: 0
+
+Res: 2.05 Content
+Observe: 23
+Payload: empty
+
+(at a later point in time)
+
+Res: 2.05 Content
+Observe: 24
+Payload:
+&lt;/west&gt;;rt="light";anchor="coap://[2001:db8:3::124]",
+&lt;/south&gt;;rt="light";anchor="coap://[2001:db8:3::124]",
+&lt;/east&gt;;rt="light";anchor="coap://[2001:db8:3::124]"
+</pre>
+<p id="rfc.section.7.4.p.5">The following example shows a client performing an endpoint type lookup:</p>
 <pre>
 Req: GET /rd-lookup/ep?et=power-node
 
@@ -1523,7 +1541,7 @@ et="power-node";ct="40";lt="600",
 &lt;/rd/4521&gt;;con="coap://[2001:db8:3::129]:61616";ep="node7";
 et="power-node";ct="40";lt="600";d="floor-3"
 </pre>
-<p id="rfc.section.7.4.p.5">The following example shows a client performing a group lookup for all groups:</p>
+<p id="rfc.section.7.4.p.6">The following example shows a client performing a group lookup for all groups:</p>
 <pre>
 Req: GET /rd-lookup/gp
 
@@ -1531,7 +1549,7 @@ Res: 2.05 Content
 &lt;/rd-group/1&gt;;gp="lights1";d="example.com";con="coap://[ff35:30:2001:db8::1]",
 &lt;/rd-group/2&gt;;gp="lights2";d="example.com";con="coap://[ff35:30:2001:db8::2]"
 </pre>
-<p id="rfc.section.7.4.p.6">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
+<p id="rfc.section.7.4.p.7">The following example shows a client performing a lookup for all endpoints in a particular group:</p>
 <pre>
 Req: GET /rd-lookup/ep?gp=lights1
 
@@ -1539,14 +1557,14 @@ Res: 2.05 Content
 &lt;/rd/abcd&gt;;con="coap://[2001:db8:3::123]:61616";ep="node1";et="power-node";ct="40";lt="600",
 &lt;/rd/efgh&gt;;con="coap://[2001:db8:3::124]:61616";ep="node2";et="power-node";ct="40";lt="600"
 </pre>
-<p id="rfc.section.7.4.p.7">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
+<p id="rfc.section.7.4.p.8">The following example shows a client performing a lookup for all groups the endpoint &#8220;node1&#8221; belongs to:</p>
 <pre>
 Req: GET /rd-lookup/gp?ep=node1
 
 Res: 2.05 Content
 &lt;/rd-group/1&gt;;gp="lights1"
 </pre>
-<p id="rfc.section.7.4.p.8">The following example shows a client performing a paginated resource lookup</p>
+<p id="rfc.section.7.4.p.9">The following example shows a client performing a paginated resource lookup</p>
 <pre>
 Req: GET /rd-lookup/res?page=0&amp;count=5
 
@@ -1566,8 +1584,8 @@ Res: 2.05 Content
 &lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
 &lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.4.p.9">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
-<p id="rfc.section.7.4.p.10">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
+<p id="rfc.section.7.4.p.10">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.4.p.11">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
 Req: GET /rd-lookup/res?et=sensor-node
 
