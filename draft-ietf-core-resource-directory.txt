@@ -5,14 +5,14 @@
 CoRE                                                           Z. Shelby
 Internet-Draft                                                       ARM
 Intended status: Standards Track                               M. Koster
-Expires: May 3, 2018                                         SmartThings
+Expires: May 4, 2018                                         SmartThings
                                                               C. Bormann
                                                  Universitaet Bremen TZI
                                                          P. van der Stok
                                                               consultant
                                                          C. Amsuess, Ed.
                                              Energy Harvesting Solutions
-                                                        October 30, 2017
+                                                        October 31, 2017
 
 
                         CoRE Resource Directory
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 3, 2018.
+   This Internet-Draft will expire on May 4, 2018.
 
 
 
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 1]
+Shelby, et al.             Expires May 4, 2018                  [Page 1]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 2]
+Shelby, et al.             Expires May 4, 2018                  [Page 2]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -165,7 +165,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 3]
+Shelby, et al.             Expires May 4, 2018                  [Page 3]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -221,7 +221,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 4]
+Shelby, et al.             Expires May 4, 2018                  [Page 4]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -277,7 +277,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 5]
+Shelby, et al.             Expires May 4, 2018                  [Page 5]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -333,7 +333,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 6]
+Shelby, et al.             Expires May 4, 2018                  [Page 6]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -389,7 +389,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 7]
+Shelby, et al.             Expires May 4, 2018                  [Page 7]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -445,7 +445,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 8]
+Shelby, et al.             Expires May 4, 2018                  [Page 8]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -501,7 +501,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                  [Page 9]
+Shelby, et al.             Expires May 4, 2018                  [Page 9]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -557,7 +557,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 10]
+Shelby, et al.             Expires May 4, 2018                 [Page 10]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -613,7 +613,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 11]
+Shelby, et al.             Expires May 4, 2018                 [Page 11]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -669,7 +669,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 12]
+Shelby, et al.             Expires May 4, 2018                 [Page 12]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -725,7 +725,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 13]
+Shelby, et al.             Expires May 4, 2018                 [Page 13]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -781,7 +781,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 14]
+Shelby, et al.             Expires May 4, 2018                 [Page 14]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -837,7 +837,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 15]
+Shelby, et al.             Expires May 4, 2018                 [Page 15]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -893,7 +893,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 16]
+Shelby, et al.             Expires May 4, 2018                 [Page 16]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -949,7 +949,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 17]
+Shelby, et al.             Expires May 4, 2018                 [Page 17]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 18]
+Shelby, et al.             Expires May 4, 2018                 [Page 18]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 19]
+Shelby, et al.             Expires May 4, 2018                 [Page 19]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1117,7 +1117,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 20]
+Shelby, et al.             Expires May 4, 2018                 [Page 20]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1173,7 +1173,7 @@ Location: /rd/4521
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 21]
+Shelby, et al.             Expires May 4, 2018                 [Page 21]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1229,7 +1229,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 22]
+Shelby, et al.             Expires May 4, 2018                 [Page 22]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1285,7 +1285,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 23]
+Shelby, et al.             Expires May 4, 2018                 [Page 23]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1341,7 +1341,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 24]
+Shelby, et al.             Expires May 4, 2018                 [Page 24]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1397,7 +1397,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 25]
+Shelby, et al.             Expires May 4, 2018                 [Page 25]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1453,7 +1453,7 @@ Payload:
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 26]
+Shelby, et al.             Expires May 4, 2018                 [Page 26]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1509,7 +1509,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 27]
+Shelby, et al.             Expires May 4, 2018                 [Page 27]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1565,7 +1565,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 28]
+Shelby, et al.             Expires May 4, 2018                 [Page 28]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1621,7 +1621,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 29]
+Shelby, et al.             Expires May 4, 2018                 [Page 29]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1677,7 +1677,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 30]
+Shelby, et al.             Expires May 4, 2018                 [Page 30]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1733,7 +1733,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 31]
+Shelby, et al.             Expires May 4, 2018                 [Page 31]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1789,7 +1789,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 32]
+Shelby, et al.             Expires May 4, 2018                 [Page 32]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1845,7 +1845,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 33]
+Shelby, et al.             Expires May 4, 2018                 [Page 33]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1901,7 +1901,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 34]
+Shelby, et al.             Expires May 4, 2018                 [Page 34]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -1957,7 +1957,7 @@ Decoded payload:
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 35]
+Shelby, et al.             Expires May 4, 2018                 [Page 35]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2013,7 +2013,7 @@ Res: 2.05 Content
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 36]
+Shelby, et al.             Expires May 4, 2018                 [Page 36]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2069,7 +2069,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 37]
+Shelby, et al.             Expires May 4, 2018                 [Page 37]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2125,7 +2125,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 38]
+Shelby, et al.             Expires May 4, 2018                 [Page 38]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2181,7 +2181,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 39]
+Shelby, et al.             Expires May 4, 2018                 [Page 39]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2237,7 +2237,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 40]
+Shelby, et al.             Expires May 4, 2018                 [Page 40]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2293,7 +2293,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 41]
+Shelby, et al.             Expires May 4, 2018                 [Page 41]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2349,7 +2349,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 42]
+Shelby, et al.             Expires May 4, 2018                 [Page 42]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2405,7 +2405,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 43]
+Shelby, et al.             Expires May 4, 2018                 [Page 43]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2461,7 +2461,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 44]
+Shelby, et al.             Expires May 4, 2018                 [Page 44]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2517,7 +2517,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 45]
+Shelby, et al.             Expires May 4, 2018                 [Page 45]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2573,7 +2573,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 46]
+Shelby, et al.             Expires May 4, 2018                 [Page 46]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2629,7 +2629,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 47]
+Shelby, et al.             Expires May 4, 2018                 [Page 47]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2685,7 +2685,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 48]
+Shelby, et al.             Expires May 4, 2018                 [Page 48]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2741,7 +2741,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 49]
+Shelby, et al.             Expires May 4, 2018                 [Page 49]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2797,7 +2797,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 50]
+Shelby, et al.             Expires May 4, 2018                 [Page 50]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2853,7 +2853,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 51]
+Shelby, et al.             Expires May 4, 2018                 [Page 51]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -2865,6 +2865,8 @@ Internet-Draft           CoRE Resource Directory            October 2017
       modification)
 
    o  enhanced IANA registry text
+
+   o  state that lookup resources can be observable
 
    o  More examples and improved text
 
@@ -2905,14 +2907,14 @@ Internet-Draft           CoRE Resource Directory            October 2017
       .well-known/core resource to accept POST data and handle it in a
       special way; we already have /rd for that
 
-   o  add IPv6 ND Option for discovery of an RD
 
 
-
-Shelby, et al.             Expires May 3, 2018                 [Page 52]
+Shelby, et al.             Expires May 4, 2018                 [Page 52]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
+
+   o  add IPv6 ND Option for discovery of an RD
 
    o  clarify group configuration section 6.1 that endpoints must be
       registered before including them in a group
@@ -2961,14 +2963,14 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
    o  Added an example for lighting and DNS integration
 
-   o  Added an example for RD use in OMA LWM2M
 
 
-
-Shelby, et al.             Expires May 3, 2018                 [Page 53]
+Shelby, et al.             Expires May 4, 2018                 [Page 53]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
+
+   o  Added an example for RD use in OMA LWM2M
 
    o  Added Read Links operation for link inspection by endpoints
 
@@ -3016,15 +3018,15 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
    o  Restricted Update to parameter updates.
 
-   o  Added pagination support for the Lookup interface.
 
 
 
-
-Shelby, et al.             Expires May 3, 2018                 [Page 54]
+Shelby, et al.             Expires May 4, 2018                 [Page 54]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
+
+   o  Added pagination support for the Lookup interface.
 
    o  Minor editing, bug fixes and reference updates.
 
@@ -3075,9 +3077,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-
-
-Shelby, et al.             Expires May 3, 2018                 [Page 55]
+Shelby, et al.             Expires May 4, 2018                 [Page 55]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3133,7 +3133,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 56]
+Shelby, et al.             Expires May 4, 2018                 [Page 56]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3152,8 +3152,8 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
    [I-D.arkko-core-dev-urn]
               Arkko, J., Jennings, C., and Z. Shelby, "Uniform Resource
-              Names for Device Identifiers", draft-arkko-core-dev-urn-04
-              (work in progress), July 2017.
+              Names for Device Identifiers", draft-arkko-core-dev-urn-05
+              (work in progress), October 2017.
 
    [I-D.nottingham-rfc5988bis]
               Nottingham, M., "Web Linking", draft-nottingham-
@@ -3189,7 +3189,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 57]
+Shelby, et al.             Expires May 4, 2018                 [Page 57]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3245,7 +3245,7 @@ A.1.  A simple example
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 58]
+Shelby, et al.             Expires May 4, 2018                 [Page 58]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3301,7 +3301,7 @@ A.2.  A slightly more complex example
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 59]
+Shelby, et al.             Expires May 4, 2018                 [Page 59]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3357,7 +3357,7 @@ A.3.  Enter the Resource Directory
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 60]
+Shelby, et al.             Expires May 4, 2018                 [Page 60]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3413,7 +3413,7 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 61]
+Shelby, et al.             Expires May 4, 2018                 [Page 61]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3469,7 +3469,7 @@ Appendix B.  Syntax examples for Protocol Negotiation
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 62]
+Shelby, et al.             Expires May 4, 2018                 [Page 62]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3525,7 +3525,7 @@ Authors' Addresses
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 63]
+Shelby, et al.             Expires May 4, 2018                 [Page 63]
 
 Internet-Draft           CoRE Resource Directory            October 2017
 
@@ -3581,4 +3581,4 @@ Internet-Draft           CoRE Resource Directory            October 2017
 
 
 
-Shelby, et al.             Expires May 3, 2018                 [Page 64]
+Shelby, et al.             Expires May 4, 2018                 [Page 64]
