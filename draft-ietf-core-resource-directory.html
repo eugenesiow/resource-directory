@@ -280,14 +280,14 @@ address {
 <link href="#rfc.section.3" rel="Chapter" title="3 Architecture and Use Cases">
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Principles">
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Architecture">
-<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Content model">
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 RD Content Model">
 <link href="#rfc.section.3.4" rel="Chapter" title="3.4 Use Case: Cellular M2M">
 <link href="#rfc.section.3.5" rel="Chapter" title="3.5 Use Case: Home and Building Automation">
 <link href="#rfc.section.3.6" rel="Chapter" title="3.6 Use Case: Link Catalogues">
 <link href="#rfc.section.4" rel="Chapter" title="4 Finding a Resource Directory">
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Resource Directory Address Option (RDAO)">
 <link href="#rfc.section.5" rel="Chapter" title="5 Resource Directory">
-<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Content Formats">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Payload Content Formats">
 <link href="#rfc.section.5.2" rel="Chapter" title="5.2 URI Discovery">
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Registration">
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Simple Registration">
@@ -345,7 +345,7 @@ address {
 
   <meta name="dct.creator" content="Shelby, Z., Koster, M., Bormann, C., van der Stok, P., and C. Ams&#252;ss, Ed." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-resource-directory-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-10-31" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-11-01" />
   <meta name="dct.abstract" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
   <meta name="description" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
 
@@ -369,7 +369,7 @@ address {
 <td class="right">M. Koster</td>
 </tr>
 <tr>
-<td class="left">Expires: May 4, 2018</td>
+<td class="left">Expires: May 5, 2018</td>
 <td class="right">SmartThings</td>
 </tr>
 <tr>
@@ -398,7 +398,7 @@ address {
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">October 31, 2017</td>
+<td class="right">November 01, 2017</td>
 </tr>
 
     	
@@ -414,7 +414,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 4, 2018.</p>
+<p>This Internet-Draft will expire on May 5, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -434,7 +434,7 @@ address {
 </li>
 <li>3.2.   <a href="#rfc.section.3.2">Architecture</a>
 </li>
-<li>3.3.   <a href="#rfc.section.3.3">Content model</a>
+<li>3.3.   <a href="#rfc.section.3.3">RD Content Model</a>
 </li>
 <li>3.4.   <a href="#rfc.section.3.4">Use Case: Cellular M2M</a>
 </li>
@@ -448,7 +448,7 @@ address {
 </li>
 </ul><li>5.   <a href="#rfc.section.5">Resource Directory</a>
 </li>
-<ul><li>5.1.   <a href="#rfc.section.5.1">Content Formats</a>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Payload Content Formats</a>
 </li>
 <li>5.2.   <a href="#rfc.section.5.2">URI Discovery</a>
 </li>
@@ -661,7 +661,7 @@ address {
 </pre>
 <p class="figure">Figure 2: The resource directory information hierarchy.</p>
 <h1 id="rfc.section.3.3">
-<a href="#rfc.section.3.3">3.3.</a> <a href="#ER-model" id="ER-model">Content model</a>
+<a href="#rfc.section.3.3">3.3.</a> <a href="#ER-model" id="ER-model">RD Content Model</a>
 </h1>
 <p id="rfc.section.3.3.p.1">The Entity-Relationship (ER) models shown in <a href="#fig-ER-WKC" class="xref">Figure 3</a> and <a href="#fig-ER-RD" class="xref">Figure 4</a> model the contents of /.well-known/core and the resource directory respectively, with entity-relationship diagrams <a href="#ER" class="xref">[ER]</a>. Entities (rectangles) are used for concepts that exist independently. Attributes (ovals) are used for concepts that exist only in connection with a related entity. Relations (diamonds) give a semantic meaning to the relation between entities. Numbers specify the cardinality of the relations.</p>
 <p id="rfc.section.3.3.p.2">Some of the attribute values are URIs. Those values are always full URIs and never relative references in the information model.  They can, however, be expressed as relative references in serializations, and often are.</p>
@@ -709,7 +709,7 @@ address {
 <p></p>
 
 <ul>
-<li>Zero or more link relations: They describe a relations between the link context and the link target.  <br><br> In link-format serialization, they are expressed as space-separated values in the &#8220;rel&#8221; attribute, and default to &#8220;hosts&#8221;.</li>
+<li>Zero or more link relations: They describe relations between the link context and the link target.  <br><br> In link-format serialization, they are expressed as space-separated values in the &#8220;rel&#8221; attribute, and default to &#8220;hosts&#8221;.</li>
 <li>A link context URI: It defines the source of the relation, eg. <em>who</em> &#8220;hosts&#8221; something.  <br><br> In link-format serialization, it is expressed in the &#8220;anchor&#8221; attribute. There, it can be a relative reference, in which case it gets resolved against the URI of the <samp>.well-known/core</samp> document it was obtained from . It defaults to that document&#8217;s URI.  <br><br> In the serialization, the context also serves as the Base URI for resolving the target reference.</li>
 <li>A link target URI: It defines the destination of the relation (eg. <em>what</em> is hosted), and is the topic of all target attributes.</li>
 </ul>
@@ -830,7 +830,7 @@ o  con  o-------|  registration |---------&lt; composed of &gt;
 <h1 id="rfc.section.4.1">
 <a href="#rfc.section.4.1">4.1.</a> <a href="#rdao" id="rdao">Resource Directory Address Option (RDAO)</a>
 </h1>
-<p id="rfc.section.4.1.p.1">The Resource Directory Option (RDAO) using IPv6 neighbor Discovery (ND) carries information about the address of the Resource Directory (RD). This information is needed when endpoints cannot discover the Resource Directory with link-local multicast address because the endpoint and the RD are separated by a border Router (6LBR). In many circumstances the availability of DHCP cannot be guaranteed either during commissioning of the network. The presence and the use of the RD is essential during commissioning.</p>
+<p id="rfc.section.4.1.p.1">The Resource Directory Address Option (RDAO) using IPv6 neighbor Discovery (ND) carries information about the address of the Resource Directory (RD). This information is needed when endpoints cannot discover the Resource Directory with a link-local multicast address because the endpoint and the RD are separated by a border Router (6LBR). In many circumstances the availability of DHCP cannot be guaranteed either during commissioning of the network. The presence and the use of the RD is essential during commissioning.</p>
 <p id="rfc.section.4.1.p.2">It is possible to send multiple RDAO options in one message, indicating as many resource directory addresses.</p>
 <p id="rfc.section.4.1.p.3">The lifetime 0x0 means that the RD address is invalid and to be removed.</p>
 <p id="rfc.section.4.1.p.4">The RDAO format is:</p>
@@ -883,7 +883,7 @@ RD Address:             IPv6 address of the RD.
 <p id="rfc.section.5.p.2">All operations on the contents of the Resource Directory MUST be atomic and idempotent.</p>
 <p id="rfc.section.5.p.3">A resource directory MAY make the information submitted to it available to further directories, if it can ensure that a loop does not form.  The protocol used between directories to ensure loop-free operation is outside the scope of this document.</p>
 <h1 id="rfc.section.5.1">
-<a href="#rfc.section.5.1">5.1.</a> <a href="#content-formats" id="content-formats">Content Formats</a>
+<a href="#rfc.section.5.1">5.1.</a> <a href="#payload-content-formats" id="payload-content-formats">Payload Content Formats</a>
 </h1>
 <p id="rfc.section.5.1.p.1">Resource Directory implementations using this specification MUST support the application/link-format content format (ct=40).</p>
 <p id="rfc.section.5.1.p.2">Resource Directories implementing this specification MAY support additional content formats.</p>
@@ -963,7 +963,7 @@ Res: 2.05 Content
 <h1 id="rfc.section.5.3">
 <a href="#rfc.section.5.3">5.3.</a> <a href="#registration" id="registration">Registration</a>
 </h1>
-<p id="rfc.section.5.3.p.1">After discovering the location of an RD, an endpoint MAY register its resources using the registration interface. This interface accepts a POST from an endpoint containing the list of resources to be added to the directory as the message payload in the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>, JSON CoRE Link Format (application/link-format+json), or CBOR CoRE Link Format (application/link-format+cbor)  <a href="#I-D.ietf-core-links-json" class="xref">[I-D.ietf-core-links-json]</a>, along with query parameters indicating the name of the endpoint, and optionally its domain and the lifetime of the registration.  It is expected that other specifications will define further parameters (see <a href="#iana-registry" class="xref">Section 9.3</a>). The RD then creates a new registration resource in the RD and returns its location. An endpoint MUST use that location when refreshing registrations using this interface. Registration resources in the RD are kept active for the period indicated by the lifetime parameter. The endpoint is responsible for refreshing the registration resource within this period using either the registration or update interface. The registration interface MUST be implemented to be idempotent, so that registering twice with the same endpoint parameters ep and d does not create multiple registration resources.  A new registration resource may be created at any time to supersede an existing registration, replacing the registration parameters and links.</p>
+<p id="rfc.section.5.3.p.1">After discovering the location of an RD, an endpoint MAY register its resources using the registration interface. This interface accepts a POST from an endpoint containing the list of resources to be added to the directory as the message payload in the CoRE Link Format <a href="#RFC6690" class="xref">[RFC6690]</a>, JSON CoRE Link Format (application/link-format+json), or CBOR CoRE Link Format (application/link-format+cbor)  <a href="#I-D.ietf-core-links-json" class="xref">[I-D.ietf-core-links-json]</a>, along with query parameters indicating the name of the endpoint, and optionally the domain and the lifetime of the registration.  It is expected that other specifications will define further parameters (see <a href="#iana-registry" class="xref">Section 9.3</a>). The RD then creates a new registration resource in the RD and returns its location. An endpoint MUST use that location when refreshing registrations using this interface. Registration resources in the RD are kept active for the period indicated by the lifetime parameter. The endpoint is responsible for refreshing the registration resource within this period using either the registration or update interface. The registration interface MUST be implemented to be idempotent, so that registering twice with the same endpoint parameters ep and d does not create multiple registration resources.  A new registration resource may be created at any time to supersede an existing registration, replacing the registration parameters and links.</p>
 <p id="rfc.section.5.3.p.2">An empty payload is considered a malformed request.</p>
 <p id="rfc.section.5.3.p.3">The posted link-format document can (and typically does) contain relative references both in its link targets and in its anchors, or contain empty anchors.  The RD server needs to resolve these references in order to faithfully represent them in lookups.  The Base URI against which they are resolved is the context of the registration, which is provided either explicitly in the <samp>con</samp> parameter or constructed implicitly from the requester&#8217;s network address.  When resolving relative target references, the server first resolves the context of that link, and then interprets the target as a reference relative to that context (see <a href="#resolution-rules" class="xref">Appendix A.4</a>).</p>
 <p id="rfc.section.5.3.p.4">The registration request interface is specified as follows:</p>
@@ -982,9 +982,9 @@ Res: 2.05 Content
 <dt>rd :=</dt>
 <dd style="margin-left: 8">RD registration URI (mandatory). This is the location of the RD, as obtained from discovery.</dd>
 <dt>ep :=</dt>
-<dd style="margin-left: 8">Endpoint name (mostly mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.  If the RD is configured to recognize the endpoint (eg. based on its security context), the endpoint can elide the endpoint name, and assign one based on the configuration.</dd>
+<dd style="margin-left: 8">Endpoint name (mostly mandatory). The endpoint name is an identifier that MUST be unique within a domain.  The maximum length of this parameter is 63 bytes.  If the RD is configured to recognize the endpoint (eg. based on its security context), the endpoint can elide the endpoint name, and assign one based on the configuration parameter values.</dd>
 <dt>d :=</dt>
-<dd style="margin-left: 8">Domain (optional). The domain to which this endpoint belongs. The maximum length of this parameter is 63 bytes. When this parameter is elided, the RD MAY associate the endpoint with a configured default domain.</dd>
+<dd style="margin-left: 8">Domain (optional). The domain to which this endpoint belongs. The maximum length of this parameter is 63 bytes. When this parameter is not present, the RD MAY associate the endpoint with a configured default domain or leave it empty.</dd>
 <dt>lt :=</dt>
 <dd style="margin-left: 8">Lifetime (optional). Lifetime of the registration in seconds. Range of 60-4294967295.  If no lifetime is included in the initial registration, a default value of 86400 (24 hours) SHOULD be assumed.</dd>
 <dt>con :=</dt>
@@ -1071,22 +1071,22 @@ Payload:
 <h1 id="rfc.section.5.3.2">
 <a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#third-party-registration" id="third-party-registration">Third-party registration</a>
 </h1>
-<p id="rfc.section.5.3.2.p.1">For some applications, even Simple Registration may be too taxing for certain very constrained devices, in particular if the security requirements become too onerous.</p>
+<p id="rfc.section.5.3.2.p.1">For some applications, even Simple Registration may be too taxing for some very constrained devices, in particular if the security requirements become too onerous.</p>
 <p id="rfc.section.5.3.2.p.2">In a controlled environment (e.g. building control), the Resource Directory can be filled by a third device, called a commissioning tool. The commissioning tool can fill the Resource Directory from a database or other means. For that purpose the scheme, IP address and port of the registered device is indicated in the Context parameter of the registration described in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <h1 id="rfc.section.5.4">
 <a href="#rfc.section.5.4">5.4.</a> <a href="#operations-on-the-registration-resource" id="operations-on-the-registration-resource">Operations on the Registration Resource</a>
 </h1>
 <p id="rfc.section.5.4.p.1">After the initial registration, an endpoint should retain the returned location of the Registration Resource for further operations, including refreshing the registration in order to extend the lifetime and &#8220;keep-alive&#8221; the registration. When the lifetime of the registration has expired, the RD SHOULD NOT respond to discovery queries concerning this endpoint. The RD SHOULD continue to provide access to the Registration Resource after a registration time-out occurs in order to enable the registering endpoint to eventually refresh the registration. The RD MAY eventually remove the registration resource for the purpose of resource recovery and garbage collection. If the Registration Resource is removed, the endpoint will need to re-register.</p>
-<p id="rfc.section.5.4.p.2">The Registration Resource may also be used to inspect the registration resource using GET, update the registration link contents, or cancel the registration using DELETE.</p>
+<p id="rfc.section.5.4.p.2">The Registration Resource may also be used to inspect the registration resource using GET, update the registration, or cancel the registration using DELETE.</p>
 <p id="rfc.section.5.4.p.3">These operations are described in this section.</p>
 <h1 id="rfc.section.5.4.1">
 <a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#update" id="update">Registration Update</a>
 </h1>
-<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned in the Location header option in the response returned from the initial registration operation.</p>
+<p id="rfc.section.5.4.1.p.1">The update interface is used by an endpoint to refresh or update its registration with an RD. To use the interface, the endpoint sends a POST request to the registration resource returned by the initial registration operation.</p>
 <p id="rfc.section.5.4.1.p.2">An update MAY update the lifetime- or the context- registration parameters &#8220;lt&#8221;, &#8220;con&#8221; as in <a href="#registration" class="xref">Section 5.3</a>. Parameters that are not being changed SHOULD NOT be included in an update. Adding parameters that have not changed increases the size of the message but does not have any other implications.  Parameters MUST be included as query parameters in an update operation as in <a href="#registration" class="xref">Section 5.3</a>.</p>
 <p id="rfc.section.5.4.1.p.3">A registration update resets the timeout of the registration to the (possibly updated) lifetime of the registration, independent of whether a <samp>lt</samp> parameter was given.</p>
 <p id="rfc.section.5.4.1.p.4">If the context of the registration is changed in an update explicitly or implicitly, relative references submitted in the original registration or later updates are resolved anew against the new context (like in the original registration).</p>
-<p id="rfc.section.5.4.1.p.5">This operation only describes the use of POST with an empty payload.  As with modification of individual using iPATCH or PATCH as proposed in <a href="#link-up" class="xref">Section 5.4.4</a>, future standards might describe the semantics of using content formats and payloads with the POST method to update the links of a registration.</p>
+<p id="rfc.section.5.4.1.p.5">This operation only describes the use of POST with an empty payload.  Future standards might describe the semantics of using content formats and payloads with the POST method to update the links of a registration (see <a href="#link-up" class="xref">Section 5.4.4</a>).</p>
 <p id="rfc.section.5.4.1.p.6">The update registration request interface is specified as follows:</p>
 <p></p>
 
@@ -1427,7 +1427,7 @@ Res: 2.02 Deleted
 </h1>
 <p id="rfc.section.7.3.p.1">Using the Accept Option, the requester can control whether this list is returned in CoRE Link Format (<samp>application/link-format</samp>, default) or its alternate content-formats (<samp>application/link-format+json</samp> or <samp>application/link-format+cbor</samp>).</p>
 <p id="rfc.section.7.3.p.2">The page and count parameters are used to obtain lookup results in specified increments using pagination, where count specifies how many links to return and page specifies which subset of links organized in sequential pages, each containing &#8216;count&#8217; links, starting with link zero and page zero. Thus, specifying count of 10 and page of 0 will return the first 10 links in the result set (links 0-9). Count = 10 and page = 1 will return the next &#8216;page&#8217; containing links 10-19, and so on.</p>
-<p id="rfc.section.7.3.p.3">Multiple search criteria MAY be included in a lookup. All included criteria MUST match for a link to be returned.</p>
+<p id="rfc.section.7.3.p.3">Multiple search criteria MAY be included in a lookup. All included criteria MUST match for a link to be returned. The Resource Directory MUST support matching with multiple search criteria.</p>
 <p id="rfc.section.7.3.p.4">A link matches a search criterion if it has an attribute of the same name and the same value, allowing for a trailing &#8220;*&#8221; wildcard operator as in Section 4.1 of <a href="#RFC6690" class="xref">[RFC6690]</a>.  Attributes that are defined as &#8220;link-type&#8221; match if the search value matches any of their values (see Section 4.1 of <a href="#RFC6690" class="xref">[RFC6690]</a>; eg. <samp>?if=core.s</samp> matches <samp>;if="abc core.s";</samp>).  A link also matches a search criterion if the link that would be produced for any of its containing entities would match the criterion: A search criterion matches an endpoint if it matches the endpoint itself or any of the groups it is contained in, and one on a resource if it matches the resource, the resource&#8217;s endpoint, or any of the endpoint&#8217;s groups.</p>
 <p id="rfc.section.7.3.p.5">Note that <samp>href</samp> is also a valid search criterion and matches target references. Like all search criteria, on a resource lookup it can match the target reference of the resource link itself, but also the registration resource of the endpoint that registered it, or any group resource that endpoint is contained in.</p>
 <p id="rfc.section.7.3.p.6">Clients that are interested in a lookup result repeatedly or continuously can use mechanisms like ETag caching, resource observation (<a href="#RFC7641" class="xref">[RFC7641]</a>), or any future mechanism that might allow more efficient observations of collections.  These are advertised, detected and used according to their own specifications and can be used with the lookup interface as with any other resource.</p>
@@ -1572,7 +1572,7 @@ Res: 2.05 Content
 &lt;/res/8&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616",
 &lt;/res/9&gt;;rt=sensor;ct=60;anchor="coap://[2001:db8:3::123]:61616"
 </pre>
-<p id="rfc.section.7.4.p.10">The following example shows a client performing a lookup of all resources from endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
+<p id="rfc.section.7.4.p.10">The following example shows a client performing a lookup of all resources from endpoints of all endpoints of a given endpoint type. It assumes that two endpoints (with endpoint names <samp>sensor1</samp> and <samp>sensor2</samp>) have previously registered with their respective addresses <samp>coap://sensor1.example.com</samp> and <samp>coap://sensor2.example.com</samp>, and posted the very payload of the 6th request of section 5 of <a href="#RFC6690" class="xref">[RFC6690]</a>.</p>
 <p id="rfc.section.7.4.p.11">It demonstrates how the link targets stay unmodified, but the anchors get constructed by the resource directory:</p>
 <pre>
 Req: GET /rd-lookup/res?et=sensor-node
