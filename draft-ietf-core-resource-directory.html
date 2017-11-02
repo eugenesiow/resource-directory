@@ -345,7 +345,7 @@ address {
 
   <meta name="dct.creator" content="Shelby, Z., Koster, M., Bormann, C., van der Stok, P., and C. Ams&#252;ss, Ed." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-resource-directory-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-11-01" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-11-02" />
   <meta name="dct.abstract" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
   <meta name="description" content="In many M2M applications, direct discovery of resources is not practical due to sleeping nodes, disperse networks, or networks where multicast traffic is inefficient. These problems can be solved by employing an entity called a Resource Directory (RD), which hosts descriptions of resources held on other servers, allowing lookups to be performed for those resources. This document specifies the web interfaces that a Resource Directory supports in order for web servers to discover the RD and to register, maintain, lookup and remove resource descriptions. Furthermore, new link attributes useful in conjunction with an RD are defined." />
 
@@ -369,7 +369,7 @@ address {
 <td class="right">M. Koster</td>
 </tr>
 <tr>
-<td class="left">Expires: May 5, 2018</td>
+<td class="left">Expires: May 6, 2018</td>
 <td class="right">SmartThings</td>
 </tr>
 <tr>
@@ -398,7 +398,7 @@ address {
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">November 01, 2017</td>
+<td class="right">November 02, 2017</td>
 </tr>
 
     	
@@ -414,7 +414,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 5, 2018.</p>
+<p>This Internet-Draft will expire on May 6, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -1293,7 +1293,7 @@ Payload:
 <dt>gp :=</dt>
 <dd style="margin-left: 8">Group Name (mandatory). The name of the group to be created or replaced, unique within that domain. The maximum length of this parameter is 63 bytes.</dd>
 <dt>d :=</dt>
-<dd style="margin-left: 8">Domain (optional). The domain to which this group belongs. The maximum length of this parameter is 63 bytes. Optional. When this parameter is elided, the RD MAY associate the endpoint with a configured default domain.</dd>
+<dd style="margin-left: 8">Domain (optional). The domain to which this group belongs. The maximum length of this parameter is 63 bytes. When this parameter is not present, the RD MAY associate the group with a configured default domain or leave it empty.</dd>
 <dt>con :=</dt>
 <dd style="margin-left: 8">Context (optional). This parameter sets the scheme, address and port of the multicast address associated with the group.  When con is used, scheme and host are mandatory and port parameter is optional.</dd>
 </dl>
